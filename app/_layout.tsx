@@ -17,7 +17,7 @@ export default function RootLayout() {
           <Stack.Screen
               name="signup"
               options={{
-                  headerShown: true,
+                  headerShown: false,
                   headerTitle: 'Create Your Account',
                   headerStyle: {
                       backgroundColor: '#ff6347', // Couleur spécifique pour l'écran de signup

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, TouchableOpacity, Text, Image, StatusBar } from 'react-native';
 import { Button } from 'react-native-paper';
+import {useRouter} from "expo-router";
 
 const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const router = useRouter();
     const handleLogin = () => {
         // Logique de connexion
         console.log('Utilisateur connecté');
@@ -25,7 +26,7 @@ const LoginScreen = () => {
                 {/* Inputs */}
                 <TextInput
                     style={styles.input}
-                    placeholder="Email"
+                    placeholder="Username"
                     placeholderTextColor="#aaa"
                     keyboardType="email-address"
                     value={email}
@@ -50,7 +51,7 @@ const LoginScreen = () => {
                 </Button>
 
                 {/* Lien d'inscription */}
-                <TouchableOpacity style={styles.signupLink}>
+                <TouchableOpacity style={styles.signupLink} onPress={()=>{router.push("/signup")}}>
                     <Text style={styles.signupText}>
                         Don't have an account ?
                         <Text style={{color: '#4c8bf5', fontWeight: 'bold'}}> Sign up</Text>
