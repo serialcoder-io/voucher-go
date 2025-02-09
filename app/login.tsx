@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Image, StatusBar, TouchableOpacity } from "react-native";
+import {View, StyleSheet, Image, StatusBar, TouchableOpacity, Alert} from "react-native";
 import {Input, Button, Text, CheckBox, Icon} from "@rneui/themed";
 import { useRouter } from "expo-router";
 
@@ -13,6 +13,7 @@ const LoginScreen = () => {
     const handleLogin = () => {
         if (email && password) {
             console.log("Connexion réussie !");
+            return;
         } else {
             console.log("Veuillez remplir tous les champs.");
         }
@@ -26,11 +27,11 @@ const LoginScreen = () => {
                 {/* Logo */}
                 <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
 
-                {/* Titre */}
+                {/* title */}
                 <Text h3 style={styles.title}>Welcome Back</Text>
                 <Text style={styles.subtitle}>Login to continue</Text>
 
-                {/* Champ Email */}
+                {/* Email field */}
                 <Input
                     placeholder="Email"
                     leftIcon={{ type: 'feather', name: 'mail', color: '#4c8bf5' }}
@@ -40,9 +41,9 @@ const LoginScreen = () => {
                     keyboardType="email-address"
                 />
 
-                {/* Champ Mot de Passe */}
+                {/* Password field */}
                 <Input
-                    placeholder="Mot de passe"
+                    placeholder="Password"
                     secureTextEntry={secureTextEntry}
                     leftIcon={{ type: 'feather', name: 'lock', color: '#4c8bf5' }}
                     rightIcon={
@@ -71,7 +72,6 @@ const LoginScreen = () => {
                     </TouchableOpacity>
                 </View>
 
-                {/* Bouton de Connexion */}
                 <Button
                     title="Log in"
                     buttonStyle={styles.button}
@@ -80,7 +80,6 @@ const LoginScreen = () => {
                     onPress={handleLogin}
                 />
 
-                {/* Lien vers Sign Up */}
                 <TouchableOpacity onPress={() => router.push("/signup")}>
                     <Text style={styles.signupText}>Don't have an account? <Text style={styles.signupLink}>Sign Up</Text></Text>
                 </TouchableOpacity>

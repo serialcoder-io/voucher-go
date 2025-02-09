@@ -45,11 +45,9 @@ const SignupScreen = () => {
                 {/* Logo */}
                 <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
 
-                {/* Titre */}
                 <Text h3 style={styles.title}>Créer un compte</Text>
                 <Text style={styles.subtitle}>Remplissez les informations ci-dessous</Text>
 
-                {/* Inputs avec React Native Elements */}
                 <Input
                     placeholder="Nom d'utilisateur"
                     leftIcon={{ type: 'feather', name: 'user', color: '#4c8bf5' }}
@@ -94,7 +92,6 @@ const SignupScreen = () => {
                     onChangeText={setConfirmPassword}
                 />
 
-                {/* Bouton */}
                 <Button
                     title="Register"
                     loading={false}
