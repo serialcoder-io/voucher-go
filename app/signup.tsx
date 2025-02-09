@@ -1,21 +1,41 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, TouchableOpacity, Text, Image, StatusBar } from 'react-native';
-import { Button } from 'react-native-paper';
-import {useRouter} from "expo-router";
+import { View, StyleSheet, Image, StatusBar, Alert } from 'react-native';
+import { Input, Button, Text, Icon } from '@rneui/themed';
+//import { useRouter } from "expo-router";
 
 const SignupScreen = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const router = useRouter();
+    const [secureTextEntry, setSecureTextEntry] = useState(true);
+
+    const validateEmail = (email: string) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    };
+
     const handleSignup = () => {
-        // Logique d'inscription
-        if (password === confirmPassword) {
-            console.log('Utilisateur inscrit');
-        } else {
-            console.log('Les mots de passe ne correspondent pas');
+        if (!username || !email || !password || !confirmPassword) {
+            Alert.alert("Erreur", "Tous les champs sont obligatoires.");
+            return;
         }
+        if (!validateEmail(email)) {
+            Alert.alert("Erreur", "Veuillez entrer une adresse e-mail valide.");
+            return;
+        }
+        if (password.length < 6) {
+            Alert.alert("Erreur", "Le mot de passe doit contenir au moins 6 caractères.");
+            return;
+        }
+        if (password !== confirmPassword) {
+            Alert.alert("Erreur", "Les mots de passe ne correspondent pas.");
+            return;
+        }
+
+        console.log('Utilisateur inscrit avec succès');
+        // Redirection après inscription
+        // router.push('/login');
     };
 
     return (
@@ -26,58 +46,64 @@ const SignupScreen = () => {
                 <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
 
                 {/* Titre */}
-                <Text style={styles.title}>Create an Account</Text>
-                <Text style={styles.subtitle}>Please fill in the details below</Text>
+                <Text h3 style={styles.title}>Créer un compte</Text>
+                <Text style={styles.subtitle}>Remplissez les informations ci-dessous</Text>
 
-                {/* Inputs */}
-                <TextInput
-                    style={styles.input}
-                    placeholder="Username"
-                    placeholderTextColor="#aaa"
+                {/* Inputs avec React Native Elements */}
+                <Input
+                    placeholder="Nom d'utilisateur"
+                    leftIcon={{ type: 'feather', name: 'user', color: '#4c8bf5' }}
                     value={username}
                     onChangeText={setUsername}
                 />
-                <TextInput
-                    style={styles.input}
+                <Input
                     placeholder="Email"
-                    placeholderTextColor="#aaa"
+                    leftIcon={{ type: 'feather', name: 'mail', color: '#4c8bf5' }}
                     keyboardType="email-address"
                     value={email}
                     onChangeText={setEmail}
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Password"
-                    placeholderTextColor="#aaa"
-                    secureTextEntry
+                <Input
+                    placeholder="Mot de passe"
+                    secureTextEntry={secureTextEntry}
+                    leftIcon={{ type: 'feather', name: 'lock', color: '#4c8bf5' }}
+                    rightIcon={
+                        <Icon
+                            type="feather"
+                            name={secureTextEntry ? "eye-off" : "eye"}
+                            color="#4c8bf5"
+                            onPress={() => setSecureTextEntry(!secureTextEntry)}
+                        />
+                    }
                     value={password}
                     onChangeText={setPassword}
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Confirm Password"
-                    placeholderTextColor="#aaa"
-                    secureTextEntry
+                <Input
+                    placeholder="Confirmer le mot de passe"
+                    secureTextEntry={secureTextEntry}
+                    leftIcon={{ type: 'feather', name: 'lock', color: '#4c8bf5' }}
+                    rightIcon={
+                        <Icon
+                            type="feather"
+                            name={secureTextEntry ? "eye-off" : "eye"}
+                            color="#4c8bf5"
+                            onPress={() => setSecureTextEntry(!secureTextEntry)}
+                        />
+                    }
                     value={confirmPassword}
                     onChangeText={setConfirmPassword}
                 />
 
-                {/* Button */}
+                {/* Bouton */}
                 <Button
-                    mode="contained"
-                    style={styles.button}
+                    title="Register"
+                    loading={false}
+                    loadingProps={{ size: 'small', color: 'white' }}
+                    buttonStyle={styles.button}
+                    titleStyle={{ fontWeight: '200', fontSize: 20 }}
+                    containerStyle={styles.buttonContainer}
                     onPress={handleSignup}
-                >
-                    Sign Up
-                </Button>
-
-                {/* Lien de connexion */}
-                <TouchableOpacity style={styles.loginLink} onPress={()=>{router.push("/login")}}>
-                    <Text style={styles.loginText}>
-                        Already have an account ?
-                        <Text style={{color: '#4c8bf5', fontWeight: 'bold'}}> Log in</Text>
-                    </Text>
-                </TouchableOpacity>
+                />
             </View>
         </View>
     );
@@ -88,60 +114,41 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f5f5f5', // Fond gris clair
+        backgroundColor: '#f5f5f5',
     },
     innerContainer: {
         width: '85%',
-        backgroundColor: 'white',
-        padding: 30,
-        borderRadius: 15,
-        elevation: 8, // Ombre subtile
         alignItems: 'center',
     },
     logo: {
-        width: 120,  // Taille du logo
-        height: 120, // Taille du logo
-        marginBottom: 20, // Espace en dessous du logo
-        resizeMode: 'contain', // Pour garder les proportions du logo
+        width: 100,
+        height: 100,
+        marginBottom: 20,
+        resizeMode: 'contain',
     },
     title: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#4c8bf5', // Couleur bleue claire
-        marginBottom: 10,
+        color: '#4c8bf5',
+        marginBottom: 8,
         textAlign: 'center',
     },
     subtitle: {
-        fontSize: 16,
+        fontSize: 15,
         color: '#4c8bf5',
-        marginBottom: 25,
+        marginBottom: 20,
         textAlign: 'center',
         fontStyle: 'italic',
     },
-    input: {
+    buttonContainer: {
+        marginHorizontal: 50,
         height: 50,
         width: '100%',
-        borderColor: 'grey',
-        borderWidth: 1.5,
-        borderRadius: 10,
-        marginBottom: 20,
-        paddingLeft: 15,
-        fontSize: 16,
-        backgroundColor: '#fafafa',
+        marginVertical: 0,
     },
     button: {
         backgroundColor: '#4c8bf5',
         width: '100%',
-        paddingVertical: 5,
+        paddingVertical: 10,
         borderRadius: 10,
-    },
-    loginLink: {
-        marginTop: 20,
-        alignItems: 'center',
-    },
-    loginText: {
-        color: '#333333',
-        fontSize: 14,
     },
 });
 
