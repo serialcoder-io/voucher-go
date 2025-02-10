@@ -13,8 +13,11 @@ const LoginScreen = () => {
     //const router = useRouter();
 
     const handleSubmit = () => {
-        if(email && validateEmail(email)) {
-            Alert.alert("We've sent you an email with a link to reset your password. Please check your inbox");
+        const trimmedEmail = email.trim(); // Supprimer les espaces avant/après
+        if (trimmedEmail && validateEmail(trimmedEmail)) {
+            Alert.alert("We've sent you an email. Please check your inbox");
+            setEmail('')
+            return;
         }
         Alert.alert("Please enter a valid email address");
     };

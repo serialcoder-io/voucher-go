@@ -18,6 +18,7 @@ function CustomInputText({
             placeholder={placeholder}
             leftIcon={{ type: 'feather', name: iconName, color: '#4c8bf5' }}
             inputContainerStyle={styles.inputContainer}
+            inputStyle={styles.textInput}
             value={value}
             onChangeText={setValue}
         />
@@ -31,4 +32,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1.5,
         borderBottomColor: "grey",
     },
+    textInput: {
+        fontSize: 17
+    }
 });

@@ -20,6 +20,8 @@ const LoginScreen = () => {
         if (username && password) {
             console.log("Connexion réussie !");
             router.push("/(tabs)/home");
+            setUsername('')
+            setPassword('')
             return;
         } else {
             console.log("Veuillez remplir tous les champs.");
@@ -30,7 +32,6 @@ const LoginScreen = () => {
         <ParentContainer>
             {/* Logo */}
             <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
-
             {/* title */}
             <Text h3 style={globalStyles.title}>Welcome Back</Text>
             <Text style={globalStyles.subtitle}>Login to continue</Text>
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 120,
         height: 120,
-        marginBottom: 20,
+        marginBottom: 10,
         resizeMode: "contain",
     },
     optionsContainer: {
