@@ -1,83 +1,63 @@
-import {View, StyleSheet} from "react-native";
-import {Text, Input, Button} from "@rneui/themed"
-import React, {useState} from "react";
+// noinspection JSUnusedGlobalSymbols
+import React, { useState } from "react";
+import {StyleSheet, Alert} from "react-native";
+import {Text} from "@rneui/themed";
+import {globalStyles} from "@/styles/global";
+//import { useRouter } from "expo-router";
+import PrimaryButton from "@/components/ui/primary-button";
+import ParentContainer from "@/components/parent-container";
+import CustomInputText from "@/components/ui/custom-inputText";
 
-export default function ForgotPasswordScreen(){
+const LoginScreen = () => {
     const [email, setEmail] = useState("");
+    //const router = useRouter();
+
+    const handleSubmit = () => {
+        if(email && validateEmail(email)) {
+            Alert.alert("We've sent you an email with a link to reset your password. Please check your inbox");
+        }
+        Alert.alert("Please enter a valid email address");
+    };
+    const validateEmail = (email: string) => {
+        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return regex.test(email);
+    };
     return (
-        <View style={styles.container}>
-            <View style={styles.innerContainer}>
-                <Text>Enter your email</Text>
-                <Text>Please provide the email you used when you you created your account</Text>
-                <Input
-                    placeholder="username"
-                    leftIcon={{ type: 'feather', name: 'user', color: '#4c8bf5' }}
-                    inputContainerStyle={styles.inputContainer}
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType="email-address"
-                />
-                <Button></Button>
-            </View>
-        </View>
-    )
-}
+        <ParentContainer>
+            {/* title */}
+            <Text h3 style={globalStyles.title}>Reset password</Text>
+            <Text style={styles.subtitle}>Please provide the email address you used to create your account</Text>
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#f5f5f5",
-    },
-    innerContainer: {
-        width: "85%",
-        alignItems: "center",
-    },
+            {/* Email field */}
 
-    logo: {
-        width: 120,
-        height: 120,
-        marginBottom: 20,
-        resizeMode: "contain",
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: "bold",
-        color: "#4c8bf5",
-        marginBottom: 10,
-        textAlign: "center",
-    },
+            <CustomInputText
+                value={email}
+                setValue={setEmail}
+                iconName="user"
+                placeholder="Enter your email address"
+            />
+
+            <PrimaryButton
+                disabled={!email}
+                title="Send email"
+                loading={false}
+                actionOnPress={handleSubmit}
+            />
+        </ParentContainer>
+    );
+};
+
+
+export default LoginScreen;
+
+
+export const styles = StyleSheet.create({
+
     subtitle: {
-        fontSize: 16,
-        color: "#4c8bf5",
-        marginBottom: 25,
-        textAlign: "center",
-        fontStyle: "italic",
+        fontSize: 15,
+        color: '#444444',
+        marginBottom: 20,
+        textAlign: 'center',
+        fontStyle: 'italic',
     },
-    inputContainer: {
-        borderBottomWidth: 1.5,
-        borderBottomColor: "grey",
-    },
-    optionsContainer: {
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: 15,
-    },
-    checkboxContainer: {
-        backgroundColor: "transparent",
-        borderWidth: 0,
-    },
-    forgotPassword: {
-        color: "#4c8bf5",
-        fontWeight: "bold",
-        fontSize: 14,
-    },
-    button: {
-        backgroundColor: "#4c8bf5",
-        paddingVertical: 10,
-        borderRadius: 10,
-    }
-});
+})

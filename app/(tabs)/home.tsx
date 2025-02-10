@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, TextInput, StyleSheet, ScrollView } from "react-native";
 import { Button, Icon, Text } from "@rneui/themed";
 
+
 const ScanScreen = () => {
     const [showInput, setShowInput] = useState(false);
     const [reference, setReference] = useState("");

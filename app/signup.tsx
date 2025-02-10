@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, StatusBar, Alert } from 'react-native';
-import { Input, Button, Text, Icon } from '@rneui/themed';
+import {StyleSheet, Image, StatusBar, Alert } from 'react-native';
+import {Text} from '@rneui/themed';
+import PrimaryButton from "@/components/ui/primary-button";
+import InputPassword from "@/components/ui/input-password";
+import {globalStyles} from "@/styles/global";
+import ParentContainer from "@/components/parent-container";
+import CustomInputText from "@/components/ui/custom-inputText";
 //import { useRouter } from "expo-router";
 
 const SignupScreen = () => {
@@ -11,15 +16,14 @@ const SignupScreen = () => {
     const [secureTextEntry, setSecureTextEntry] = useState(true);
 
     const validateEmail = (email: string) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return regex.test(email);
     };
-
+    const allFields = [username, email, password, confirmPassword];
+    const allFieldsFilled = allFields.every((field) => {
+        return field.length > 0
+    })
     const handleSignup = () => {
-        if (!username || !email || !password || !confirmPassword) {
-            Alert.alert("Erreur", "Tous les champs sont obligatoires.");
-            return;
-        }
         if (!validateEmail(email)) {
             Alert.alert("Erreur", "Veuillez entrer une adresse e-mail valide.");
             return;
@@ -39,113 +43,62 @@ const SignupScreen = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <StatusBar barStyle="dark-content" backgroundColor="#f5f5f5" />
-            <View style={styles.innerContainer}>
-                {/* Logo */}
-                <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
+        <ParentContainer>
+            {/* Logo */}
+            <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
 
-                <Text h3 style={styles.title}>Créer un compte</Text>
-                <Text style={styles.subtitle}>Remplissez les informations ci-dessous</Text>
+            <Text h3 style={globalStyles.title}>Create accont</Text>
+            <Text style={globalStyles.subtitle}>Remplissez les informations ci-dessous</Text>
 
-                <Input
-                    placeholder="Nom d'utilisateur"
-                    leftIcon={{ type: 'feather', name: 'user', color: '#4c8bf5' }}
-                    value={username}
-                    onChangeText={setUsername}
-                />
-                <Input
-                    placeholder="Email"
-                    leftIcon={{ type: 'feather', name: 'mail', color: '#4c8bf5' }}
-                    keyboardType="email-address"
-                    value={email}
-                    onChangeText={setEmail}
-                />
-                <Input
-                    placeholder="Mot de passe"
-                    secureTextEntry={secureTextEntry}
-                    leftIcon={{ type: 'feather', name: 'lock', color: '#4c8bf5' }}
-                    rightIcon={
-                        <Icon
-                            type="feather"
-                            name={secureTextEntry ? "eye-off" : "eye"}
-                            color="#4c8bf5"
-                            onPress={() => setSecureTextEntry(!secureTextEntry)}
-                        />
-                    }
-                    value={password}
-                    onChangeText={setPassword}
-                />
-                <Input
-                    placeholder="Confirmer le mot de passe"
-                    secureTextEntry={secureTextEntry}
-                    leftIcon={{ type: 'feather', name: 'lock', color: '#4c8bf5' }}
-                    rightIcon={
-                        <Icon
-                            type="feather"
-                            name={secureTextEntry ? "eye-off" : "eye"}
-                            color="#4c8bf5"
-                            onPress={() => setSecureTextEntry(!secureTextEntry)}
-                        />
-                    }
-                    value={confirmPassword}
-                    onChangeText={setConfirmPassword}
-                />
+            {/* Username */}
+            <CustomInputText
+                value={username}
+                setValue={setUsername}
+                iconName="user"
+                placeholder="Username"
+            />
 
-                <Button
-                    title="Register"
-                    loading={false}
-                    loadingProps={{ size: 'small', color: 'white' }}
-                    buttonStyle={styles.button}
-                    titleStyle={{ fontWeight: '200', fontSize: 20 }}
-                    containerStyle={styles.buttonContainer}
-                    onPress={handleSignup}
-                />
-            </View>
-        </View>
+            {/* Email */}
+
+            <CustomInputText
+                value={email}
+                setValue={setEmail}
+                iconName="mail"
+                placeholder="Email"
+            />
+
+            <InputPassword
+                placeholder="Password"
+                secureTextEntry={secureTextEntry}
+                onPressIcon={() => setSecureTextEntry(!secureTextEntry)}
+                value={password}
+                onChangeText={setPassword}
+            />
+
+            <InputPassword
+                placeholder="Confirme password"
+                secureTextEntry={secureTextEntry}
+                onPressIcon={() => setSecureTextEntry(!secureTextEntry)}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+            />
+
+            <PrimaryButton
+                disabled={!allFieldsFilled}
+                title="Register"
+                loading={false}
+                actionOnPress={handleSignup}
+            />
+        </ParentContainer>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f5f5f5',
-    },
-    innerContainer: {
-        width: '85%',
-        alignItems: 'center',
-    },
     logo: {
         width: 100,
         height: 100,
         marginBottom: 20,
         resizeMode: 'contain',
-    },
-    title: {
-        color: '#4c8bf5',
-        marginBottom: 8,
-        textAlign: 'center',
-    },
-    subtitle: {
-        fontSize: 15,
-        color: '#4c8bf5',
-        marginBottom: 20,
-        textAlign: 'center',
-        fontStyle: 'italic',
-    },
-    buttonContainer: {
-        marginHorizontal: 50,
-        height: 50,
-        width: '100%',
-        marginVertical: 0,
-    },
-    button: {
-        backgroundColor: '#4c8bf5',
-        width: '100%',
-        paddingVertical: 10,
-        borderRadius: 10,
     },
 });
 

@@ -25,7 +25,7 @@ export default function RootLayout() {
                   name="signup"
                   options={{
                       headerShown: true,
-                      headerTitle: 'Create Account',
+                      headerTitle: 'Rgister',
                       headerStyle: {
                           backgroundColor: 'white', // Couleur spécifique pour l'écran de signup
                       },

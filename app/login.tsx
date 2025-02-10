@@ -1,17 +1,23 @@
+// noinspection JSUnusedGlobalSymbols
 import React, { useState } from "react";
-import {View, StyleSheet, Image, StatusBar, TouchableOpacity, Alert} from "react-native";
-import {Input, Button, Text, CheckBox, Icon} from "@rneui/themed";
+import {View, StyleSheet, Image, StatusBar, TouchableOpacity} from "react-native";
+import {Text, CheckBox} from "@rneui/themed";
+import {globalStyles} from "@/styles/global";
 import { useRouter } from "expo-router";
+import PrimaryButton from "@/components/ui/primary-button";
+import InputPassword from "@/components/ui/input-password";
+import ParentContainer from "@/components/parent-container";
+import CustomInputText from "@/components/ui/custom-inputText";
 
 const LoginScreen = () => {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [checked, setChecked] = useState(false);
     const [secureTextEntry, setSecureTextEntry] = useState(true);
     const router = useRouter();
 
     const handleLogin = () => {
-        if (email && password) {
+        if (username && password) {
             console.log("Connexion réussie !");
             router.push("/(tabs)/home");
             return;
@@ -21,108 +27,66 @@ const LoginScreen = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <StatusBar barStyle="dark-content" backgroundColor="#f5f5f5" />
-            <View style={styles.innerContainer}>
+        <ParentContainer>
+            {/* Logo */}
+            <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
 
-                {/* Logo */}
-                <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
+            {/* title */}
+            <Text h3 style={globalStyles.title}>Welcome Back</Text>
+            <Text style={globalStyles.subtitle}>Login to continue</Text>
 
-                {/* title */}
-                <Text h3 style={styles.title}>Welcome Back</Text>
-                <Text style={styles.subtitle}>Login to continue</Text>
+            {/* Username field */}
 
-                {/* Email field */}
-                <Input
-                    placeholder="username"
-                    leftIcon={{ type: 'feather', name: 'user', color: '#4c8bf5' }}
-                    inputContainerStyle={styles.inputContainer}
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType="email-address"
+            <CustomInputText
+                value={username}
+                setValue={setUsername}
+                iconName="user"
+                placeholder="Username"
+            />
+
+            {/* Password field */}
+            <InputPassword
+                placeholder="Password"
+                secureTextEntry={secureTextEntry}
+                onPressIcon={() => setSecureTextEntry(!secureTextEntry)}
+                value={password}
+                onChangeText={setPassword}
+            />
+
+            {/* Options : Keep me signed in & Forgot password */}
+            <View style={styles.optionsContainer}>
+                <CheckBox
+                    checked={checked}
+                    onPress={() => setChecked(!checked)}
+                    title="Keep me signed in"
+                    containerStyle={styles.checkboxContainer}
+                    checkedColor="#4c8bf5"
                 />
-
-                {/* Password field */}
-                <Input
-                    placeholder="Password"
-                    secureTextEntry={secureTextEntry}
-                    leftIcon={{ type: 'feather', name: 'lock', color: '#4c8bf5' }}
-                    rightIcon={
-                        <Icon
-                            type="feather"
-                            name={secureTextEntry ? "eye-off" : "eye"}
-                            color="#4c8bf5"
-                            onPress={() => setSecureTextEntry(!secureTextEntry)}
-                        />
-                    }
-                    value={password}
-                    onChangeText={setPassword}
-                />
-
-                {/* Options : Keep me signed in & Forgot password */}
-                <View style={styles.optionsContainer}>
-                    <CheckBox
-                        checked={checked}
-                        onPress={() => setChecked(!checked)}
-                        title="Keep me signed in"
-                        containerStyle={styles.checkboxContainer}
-                        checkedColor="#4c8bf5"
-                    />
-                    <TouchableOpacity onPress={() => router.push("/reset-password")}>
-                        <Text style={styles.forgotPassword}>Forgot password?</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <Button
-                    title="Log in"
-                    buttonStyle={styles.button}
-                    titleStyle={{ fontWeight: 'bold', fontSize: 20 }}
-                    containerStyle={{ width: "100%" }}
-                    onPress={handleLogin}
-                />
-
-                <TouchableOpacity onPress={() => router.push("/signup")}>
-                    <Text style={styles.signupText}>Don't have an account ? <Text style={styles.signupLink}>Sign Up</Text></Text>
+                <TouchableOpacity onPress={() => router.push("/reset-password")}>
+                    <Text style={styles.forgotPassword}>Forgot password?</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+
+            <PrimaryButton
+                disabled={!username || !password}
+                title="Login"
+                loading={false}
+                actionOnPress={handleLogin}
+            />
+
+            <TouchableOpacity onPress={() => router.push("/signup")}>
+                <Text style={styles.signupText}>Don't have an account ? <Text style={styles.signupLink}>Sign Up</Text></Text>
+            </TouchableOpacity>
+        </ParentContainer>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#f5f5f5",
-    },
-    innerContainer: {
-        width: "85%",
-        alignItems: "center",
-    },
     logo: {
         width: 120,
         height: 120,
         marginBottom: 20,
         resizeMode: "contain",
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: "bold",
-        color: "#4c8bf5",
-        marginBottom: 10,
-        textAlign: "center",
-    },
-    subtitle: {
-        fontSize: 16,
-        color: "#4c8bf5",
-        marginBottom: 25,
-        textAlign: "center",
-        fontStyle: "italic",
-    },
-    inputContainer: {
-        borderBottomWidth: 1.5,
-        borderBottomColor: "grey",
     },
     optionsContainer: {
         width: "100%",
@@ -139,11 +103,6 @@ const styles = StyleSheet.create({
         color: "#4c8bf5",
         fontWeight: "bold",
         fontSize: 14,
-    },
-    button: {
-        backgroundColor: "#4c8bf5",
-        paddingVertical: 10,
-        borderRadius: 10,
     },
     signupText: {
         marginTop: 15,
