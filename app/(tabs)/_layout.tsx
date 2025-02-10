@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { View, StyleSheet, Text } from "react-native";
+import {View, StyleSheet, Text, Platform} from "react-native";
 
 export default function MainLayout() {
     return (
@@ -10,11 +10,11 @@ export default function MainLayout() {
                 headerShown: false,
                 tabBarStyle: {
                     height: 75,
-                    backgroundColor: '#EDE8FF',
+                    backgroundColor: '#E0E7FF',
                 },
                 tabBarLabelStyle: {
                     fontSize: 12,
-                    color: 'grey',
+                    color: 'black',
                 },
                 tabBarIconStyle: {
                     marginTop: 14,
@@ -24,50 +24,74 @@ export default function MainLayout() {
             }}
         >
             <Tabs.Screen
-                name="login"
+                name="home"
                 options={{
-                    headerShown: false,
-                    title: 'Sign in',
+                    headerShown: true,
+                    title: 'Home',
                     tabBarIcon: ({ focused, color, size }) => (
                         <View
                             style={[
                                 styles.iconContainer,
-                                { backgroundColor: focused ? '#5F33E1' : 'transparent' }
+                                { backgroundColor: focused ? '#4c8bf5' : 'transparent' }
                             ]}
                         >
                             <Ionicons
-                                name="log-in"
+                                name="home-outline"
                                 size={25}
                                 color={focused ? 'white' : color}
                             />
                         </View>
                     ),
                     tabBarLabel: ({ focused }) => (
-                        <Text style={{ marginTop: focused ? 5 : 0 }}>Sign in</Text>
+                        <Text style={{ marginTop: focused ? 5 : 0 }}>Home</Text>
                     ),
                 }}
             />
             <Tabs.Screen
-                name="signup"
+                name="transactions"
                 options={{
-                    headerShown: false,
-                    title: 'Signup',
+                    headerShown: true,
+                    title: 'Transactions',
                     tabBarIcon: ({ focused, color, size }) => (
                         <View
                             style={[
                                 styles.iconContainer,
-                                { backgroundColor: focused ? '#5F33E1' : 'transparent' }
+                                { backgroundColor: focused ? '#4c8bf5' : 'transparent' }
                             ]}
                         >
                             <Ionicons
-                                name="person-add"
+                                name="receipt-outline"
                                 size={25}
                                 color={focused ? 'white' : color}
                             />
                         </View>
                     ),
                     tabBarLabel: ({ focused }) => (
-                        <Text style={{ marginTop: focused ? 5 : 0 }}>Sign up</Text>
+                        <Text style={{ marginTop: focused ? 5 : 0 }}>Transactions</Text>
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="settings"
+                options={{
+                    headerShown: true,
+                    title: 'Settings',
+                    tabBarIcon: ({ focused, color, size }) => (
+                        <View
+                            style={[
+                                styles.iconContainer,
+                                { backgroundColor: focused ? '#4c8bf5' : 'transparent' }
+                            ]}
+                        >
+                            <Ionicons
+                                name={Platform.OS === 'ios' ? 'cog' : 'settings-outline'}
+                                size={30}
+                                color={focused ? 'white' : color}
+                            />
+                        </View>
+                    ),
+                    tabBarLabel: ({ focused }) => (
+                        <Text style={{ marginTop: focused ? 5 : 0 }}>Settings</Text>
                     ),
                 }}
             />

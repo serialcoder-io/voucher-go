@@ -5,7 +5,11 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 export default function RootLayout() {
   return (
       <SafeAreaProvider>
-          <Stack>
+          <Stack
+            screenOptions={{
+                headerShown: false,
+            }}
+          >
               <Stack.Screen
                   name="login"
                   options={{
@@ -40,7 +44,7 @@ export default function RootLayout() {
                   }}
               />
               <Stack.Screen
-                  name="forgot-password"
+                  name="reset-password"
                   options={{
                       headerShown: true,
                       headerTitle: 'Reset password',

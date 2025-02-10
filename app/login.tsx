@@ -13,6 +13,7 @@ const LoginScreen = () => {
     const handleLogin = () => {
         if (email && password) {
             console.log("Connexion réussie !");
+            router.push("/(tabs)/home");
             return;
         } else {
             console.log("Veuillez remplir tous les champs.");
@@ -33,8 +34,8 @@ const LoginScreen = () => {
 
                 {/* Email field */}
                 <Input
-                    placeholder="Email"
-                    leftIcon={{ type: 'feather', name: 'mail', color: '#4c8bf5' }}
+                    placeholder="username"
+                    leftIcon={{ type: 'feather', name: 'user', color: '#4c8bf5' }}
                     inputContainerStyle={styles.inputContainer}
                     value={email}
                     onChangeText={setEmail}
@@ -67,7 +68,7 @@ const LoginScreen = () => {
                         containerStyle={styles.checkboxContainer}
                         checkedColor="#4c8bf5"
                     />
-                    <TouchableOpacity onPress={() => router.push("/forgot-password")}>
+                    <TouchableOpacity onPress={() => router.push("/reset-password")}>
                         <Text style={styles.forgotPassword}>Forgot password?</Text>
                     </TouchableOpacity>
                 </View>
@@ -81,7 +82,7 @@ const LoginScreen = () => {
                 />
 
                 <TouchableOpacity onPress={() => router.push("/signup")}>
-                    <Text style={styles.signupText}>Don't have an account? <Text style={styles.signupLink}>Sign Up</Text></Text>
+                    <Text style={styles.signupText}>Don't have an account ? <Text style={styles.signupLink}>Sign Up</Text></Text>
                 </TouchableOpacity>
             </View>
         </View>
