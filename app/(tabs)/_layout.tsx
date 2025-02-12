@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import {View, StyleSheet, Text, Platform} from "react-native";
+import { View, StyleSheet, Text, Platform} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {Avatar} from "@rneui/base";
 
 export default function MainLayout() {
     return (
         <SafeAreaProvider>
             <Tabs
                 screenOptions={{
-                    headerShown: false,
                     tabBarStyle: {
                         height: 75,
                         backgroundColor: 'white',
@@ -28,7 +28,25 @@ export default function MainLayout() {
                 <Tabs.Screen
                     name="home"
                     options={{
-                        headerShown: true,
+                        headerShown: true, // Active le header
+                        headerTitle: '',  // Enlever le titre par défaut
+                        headerLeft: () => (
+                            <View style={{ paddingLeft: 10, display: 'flex', flexDirection: 'row', alignItems: 'center', columnGap: 10 }}>
+                                {/* Logo à gauche */}
+                                <Text style={{fontSize: 18, paddingLeft: 18, fontWeight: 'bold'}}>Voucher Go</Text>
+                            </View>
+                        ),
+                        headerRight: () => (
+                            <View style={{ paddingRight: 20 }}>
+                                {/* Avatar à droite */}
+                                <Avatar
+                                    size={40}
+                                    rounded
+                                    title="A"
+                                    containerStyle={{ backgroundColor: "#4c8bf5" }}
+                                />
+                            </View>
+                        ),
                         title: 'Home',
                         tabBarIcon: ({ focused, color, size }) => (
                             <View
