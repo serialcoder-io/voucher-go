@@ -8,6 +8,7 @@ import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
 import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
+import BorderedInput from "@/components/ui/bordered-input";
 
 const LoginScreen = () => {
     const [username, setUsername] = useState("");
@@ -29,7 +30,7 @@ const LoginScreen = () => {
     };
 
     return (
-        <ParentContainer>
+        <ParentContainer width='90%'>
             {/* Logo */}
             <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
             {/* title */}
@@ -73,6 +74,7 @@ const LoginScreen = () => {
                 title="Login"
                 loading={false}
                 actionOnPress={handleLogin}
+                width='95%'
             />
 
             <TouchableOpacity onPress={() => router.push("/signup")}>
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: 15,
+        marginBottom: 10,
     },
     checkboxContainer: {
         backgroundColor: "transparent",
@@ -104,6 +106,7 @@ const styles = StyleSheet.create({
         color: "#4c8bf5",
         fontWeight: "bold",
         fontSize: 14,
+        marginRight: 10
     },
     signupText: {
         marginTop: 15,

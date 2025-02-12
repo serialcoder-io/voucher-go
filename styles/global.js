@@ -18,13 +18,13 @@ export const globalStyles = StyleSheet.create({
 	primaryButtonStyle: {
 		backgroundColor: '#4c8bf5',
 		width: '100%',
-		paddingVertical: 10,
+		paddingVertical: 8,
 		borderRadius: 10,
 	},
 	buttonContainer: {
 		marginHorizontal: 50,
 		height: 50,
-		width: '100%',
+		width: '95%',
 		marginVertical: 0,
 	},
 	title: {
@@ -39,4 +39,12 @@ export const globalStyles = StyleSheet.create({
 		textAlign: 'center',
 		fontStyle: 'italic',
 	},
+	inputContainer: {
+		borderWidth: 0.5,
+		borderColor: "#d3d3d3",
+		backgroundColor: "white",
+		paddingHorizontal: 8,
+		borderRadius: 8,
+		width: '100%',
+	}
 })

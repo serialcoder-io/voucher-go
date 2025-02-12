@@ -45,6 +45,7 @@ const LoginScreen = () => {
                 title="Send email"
                 loading={false}
                 actionOnPress={handleSubmit}
+                width='95%'
             />
         </ParentContainer>
     );

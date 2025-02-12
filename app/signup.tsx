@@ -43,7 +43,7 @@ const SignupScreen = () => {
     };
 
     return (
-        <ParentContainer>
+        <ParentContainer width='90%'>
             {/* Logo */}
             <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
 
@@ -88,6 +88,7 @@ const SignupScreen = () => {
                 title="Register"
                 loading={false}
                 actionOnPress={handleSignup}
+                width='95%'
             />
         </ParentContainer>
     );
