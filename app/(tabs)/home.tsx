@@ -53,7 +53,7 @@ const ScanScreen = () => {
                 </View>
 
                 {/*scan button*/}
-                <View style={{width: '100%'}}>
+                <View style={{width: '100%', borderTopWidth: 0.5, borderTopColor: 'grey'}}>
                     <TouchableOpacity style={styles.scanButton}>
                         <Icon name="qrcode" size={25} color="grey" type="font-awesome" />
                         <Text style={{fontSize: 16}}>Scan the QR code</Text>
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     scanButton: {
         width:'100%', display: "flex", flexDirection: "row",
         alignItems: "center", columnGap: 15,
-        paddingVertical: 20, borderTopWidth: 0.5,  paddingHorizontal: 18, borderTopColor: 'grey'
+        paddingVertical: 15, paddingHorizontal: 18
     },
     checkVoucherConainer: {
         width:'100%',
