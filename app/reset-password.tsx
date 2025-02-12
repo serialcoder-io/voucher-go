@@ -35,7 +35,7 @@ const LoginScreen = () => {
 
             <CustomInputText
                 value={email}
-                setValue={setEmail}
+                onChangeText={setEmail}
                 iconName="user"
                 placeholder="Enter your email address"
             />

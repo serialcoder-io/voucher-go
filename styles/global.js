@@ -1,14 +1,18 @@
 import { StyleSheet } from 'react-native';
 
 export const globalStyles = StyleSheet.create({
+	center:{
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 	container: {
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#f5f5f5',
+		backgroundColor: '#f3f3f3',
 	},
 	innerContainer: {
-		width: "85%",
 		alignItems: "center",
 	},
 	primaryButtonStyle: {

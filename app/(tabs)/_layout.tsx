@@ -2,100 +2,103 @@ import * as React from 'react';
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import {View, StyleSheet, Text, Platform} from "react-native";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function MainLayout() {
     return (
-        <Tabs
-            screenOptions={{
-                headerShown: false,
-                tabBarStyle: {
-                    height: 75,
-                    backgroundColor: '#E0E7FF',
-                },
-                tabBarLabelStyle: {
-                    fontSize: 12,
-                    color: 'black',
-                },
-                tabBarIconStyle: {
-                    marginTop: 14,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                },
-            }}
-        >
-            <Tabs.Screen
-                name="home"
-                options={{
-                    headerShown: true,
-                    title: 'Home',
-                    tabBarIcon: ({ focused, color, size }) => (
-                        <View
-                            style={[
-                                styles.iconContainer,
-                                { backgroundColor: focused ? '#4c8bf5' : 'transparent' }
-                            ]}
-                        >
-                            <Ionicons
-                                name="home-outline"
-                                size={25}
-                                color={focused ? 'white' : color}
-                            />
-                        </View>
-                    ),
-                    tabBarLabel: ({ focused }) => (
-                        <Text style={{ marginTop: focused ? 5 : 0 }}>Home</Text>
-                    ),
+        <SafeAreaProvider>
+            <Tabs
+                screenOptions={{
+                    headerShown: false,
+                    tabBarStyle: {
+                        height: 75,
+                        backgroundColor: 'white',
+                    },
+                    tabBarLabelStyle: {
+                        fontSize: 12,
+                        color: 'black',
+                    },
+                    tabBarIconStyle: {
+                        marginTop: 14,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    },
                 }}
-            />
-            <Tabs.Screen
-                name="transactions"
-                options={{
-                    headerShown: true,
-                    title: 'Transactions',
-                    tabBarIcon: ({ focused, color, size }) => (
-                        <View
-                            style={[
-                                styles.iconContainer,
-                                { backgroundColor: focused ? '#4c8bf5' : 'transparent' }
-                            ]}
-                        >
-                            <Ionicons
-                                name="receipt-outline"
-                                size={25}
-                                color={focused ? 'white' : color}
-                            />
-                        </View>
-                    ),
-                    tabBarLabel: ({ focused }) => (
-                        <Text style={{ marginTop: focused ? 5 : 0 }}>Transactions</Text>
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="settings"
-                options={{
-                    headerShown: true,
-                    title: 'Settings',
-                    tabBarIcon: ({ focused, color, size }) => (
-                        <View
-                            style={[
-                                styles.iconContainer,
-                                { backgroundColor: focused ? '#4c8bf5' : 'transparent' }
-                            ]}
-                        >
-                            <Ionicons
-                                name={Platform.OS === 'ios' ? 'cog' : 'settings-outline'}
-                                size={30}
-                                color={focused ? 'white' : color}
-                            />
-                        </View>
-                    ),
-                    tabBarLabel: ({ focused }) => (
-                        <Text style={{ marginTop: focused ? 5 : 0 }}>Settings</Text>
-                    ),
-                }}
-            />
-        </Tabs>
+            >
+                <Tabs.Screen
+                    name="home"
+                    options={{
+                        headerShown: true,
+                        title: 'Home',
+                        tabBarIcon: ({ focused, color, size }) => (
+                            <View
+                                style={[
+                                    styles.iconContainer,
+                                    { backgroundColor: focused ? '#4c8bf5' : 'transparent' }
+                                ]}
+                            >
+                                <Ionicons
+                                    name="home-outline"
+                                    size={25}
+                                    color={focused ? 'white' : color}
+                                />
+                            </View>
+                        ),
+                        tabBarLabel: ({ focused }) => (
+                            <Text style={{ marginTop: focused ? 5 : 0 }}>Home</Text>
+                        ),
+                    }}
+                />
+                <Tabs.Screen
+                    name="transactions"
+                    options={{
+                        headerShown: true,
+                        title: 'Transactions',
+                        tabBarIcon: ({ focused, color, size }) => (
+                            <View
+                                style={[
+                                    styles.iconContainer,
+                                    { backgroundColor: focused ? '#4c8bf5' : 'transparent' }
+                                ]}
+                            >
+                                <Ionicons
+                                    name="receipt-outline"
+                                    size={25}
+                                    color={focused ? 'white' : color}
+                                />
+                            </View>
+                        ),
+                        tabBarLabel: ({ focused }) => (
+                            <Text style={{ marginTop: focused ? 5 : 0 }}>Transactions</Text>
+                        ),
+                    }}
+                />
+                <Tabs.Screen
+                    name="settings"
+                    options={{
+                        headerShown: true,
+                        title: 'Settings',
+                        tabBarIcon: ({ focused, color, size }) => (
+                            <View
+                                style={[
+                                    styles.iconContainer,
+                                    { backgroundColor: focused ? '#4c8bf5' : 'transparent' }
+                                ]}
+                            >
+                                <Ionicons
+                                    name={Platform.OS === 'ios' ? 'cog' : 'settings-outline'}
+                                    size={30}
+                                    color={focused ? 'white' : color}
+                                />
+                            </View>
+                        ),
+                        tabBarLabel: ({ focused }) => (
+                            <Text style={{ marginTop: focused ? 5 : 0 }}>Settings</Text>
+                        ),
+                    }}
+                />
+            </Tabs>
+        </SafeAreaProvider>
     );
 }
 

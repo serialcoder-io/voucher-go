@@ -53,7 +53,7 @@ const SignupScreen = () => {
             {/* Username */}
             <CustomInputText
                 value={username}
-                setValue={setUsername}
+                onChangeText={setUsername}
                 iconName="user"
                 placeholder="Username"
             />
@@ -62,7 +62,7 @@ const SignupScreen = () => {
 
             <CustomInputText
                 value={email}
-                setValue={setEmail}
+                onChangeText={setEmail}
                 iconName="mail"
                 placeholder="Email"
             />

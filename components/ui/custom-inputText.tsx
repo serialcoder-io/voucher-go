@@ -2,17 +2,18 @@ import {Input} from "@rneui/themed";
 import React from "react";
 import {StyleSheet} from "react-native";
 
+export type CustomInputTextProps = {
+    value: string,
+    onChangeText: (e: string) => void
+    iconName?: string,
+    placeholder: string,
+}
 function CustomInputText({
     value,
-    setValue,
+    onChangeText,
     iconName,
     placeholder,
-}: {
-    value: string,
-    setValue: (e: string) => void
-    iconName: string,
-    placeholder: string,
-}) {
+}: CustomInputTextProps) {
     return (
         <Input
             placeholder={placeholder}
@@ -20,7 +21,7 @@ function CustomInputText({
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.textInput}
             value={value}
-            onChangeText={setValue}
+            onChangeText={onChangeText}
         />
     );
 }

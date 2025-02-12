@@ -1,15 +1,23 @@
-import {StatusBar, View} from "react-native";
+import {StatusBar, View, ScrollView, DimensionValue} from "react-native";
 import {globalStyles} from "@/styles/global";
 import React from "react";
 
-function ParentContainer({children}: {children: React.ReactNode}) {
+
+interface ParentContainerProps {
+    children: React.ReactNode;
+    width?: DimensionValue; // Use DimensionValue for width
+}
+
+function ParentContainer({children, width='85%'}: ParentContainerProps) {
     return (
-        <View style={globalStyles.container}>
-            <StatusBar barStyle="dark-content" backgroundColor="#f5f5f5" />
-            <View style={globalStyles.innerContainer}>
-                {children}
+        <ScrollView contentContainerStyle={{flex: 1}}>
+            <View style={globalStyles.container}>
+                <StatusBar barStyle="dark-content" backgroundColor="white" />
+                <View style={[globalStyles.innerContainer, { width: width }]}>
+                    {children}
+                </View>
             </View>
-        </View>
+        </ScrollView>
     );
 }
 

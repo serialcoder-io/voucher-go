@@ -40,7 +40,7 @@ const LoginScreen = () => {
 
             <CustomInputText
                 value={username}
-                setValue={setUsername}
+                onChangeText={setUsername}
                 iconName="user"
                 placeholder="Username"
             />

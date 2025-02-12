@@ -16,7 +16,7 @@ export default function RootLayout() {
                       headerShown: false,
                       headerTitle: 'Login',
                       headerStyle: {
-                          backgroundColor: '#1e90ff', // Couleur spécifique pour l'écran de login
+                          backgroundColor: '#1e90ff',
                       },
                       headerTintColor: '#fff',
                   }}

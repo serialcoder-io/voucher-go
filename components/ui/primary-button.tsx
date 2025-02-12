@@ -21,7 +21,7 @@ function PrimaryButton({
             loading={loading}
             loadingProps={{ size: 'small', color: 'white' }}
             buttonStyle={globalStyles.primaryButtonStyle}
-            titleStyle={{ fontWeight: '200', fontSize: 20 }}
+            titleStyle={{fontSize: 20 }}
             containerStyle={globalStyles.buttonContainer}
             onPress={actionOnPress}
         />

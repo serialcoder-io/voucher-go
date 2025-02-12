@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import { View, TextInput, StyleSheet, ScrollView } from "react-native";
-import { Button, Icon, Text } from "@rneui/themed";
+import {View, TextInput, StyleSheet, Pressable, TouchableOpacity} from "react-native";
+import {Button, Icon, Input, Text} from "@rneui/themed";
+import {globalStyles} from "@/styles/global";
+import ParentContainer from "@/components/parent-container"
+import PrimaryButton from "@/components/ui/primary-button";
+import BorderedInput from "@/components/ui/bordered-input";
 
 
 const ScanScreen = () => {
@@ -9,72 +13,71 @@ const ScanScreen = () => {
 
     const handleCheck = () => {
         console.log("Checking reference:", reference);
+        setReference("");
     };
 
     return (
-        <ScrollView>
-            <View style={styles.container}>
-                {/* Bouton Scan QR */}
-                <Button
-                    title=" Scan QR Code"
-                    icon={<Icon name="qrcode" type="font-awesome" color="black" />}
-                    buttonStyle={styles.scanButton}
-                    containerStyle={styles.buttonContainer}
-                    titleStyle={{ color: "black" }}
-                    onPress={() => console.log("Scanning QR")}
-                />
-
-                {/* Bouton pour afficher/cacher la saisie */}
-
-                <Button
-                    title={showInput ? "Hide Reference Input" : "Enter Reference Manually"}
-                    buttonStyle={styles.scanButton}
-                    containerStyle={styles.buttonContainer}
-                    titleStyle={{ color: "black" }}
-                    onPress={() => setShowInput(!showInput)}
-                />
-
-
-                {/* Champ de saisie et bouton Check */}
-                {showInput && (
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.label}>Enter Reference</Text>
-                        <TextInput
-                            placeholder="Enter voucher ref"
-                            placeholderTextColor="#666"
-                            value={reference}
-                            onChangeText={setReference}
-                            style={styles.input}
+        <ParentContainer width="90%">
+            <View style={styles.CheckContainer}
+            >
+                {/* check-voucher container*/}
+                <View style={styles.checkVoucherConainer}>
+                    {/* button to show and hide voucher reference field*/}
+                    <Pressable
+                        onPress={() => setShowInput(!showInput)}
+                        style={styles.showInputRefBtn}
+                        hitSlop={20}
+                    >
+                        <Icon
+                            name={showInput ? 'chevron-down': 'chevron-right'}
+                            size={25} color="grey" type="feather"
                         />
-                        <Button
-                            title="Check"
-                            buttonStyle={styles.checkButton}
-                            titleStyle={styles.checkButtonText}
-                            onPress={handleCheck}
-                        />
-                    </View>
-                )}
+                        <Text style={{fontSize: 16}}>Enter the Reference manually</Text>
+                    </Pressable>
+
+                    {showInput && (
+                        <View style={styles.inputContainer}>
+                            <BorderedInput
+                                placeholder="Voucher Reference"
+                                value={reference}
+                                onChangeText={setReference}
+                            />
+                            <PrimaryButton
+                                disabled={!reference}
+                                title="Check"
+                                loading={false}
+                                actionOnPress={handleCheck}
+                            />
+                        </View>
+                    )}
+                </View>
+
+                {/*scan button*/}
+                <View style={{width: '100%'}}>
+                    <TouchableOpacity style={styles.scanButton}>
+                        <Icon name="qrcode" size={25} color="grey" type="font-awesome" />
+                        <Text style={{fontSize: 16}}>Scan the QR code</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </ScrollView>
+        </ParentContainer>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#F5F5F5", // Fond clair
-        justifyContent: "center",
+    CheckContainer:{
+        backgroundColor: 'white',
+        ...globalStyles.center,
+        width: '100%',
+        borderWidth: 0.5, borderRadius: 10,
+        borderColor: 'grey'
+    },
+    showInputRefBtn:{
+        width:'100%',
+        display: "flex",
+        flexDirection: "row",
         alignItems: "center",
-        padding: 20,
-    },
-    buttonContainer: {
-        width: "90%",
-        marginBottom: 20,
-    },
-    scanButton: {
-        backgroundColor: "#E0E0E0", // Couleur claire
-        borderRadius: 10,
-        padding: 15,
+        columnGap: 10
     },
     toggleText: {
         color: "#333",
@@ -84,20 +87,12 @@ const styles = StyleSheet.create({
         backgroundColor: "#F5F5F5",
     },
     inputContainer: {
-        backgroundColor: "#FFF",
-        padding: 15,
-        borderRadius: 10,
-        width: "90%",
+        backgroundColor: "white",
+        width: "100%",
         alignItems: "center",
-        elevation: 2, // Ombre légère
-    },
-    label: {
-        fontSize: 16,
-        color: "#333",
-        marginBottom: 5,
     },
     input: {
-        backgroundColor: "#F0F0F0",
+        backgroundColor: "white",
         padding: 12,
         color: "#000",
         borderRadius: 5,
@@ -109,7 +104,7 @@ const styles = StyleSheet.create({
     checkButton: {
         backgroundColor: "#4c8bf5",
         borderRadius: 5,
-        padding: 12,
+        padding: 10,
         width: "100%",
     },
     checkButtonText: {
@@ -118,6 +113,18 @@ const styles = StyleSheet.create({
         textAlign: "center",
         width: "100%",
     },
+    scanButton: {
+        width:'100%', display: "flex", flexDirection: "row",
+        alignItems: "center", columnGap: 15,
+        paddingVertical: 20, borderTopWidth: 0.5,  paddingHorizontal: 18, borderTopColor: 'grey'
+    },
+    checkVoucherConainer: {
+        width:'100%',
+        display: 'flex',
+        flexDirection: 'column',
+        rowGap: 15,
+        padding: 18,
+    }
 });
 
 export default ScanScreen;
