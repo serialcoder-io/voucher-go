@@ -22,7 +22,7 @@ const ScanScreen = () => {
             >
                 {/* check-voucher container*/}
                 <View style={styles.checkVoucherConainer}>
-                    {/* button to show and hide voucher reference field*/}
+                    {/* button to show and hide voucher reference field */}
                     <Pressable
                         onPress={() => setShowInput(!showInput)}
                         style={styles.showInputRefBtn}
