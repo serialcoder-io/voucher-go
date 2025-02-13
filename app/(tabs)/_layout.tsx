@@ -5,6 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {Avatar} from "@rneui/base";
 import CustomTabBarIcon from "@/components/ui/custom-tabBarIcon";
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
+import HeaderRightAvatar from "@/components/ui/headerRight-avatar";
 
 export default function MainLayout() {
     return (
@@ -22,15 +23,7 @@ export default function MainLayout() {
                             </View>
                         ),
                         headerRight: () => (
-                            <View style={{ paddingRight: 20 }}>
-                                {/* Avatar à droite */}
-                                <Avatar
-                                    size={40}
-                                    rounded
-                                    title="A"
-                                    containerStyle={{ backgroundColor: "#4c8bf5" }}
-                                />
-                            </View>
+                            <HeaderRightAvatar />
                         ),
                         title: 'Home',
                         tabBarIcon: ({ focused, color}) => (
@@ -46,6 +39,9 @@ export default function MainLayout() {
                     options={{
                         headerShown: true,
                         title: 'Transactions',
+                        headerRight: () => (
+                            <HeaderRightAvatar />
+                        ),
                         tabBarIcon: ({ focused, color}) => (
                             <CustomTabBarIcon iconName="receipt-outline" color={color} focused={focused} />
                         ),
@@ -59,6 +55,9 @@ export default function MainLayout() {
                     options={{
                         headerShown: true,
                         title: 'Settings',
+                        headerRight: () => (
+                            <HeaderRightAvatar />
+                        ),
                         tabBarIcon: ({ focused, color}) => (
                             <CustomTabBarIcon
                                 iconName={Platform.OS === 'ios' ? 'cog' : 'settings-outline'}
