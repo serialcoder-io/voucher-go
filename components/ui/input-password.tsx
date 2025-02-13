@@ -1,7 +1,5 @@
 import {Icon, Input} from "@rneui/themed";
 import React from "react";
-import {IconNode} from "@rneui/base";
-import {StyleSheet} from "react-native";
 import {globalStyles} from "@/styles/global";
 
 function InputPassword({
@@ -39,8 +37,3 @@ function InputPassword({
 
 export default InputPassword;
 
-const styles = StyleSheet.create({
-    textInput: {
-        fontSize: 17
-    }
-});

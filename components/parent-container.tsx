@@ -1,12 +1,8 @@
 import {StatusBar, View, ScrollView, DimensionValue} from "react-native";
 import {globalStyles} from "@/styles/global";
 import React from "react";
+import {ParentContainerProps} from "@/lib/definitions";
 
-
-interface ParentContainerProps {
-    children: React.ReactNode;
-    width?: DimensionValue; // Use DimensionValue for width
-}
 
 function ParentContainer({children, width='85%'}: ParentContainerProps) {
     return (

@@ -1,8 +1,6 @@
 import {StyleSheet, TextInput} from "react-native";
-import {Input} from "@rneui/themed";
 import React from "react";
-import {CustomInputTextProps} from "@/components/ui/custom-inputText";
-
+import {CustomInputTextProps} from "@/lib/definitions";
 
 function BorderedInput({
    value,
@@ -20,6 +18,8 @@ function BorderedInput({
     )
 }
 
+export default BorderedInput;
+
 const styles = StyleSheet.create({
     input: {
         backgroundColor: "white",
@@ -32,5 +32,3 @@ const styles = StyleSheet.create({
         borderColor: "#CCC",
     },
 });
-
-export default BorderedInput;

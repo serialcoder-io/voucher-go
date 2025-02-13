@@ -5,6 +5,7 @@ import {globalStyles} from "@/styles/global";
 import ParentContainer from "@/components/parent-container"
 import PrimaryButton from "@/components/ui/primary-button";
 import BorderedInput from "@/components/ui/bordered-input";
+import CustomInputText from "@/components/ui/custom-inputText";
 
 
 const ScanScreen = () => {

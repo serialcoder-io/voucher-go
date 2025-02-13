@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Tabs } from 'expo-router';
 import { View, Text, Platform} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import CustomTabBarIcon from "@/components/ui/custom-tabBarIcon";
+import CustomTabBarIcon from "@/components/ui/settings/custom-tabBarIcon";
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
-import HeaderRightAvatar from "@/components/ui/headerRight-avatar";
+import HeaderRightAvatar from "@/components/ui/_layout/headerRight-avatar";
 
 export default function MainLayout() {
     return (

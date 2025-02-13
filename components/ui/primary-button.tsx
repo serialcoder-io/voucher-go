@@ -1,21 +1,15 @@
 import { Button } from "@rneui/themed";
 import React from "react";
 import { globalStyles } from "@/styles/global";
-import { DimensionValue, GestureResponderEvent } from "react-native";
+import {PrimaryButtonProps} from "@/lib/definitions";
 
 function PrimaryButton({
-                           title,
-                           loading = false,
-                           actionOnPress,
-                           disabled = false,
-                           width = "100%",
-                       }: {
-    title: string;
-    loading?: boolean;
-    actionOnPress?: (event: GestureResponderEvent) => void;
-    disabled?: boolean;
-    width?: DimensionValue;
-}) {
+   title,
+   loading = false,
+   actionOnPress,
+   disabled = false,
+   width = "100%",
+}: PrimaryButtonProps): React.ReactElement<PrimaryButtonProps> {
     return (
         <Button
             disabled={disabled}

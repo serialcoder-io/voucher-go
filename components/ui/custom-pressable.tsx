@@ -1,15 +1,14 @@
-import {GestureResponderEvent, StyleSheet, TouchableOpacity} from "react-native";
-import {Card, Divider, Icon, Text} from "@rneui/themed";
+import {StyleSheet, TouchableOpacity} from "react-native";
+import {Icon, Text} from "@rneui/themed";
 import React from "react";
+import {PressableProps} from "@/lib/definitions";
 
-type PressableProps = {
-    text: string;
-    iconName: string;
-    iconType: string;
-    onPress?: (event: GestureResponderEvent) => void;
-}
-
-function CustomPressable({text, iconName, iconType, onPress}: PressableProps) {
+function CustomPressable({
+    text,
+    iconName,
+    iconType,
+    onPress
+}: PressableProps): React.ReactElement<PressableProps> {
     return (
         <TouchableOpacity style={styles.pressable} onPress={onPress}>
             <Icon name={iconName} type={iconType} size={20} style={styles.icon} />

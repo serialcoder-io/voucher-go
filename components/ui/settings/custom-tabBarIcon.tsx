@@ -1,13 +1,7 @@
 import {Ionicons} from "@expo/vector-icons";
 import {StyleSheet, View} from "react-native";
 import * as React from "react";
-
-type TabBarIconProps = {
-    iconName: keyof typeof Ionicons.glyphMap,
-    focused: boolean,
-    color: string,
-}
-
+import {TabBarIconProps} from "@/lib/definitions";
 
 function CustomTabBarIcon({iconName, focused, color}: TabBarIconProps) {
     return (

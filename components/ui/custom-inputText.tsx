@@ -2,19 +2,14 @@ import {Input} from "@rneui/themed";
 import React from "react";
 import {StyleSheet} from "react-native";
 import {globalStyles} from "@/styles/global";
+import {CustomInputTextProps} from "@/lib/definitions";
 
-export type CustomInputTextProps = {
-    value: string,
-    onChangeText: (e: string) => void
-    iconName?: string,
-    placeholder: string,
-}
 function CustomInputText({
     value,
     onChangeText,
     iconName,
     placeholder,
-}: CustomInputTextProps) {
+}: CustomInputTextProps): React.ReactElement<CustomInputTextProps> {
     return (
         <Input
             placeholder={placeholder}

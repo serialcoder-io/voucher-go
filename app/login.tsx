@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 import React, { useState } from "react";
-import {View, StyleSheet, Image, StatusBar, TouchableOpacity} from "react-native";
+import {View, StyleSheet, Image, TouchableOpacity} from "react-native";
 import {Text, CheckBox} from "@rneui/themed";
 import {globalStyles} from "@/styles/global";
 import { useRouter } from "expo-router";
@@ -8,7 +8,6 @@ import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
 import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
-import BorderedInput from "@/components/ui/bordered-input";
 
 const LoginScreen = () => {
     const [username, setUsername] = useState("");

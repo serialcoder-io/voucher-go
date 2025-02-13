@@ -1,31 +1,15 @@
 import React, { useState } from 'react';
-import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, Pressable} from 'react-native';
+import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet} from 'react-native';
 import { Text, Icon, Card, Divider } from '@rneui/themed';
 import CustomPressable from "@/components/ui/custom-pressable";
 import {globalStyles} from "@/styles/global";
-import BorderedInput from "@/components/ui/bordered-input";
-import PrimaryButton from "@/components/ui/primary-button";
+import ThemeOptions from "@/components/ui/settings/theme-options";
 
 function Settings() {
     const [theme, setTheme] = useState('auto');
     const [language, setLanguage] = useState('FR');
+    const [showProfileSettingss, setShowProfileSettings] = useState(false);
 
-    const ThemeOption = ({
-         label, value, icon, type='feather'
-        }: {
-        label: string,
-        value: string,
-        icon: string,
-        type: string
-    }) => (
-        <TouchableOpacity onPress={() => setTheme(value)} style={styles.optionRow}>
-            <View style={styles.optionLabel}>
-                <Icon name={icon} type={type} size={20} style={globalStyles.icon} />
-                <Text>{label}</Text>
-            </View>
-            <Icon name={theme === value ? 'check-circle' : 'circle'} type='feather' color={theme === value ? '#6200EE' : '#CCC'} />
-        </TouchableOpacity>
-    );
 
     const LanguageOption = ({ label, value }: {label: string, value: string}) => (
         <TouchableOpacity onPress={() => setLanguage(value)} style={styles.optionRow}>
@@ -33,8 +17,6 @@ function Settings() {
             <Icon name={language === value ? 'check-circle' : 'circle'} type='feather' color={language === value ? '#6200EE' : '#CCC'} />
         </TouchableOpacity>
     );
-
-    const [showProfileSettingss, setShowProfileSettings] = useState(false);
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -87,11 +69,32 @@ function Settings() {
                 </View>
 
                 <Card containerStyle={styles.card}>
-                    <ThemeOption label='Automatique' value='auto' icon='contrast' type='material' />
+                    <ThemeOptions
+                        label='Automatique'
+                        value='auto'
+                        icon='contrast'
+                        type='material'
+                        theme={theme}
+                        setTheme={setTheme}
+                    />
                     <Divider />
-                    <ThemeOption label='Light' value='light' icon='sun' type='feather' />
+                    <ThemeOptions
+                        label='Light'
+                        value='light'
+                        icon='sun'
+                        type='feather'
+                        theme={theme}
+                        setTheme={setTheme}
+                    />
                     <Divider />
-                    <ThemeOption label='Dark' value='dark' icon='moon' type='feather' />
+                    <ThemeOptions
+                        label='Dark'
+                        value='dark'
+                        icon='moon'
+                        type='feather'
+                        theme={theme}
+                        setTheme={setTheme}
+                    />
                 </Card>
 
                 {/* Languages option section*/}
@@ -101,9 +104,9 @@ function Settings() {
                 </View>
 
                 <Card containerStyle={styles.card}>
-                    <LanguageOption label='FR      French' value='FR' />
+                    <LanguageOption label='French' value='FR' />
                     <Divider />
-                    <LanguageOption label='EN      English' value='EN' />
+                    <LanguageOption label='English' value='EN' />
                 </Card>
             </View>
         </ScrollView>
