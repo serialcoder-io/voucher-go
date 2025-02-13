@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import {View, TextInput, StyleSheet, Pressable, TouchableOpacity} from "react-native";
-import {Button, Icon, Input, Text} from "@rneui/themed";
+import {View, StyleSheet, Pressable, TouchableOpacity} from "react-native";
+import {Icon, Text} from "@rneui/themed";
 import {globalStyles} from "@/styles/global";
 import ParentContainer from "@/components/parent-container"
 import PrimaryButton from "@/components/ui/primary-button";
@@ -100,18 +100,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderWidth: 1,
         borderColor: "#CCC",
-    },
-    checkButton: {
-        backgroundColor: "#4c8bf5",
-        borderRadius: 5,
-        padding: 10,
-        width: "100%",
-    },
-    checkButtonText: {
-        color: "#FFF",
-        fontWeight: "bold",
-        textAlign: "center",
-        width: "100%",
     },
     scanButton: {
         width:'100%', display: "flex", flexDirection: "row",

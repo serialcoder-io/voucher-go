@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { ScrollView, View, StatusBar, TouchableOpacity, StyleSheet } from 'react-native';
+import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, Pressable} from 'react-native';
 import { Text, Icon, Card, Divider } from '@rneui/themed';
-import CustomPressable from "@/components/ui/pressable-option";
+import CustomPressable from "@/components/ui/custom-pressable";
 import {globalStyles} from "@/styles/global";
+import BorderedInput from "@/components/ui/bordered-input";
+import PrimaryButton from "@/components/ui/primary-button";
 
 function Settings() {
     const [theme, setTheme] = useState('auto');
@@ -32,16 +34,38 @@ function Settings() {
         </TouchableOpacity>
     );
 
+    const [showProfileSettingss, setShowProfileSettings] = useState(false);
+
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
                 <StatusBar barStyle='dark-content' backgroundColor='white' />
                 <Card containerStyle={styles.card}>
-                    <CustomPressable
-                        text='Comte'
-                        iconName='user'
-                        iconType='feather'
-                    />
+                    {/* profile settings */}
+                    <View style={styles.profileSettingsConainer}>
+                        <CustomPressable
+                            text='Profile'
+                            iconName={showProfileSettingss ? 'chevron-down': 'chevron-right'}
+                            iconType='feather'
+                            onPress={() => setShowProfileSettings(!showProfileSettingss)}
+                        />
+                        {showProfileSettingss && (
+                            <View style={styles.profileSettinDropdown}>
+                                <Divider />
+                                <CustomPressable
+                                    text='Account'
+                                    iconName='user'
+                                    iconType='feather'
+                                />
+                                <Divider />
+                                <CustomPressable
+                                    text='Personal informations'
+                                    iconName='info'
+                                    iconType='feather'
+                                />
+                            </View>
+                        )}
+                    </View>
                     <Divider />
                     <CustomPressable
                         text='Pin'
@@ -92,8 +116,9 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        backgroundColor: '#F3F3F3',
-        padding: 20,
+        backgroundColor: '#f3f3f3',
+        paddingVertical: 20,
+        paddingHorizontal: 18,
         width: '100%',
     },
     card: {
@@ -123,6 +148,16 @@ const styles = StyleSheet.create({
     sectionTitleText:{
         fontSize: 16,
         fontWeight: '100',
+    },
+    profileSettinDropdown: {
+        backgroundColor: "white",
+        width: "100%",
+        paddingLeft: 20
+    },
+    profileSettingsConainer: {
+        width:'100%',
+        display: 'flex',
+        flexDirection: 'column',
     }
 });
 

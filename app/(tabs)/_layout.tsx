@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Tabs } from 'expo-router';
 import { View, Text, Platform} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import {Avatar} from "@rneui/base";
 import CustomTabBarIcon from "@/components/ui/custom-tabBarIcon";
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import HeaderRightAvatar from "@/components/ui/headerRight-avatar";

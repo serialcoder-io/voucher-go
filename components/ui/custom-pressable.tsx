@@ -6,12 +6,12 @@ type PressableProps = {
     text: string;
     iconName: string;
     iconType: string;
-    actionOnPress?: (event: GestureResponderEvent) => void;
+    onPress?: (event: GestureResponderEvent) => void;
 }
 
-function CustomPressable({text, iconName, iconType, actionOnPress}: PressableProps) {
+function CustomPressable({text, iconName, iconType, onPress}: PressableProps) {
     return (
-        <TouchableOpacity style={styles.pressable} onPress={actionOnPress}>
+        <TouchableOpacity style={styles.pressable} onPress={onPress}>
             <Icon name={iconName} type={iconType} size={20} style={styles.icon} />
             <Text>{text}</Text>
         </TouchableOpacity>
