@@ -5,7 +5,6 @@ import {globalStyles} from "@/styles/global";
 import ParentContainer from "@/components/parent-container"
 import PrimaryButton from "@/components/ui/primary-button";
 import BorderedInput from "@/components/ui/bordered-input";
-import CustomInputText from "@/components/ui/custom-inputText";
 
 
 const ScanScreen = () => {
@@ -33,7 +32,7 @@ const ScanScreen = () => {
                             name={showInput ? 'chevron-down': 'chevron-right'}
                             size={25} color="grey" type="feather"
                         />
-                        <Text style={{fontSize: 16}}>Enter the Reference manually</Text>
+                        <Text style={{fontSize: 16}}>Enter the reference manually</Text>
                     </Pressable>
 
                     {showInput && (
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
         width:'100%',
         display: 'flex',
         flexDirection: 'column',
-        rowGap: 15,
+        rowGap: 20,
         padding: 18,
     }
 });

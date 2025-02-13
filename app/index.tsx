@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, Image, StyleSheet, StatusBar } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
 import { useCallback } from "react";
+import {globalStyles} from "@/styles/global";
 
 const WelcomeScreen = () => {
     const router = useRouter();
@@ -10,7 +11,7 @@ const WelcomeScreen = () => {
         useCallback(() => {
             const timer = setTimeout(() => {
                 if(firstLaunch){
-                    router.push("/setup");
+                    router.push("/(pin-code)/pinSetup");
                 }else{
                     router.push("/login");
                 }
@@ -21,7 +22,7 @@ const WelcomeScreen = () => {
     );
 
     return (
-        <View style={styles.container}>
+        <View style={globalStyles.container}>
             <StatusBar backgroundColor="white" barStyle="light-content" />
             <View>
                 <Image
@@ -34,12 +35,6 @@ const WelcomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "white",
-    },
     logo: {
         width: 200,
         height: 200,

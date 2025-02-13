@@ -19,7 +19,7 @@ const LoginScreen = () => {
     const handleLogin = () => {
         if (username && password) {
             console.log("Connexion réussie !");
-            router.push("/(tabs)/home");
+            router.push("/(tabs)");
             setUsername('')
             setPassword('')
             return;

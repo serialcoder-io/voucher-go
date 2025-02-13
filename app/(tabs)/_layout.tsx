@@ -11,7 +11,7 @@ export default function MainLayout() {
         <SafeAreaProvider>
             <Tabs screenOptions={screenOptions}>
                 <Tabs.Screen
-                    name="home"
+                    name="index"
                     options={{
                         headerShown: true,
                         headerTitle: '',

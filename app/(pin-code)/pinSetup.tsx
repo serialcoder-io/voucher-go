@@ -1,11 +1,11 @@
 import {View, Text} from "react-native";
 import {Link} from "expo-router";
 
-export default function Setup(){
+export default function PinSetup(){
     return (
         <View>
             <Text>
-                setup
+                setup Pin code
             </Text>
             <Link href="/">go back</Link>
         </View>
