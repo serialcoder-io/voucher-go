@@ -46,5 +46,8 @@ export const globalStyles = StyleSheet.create({
 		paddingHorizontal: 8,
 		borderRadius: 8,
 		width: '100%',
+	},
+	icon: {
+		marginRight: 10
 	}
 })

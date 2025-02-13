@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ScrollView, View, StatusBar, TouchableOpacity, StyleSheet } from 'react-native';
 import { Text, Icon, Card, Divider } from '@rneui/themed';
+import CustomPressable from "@/components/ui/pressable-option";
+import {globalStyles} from "@/styles/global";
 
 function Settings() {
     const [theme, setTheme] = useState('auto');
@@ -16,7 +18,7 @@ function Settings() {
     }) => (
         <TouchableOpacity onPress={() => setTheme(value)} style={styles.optionRow}>
             <View style={styles.optionLabel}>
-                <Icon name={icon} type={type} size={20} style={styles.icon} />
+                <Icon name={icon} type={type} size={20} style={globalStyles.icon} />
                 <Text>{label}</Text>
             </View>
             <Icon name={theme === value ? 'check-circle' : 'circle'} type='feather' color={theme === value ? '#6200EE' : '#CCC'} />
@@ -35,24 +37,28 @@ function Settings() {
             <View style={styles.container}>
                 <StatusBar barStyle='dark-content' backgroundColor='white' />
                 <Card containerStyle={styles.card}>
-                    <TouchableOpacity style={styles.securityOptionRow}>
-                        <Icon name='user' type='feather' size={20} style={styles.icon} />
-                        <Text>Compte</Text>
-                    </TouchableOpacity>
+                    <CustomPressable
+                        text='Comte'
+                        iconName='user'
+                        iconType='feather'
+                    />
                     <Divider />
-                    <TouchableOpacity style={styles.securityOptionRow}>
-                        <Icon name='lock' type='feather' size={20} style={styles.icon} />
-                        <Text>Code d'accès</Text>
-                    </TouchableOpacity>
+                    <CustomPressable
+                        text='Pin'
+                        iconName='lock'
+                        iconType='feather'
+                    />
                     <Divider />
-                    <TouchableOpacity style={styles.securityOptionRow}>
-                        <Icon name='info' type='feather' size={20} style={styles.icon} />
-                        <Text>About shop</Text>
-                    </TouchableOpacity>
+                    <CustomPressable
+                        text='About shop'
+                        iconName='info'
+                        iconType='feather'
+                    />
                 </Card>
 
+                {/* Theme section */}
                 <View style={styles.sectionTitle}>
-                    <Icon name='contrast' type='material' size={20} style={styles.icon} />
+                    <Icon name='contrast' type='material' size={20} style={globalStyles.icon} />
                     <Text style={styles.sectionTitleText}>Theme</Text>
                 </View>
 
@@ -64,8 +70,9 @@ function Settings() {
                     <ThemeOption label='Dark' value='dark' icon='moon' type='feather' />
                 </Card>
 
+                {/* Languages option section*/}
                 <View style={styles.sectionTitle}>
-                    <Icon name='translate' type='material' size={20} style={styles.icon} />
+                    <Icon name='translate' type='material' size={20} style={globalStyles.icon} />
                     <Text style={styles.sectionTitleText}>Langues</Text>
                 </View>
 
@@ -99,18 +106,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 15,
     },
-    securityOptionRow:{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        paddingVertical: 15,
-    },
     optionLabel: {
         flexDirection: 'row',
         alignItems: 'center',
-    },
-    icon: {
-        marginRight: 10,
     },
     sectionTitle: {
         fontWeight: 'bold',
