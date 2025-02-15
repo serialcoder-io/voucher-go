@@ -11,11 +11,17 @@ export default function RootLayout() {
             }}
           >
               <Stack.Screen
-                  name="login"
+                  name="index"
                   options={{
                       headerShown: false,
                   }}
               />
+              {/*<Stack.Screen
+                  name="login"
+                  options={{
+                      headerShown: false,
+                  }}
+              />*/}
               <Stack.Screen
                   name="signup"
                   options={{
@@ -25,12 +31,6 @@ export default function RootLayout() {
                           backgroundColor: 'white',
                       },
                       headerTintColor: 'black',
-                  }}
-              />
-              <Stack.Screen
-                  name="index"
-                  options={{
-                      headerShown: false,
                   }}
               />
               <Stack.Screen

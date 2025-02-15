@@ -1,7 +1,7 @@
 import {Input} from "@rneui/themed";
 import React from "react";
 import {StyleSheet} from "react-native";
-import {globalStyles} from "@/styles/global";
+import {globalStyles, getGlobalStyles} from "@/styles/global";
 import {CustomInputTextProps} from "@/lib/definitions";
 
 function CustomInputText({
@@ -14,7 +14,7 @@ function CustomInputText({
         <Input
             placeholder={placeholder}
             leftIcon={{ type: 'feather', name: iconName, color: '#4c8bf5' }}
-            inputContainerStyle={globalStyles.inputContainer}
+            inputContainerStyle={getGlobalStyles().inputContainer}
             inputStyle={styles.textInput}
             value={value}
             onChangeText={onChangeText}

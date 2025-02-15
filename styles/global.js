@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
-import {colors} from 'constants/colors'
+import {commonColors} from '@/constants/Colors'
+import useThemeStore from "@/store/store";
 
 export const globalStyles = StyleSheet.create({
 	center:{
@@ -17,7 +18,7 @@ export const globalStyles = StyleSheet.create({
 		alignItems: "center",
 	},
 	primaryButtonStyle: {
-		backgroundColor: colors.common.primaryColor,
+		backgroundColor: commonColors.primaryColor,
 		width: '100%',
 		paddingVertical: 8,
 		borderRadius: 10,
@@ -29,7 +30,7 @@ export const globalStyles = StyleSheet.create({
 		marginVertical: 0,
 	},
 	title: {
-		color: colors.common.primaryColor,
+		color: commonColors.primaryColor,
 		marginBottom: 8,
 		textAlign: 'center',
 	},
@@ -50,5 +51,67 @@ export const globalStyles = StyleSheet.create({
 	},
 	icon: {
 		marginRight: 10
-	}
+	},
 })
+
+export const getGlobalStyles = () => {
+	const { getTheme } = useThemeStore.getState(); // Récupère le thème actuel
+	const theme = getTheme();
+	return StyleSheet.create({
+		center:{
+			display: 'flex',
+			justifyContent: 'center',
+			alignItems: 'center',
+		},
+		container: {
+			flex: 1,
+			justifyContent: 'center',
+			alignItems: 'center',
+			backgroundColor: theme.background,
+		},
+		innerContainer: {
+			alignItems: "center",
+		},
+		primaryButtonStyle: {
+			backgroundColor: commonColors.primaryColor,
+			width: '100%',
+			paddingVertical: 8,
+			borderRadius: 10,
+		},
+		buttonContainer: {
+			marginHorizontal: 50,
+			height: 50,
+			width: '95%',
+			marginVertical: 0,
+		},
+		title: {
+			color: commonColors.primaryColor,
+			marginBottom: 8,
+			textAlign: 'center',
+		},
+		subtitle: {
+			fontSize: 15,
+			color: commonColors.primaryColor,
+			marginBottom: 20,
+			textAlign: 'center',
+			fontStyle: 'italic',
+		},
+		inputContainer: {
+			borderWidth: 0.5,
+			borderColor: theme.backgroundSecondary,
+			backgroundColor: theme.backgroundSecondary,
+			paddingHorizontal: 8,
+			borderRadius: 8,
+			width: '100%',
+		},
+		icon: {
+			marginRight: 10
+		},
+		textPrimary:{
+			color: theme.textPrimary,
+		},
+		textSecondary:{
+			color: theme.textSecondary,
+		}
+	});
+};
