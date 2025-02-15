@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import {colors} from 'constants/colors'
 
 export const globalStyles = StyleSheet.create({
 	center:{
@@ -16,7 +17,7 @@ export const globalStyles = StyleSheet.create({
 		alignItems: "center",
 	},
 	primaryButtonStyle: {
-		backgroundColor: '#4c8bf5',
+		backgroundColor: colors.common.primaryColor,
 		width: '100%',
 		paddingVertical: 8,
 		borderRadius: 10,
@@ -28,7 +29,7 @@ export const globalStyles = StyleSheet.create({
 		marginVertical: 0,
 	},
 	title: {
-		color: '#4c8bf5',
+		color: colors.common.primaryColor,
 		marginBottom: 8,
 		textAlign: 'center',
 	},

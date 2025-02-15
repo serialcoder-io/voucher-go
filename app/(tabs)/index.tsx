@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 10,
         width: "100%",
-        backgroundColor: "#F5F5F5",
+        backgroundColor: "#ffffff",
     },
     inputContainer: {
         backgroundColor: "white",
