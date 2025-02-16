@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import {View, StyleSheet, Pressable, TouchableOpacity} from "react-native";
 import {Icon, Text} from "@rneui/themed";
-import {globalStyles} from "@/styles/global";
+import {globalStyles, getGlobalStyles} from "@/styles/global";
 import ParentContainer from "@/components/parent-container"
 import PrimaryButton from "@/components/ui/primary-button";
 import BorderedInput from "@/components/ui/bordered-input";
-
+import useThemeStore from "@/store/store";
+import {useTheme} from "@/store/theme";
 
 const ScanScreen = () => {
     const [showInput, setShowInput] = useState(false);
@@ -15,6 +16,9 @@ const ScanScreen = () => {
         console.log("Checking reference:", reference);
         setReference("");
     };
+    const { themeMode, setThemeMode } = useTheme();
+
+    const styles = getStyles();
 
     return (
         <ParentContainer width="90%">
@@ -64,55 +68,59 @@ const ScanScreen = () => {
     );
 };
 
-const styles = StyleSheet.create({
-    CheckContainer:{
-        backgroundColor: 'white',
-        ...globalStyles.center,
-        width: '100%',
-        borderWidth: 0.5, borderRadius: 10,
-        borderColor: 'grey'
-    },
-    showInputRefBtn:{
-        width:'100%',
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        columnGap: 10
-    },
-    toggleText: {
-        color: "#333",
-        fontSize: 16,
-        marginBottom: 10,
-        width: "100%",
-        backgroundColor: "#ffffff",
-    },
-    inputContainer: {
-        backgroundColor: "white",
-        width: "100%",
-        alignItems: "center",
-    },
-    input: {
-        backgroundColor: "white",
-        padding: 12,
-        color: "#000",
-        borderRadius: 5,
-        width: "100%",
-        marginBottom: 10,
-        borderWidth: 1,
-        borderColor: "#CCC",
-    },
-    scanButton: {
-        width:'100%', display: "flex", flexDirection: "row",
-        alignItems: "center", columnGap: 15,
-        paddingVertical: 15, paddingHorizontal: 18
-    },
-    checkVoucherConainer: {
-        width:'100%',
-        display: 'flex',
-        flexDirection: 'column',
-        rowGap: 20,
-        padding: 18,
-    }
-});
 
 export default ScanScreen;
+
+const getStyles = () => {
+    const { theme } = useTheme();
+    return StyleSheet.create({
+        CheckContainer:{
+            backgroundColor: theme.backgroundSecondary,
+            ...globalStyles.center,
+            width: '100%',
+            borderWidth: 0.5, borderRadius: 10,
+            borderColor: 'grey'
+        },
+        showInputRefBtn:{
+            width:'100%',
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            columnGap: 10
+        },
+        toggleText: {
+            color: "#333",
+            fontSize: 16,
+            marginBottom: 10,
+            width: "100%",
+            backgroundColor: "#ffffff",
+        },
+        inputContainer: {
+            backgroundColor: theme.backgroundSecondary,
+            width: "100%",
+            alignItems: "center",
+        },
+        input: {
+            backgroundColor: theme.backgroundSecondary,
+            padding: 12,
+            color: "#000",
+            borderRadius: 5,
+            width: "100%",
+            marginBottom: 10,
+            borderWidth: 1,
+            borderColor: "#CCC",
+        },
+        scanButton: {
+            width:'100%', display: "flex", flexDirection: "row",
+            alignItems: "center", columnGap: 15,
+            paddingVertical: 15, paddingHorizontal: 18
+        },
+        checkVoucherConainer: {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            rowGap: 20,
+            padding: 18,
+        }
+    })
+};

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import {commonColors} from '@/constants/Colors'
-import useThemeStore from "@/store/store";
+import {useTheme} from "@/store/theme";
 
 export const globalStyles = StyleSheet.create({
 	center:{
@@ -55,9 +55,8 @@ export const globalStyles = StyleSheet.create({
 })
 
 export const getGlobalStyles = () => {
-	const { getTheme } = useThemeStore.getState(); // Récupère le thème actuel
-	const theme = getTheme();
-	return StyleSheet.create({
+	const { theme } = useTheme();
+	return {
 		center:{
 			display: 'flex',
 			justifyContent: 'center',
@@ -113,5 +112,5 @@ export const getGlobalStyles = () => {
 		textSecondary:{
 			color: theme.textSecondary,
 		}
-	});
+	};
 };

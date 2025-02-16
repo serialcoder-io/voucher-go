@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet} from 'react-native';
 import { Text, Icon, Card, Divider } from '@rneui/themed';
 import CustomPressable from "@/components/ui/custom-pressable";
-import {globalStyles} from "@/styles/global";
+import {getGlobalStyles, globalStyles} from "@/styles/global";
 import ThemeOptions from "@/components/ui/settings/theme-options";
+import useThemeStore from "@/store/store";
+import {commonColors} from "@/constants/Colors";
+import {useTheme} from "@/store/theme";
 
 function Settings() {
-    const [theme, setTheme] = useState('auto');
     const [language, setLanguage] = useState('FR');
     const [showProfileSettingss, setShowProfileSettings] = useState(false);
-
+    const { themeMode, setThemeMode } = useTheme();
 
     const LanguageOption = ({ label, value }: {label: string, value: string}) => (
-        <TouchableOpacity onPress={() => setLanguage(value)} style={styles.optionRow}>
+        <TouchableOpacity onPress={() => setLanguage(value)} style={styles().optionRow}>
             <Text>{label}</Text>
             <Icon name={language === value ? 'check-circle' : 'circle'} type='feather' color={language === value ? '#6200EE' : '#CCC'} />
         </TouchableOpacity>
@@ -20,11 +22,11 @@ function Settings() {
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View style={styles.container}>
+            <View style={styles().container}>
                 <StatusBar barStyle='dark-content' backgroundColor='white' />
-                <Card containerStyle={styles.card}>
+                <Card containerStyle={styles().card}>
                     {/* profile settings */}
-                    <View style={styles.profileSettingsConainer}>
+                    <View style={styles().profileSettingsConainer}>
                         <CustomPressable
                             text='Profile'
                             iconName={showProfileSettingss ? 'chevron-down': 'chevron-right'}
@@ -32,7 +34,7 @@ function Settings() {
                             onPress={() => setShowProfileSettings(!showProfileSettingss)}
                         />
                         {showProfileSettingss && (
-                            <View style={styles.profileSettinDropdown}>
+                            <View style={styles().profileSettinDropdown}>
                                 <Divider />
                                 <CustomPressable
                                     text='Account'
@@ -63,19 +65,19 @@ function Settings() {
                 </Card>
 
                 {/* Theme section */}
-                <View style={styles.sectionTitle}>
+                <View style={styles().sectionTitle}>
                     <Icon name='contrast' type='material' size={20} style={globalStyles.icon} />
-                    <Text style={styles.sectionTitleText}>Theme</Text>
+                    <Text style={styles().sectionTitleText}>Theme</Text>
                 </View>
 
-                <Card containerStyle={styles.card}>
+                <Card containerStyle={styles().card}>
                     <ThemeOptions
                         label='Automatique'
                         value='auto'
                         icon='contrast'
                         type='material'
-                        theme={theme}
-                        setTheme={setTheme}
+                        theme={themeMode}
+                        setTheme={setThemeMode}
                     />
                     <Divider />
                     <ThemeOptions
@@ -83,8 +85,8 @@ function Settings() {
                         value='light'
                         icon='sun'
                         type='feather'
-                        theme={theme}
-                        setTheme={setTheme}
+                        theme={themeMode}
+                        setTheme={setThemeMode}
                     />
                     <Divider />
                     <ThemeOptions
@@ -92,18 +94,18 @@ function Settings() {
                         value='dark'
                         icon='moon'
                         type='feather'
-                        theme={theme}
-                        setTheme={setTheme}
+                        theme={themeMode}
+                        setTheme={setThemeMode}
                     />
                 </Card>
 
                 {/* Languages option section*/}
-                <View style={styles.sectionTitle}>
+                <View style={styles().sectionTitle}>
                     <Icon name='translate' type='material' size={20} style={globalStyles.icon} />
-                    <Text style={styles.sectionTitleText}>Langues</Text>
+                    <Text style={styles().sectionTitleText}>Langues</Text>
                 </View>
 
-                <Card containerStyle={styles.card}>
+                <Card containerStyle={styles().card}>
                     <LanguageOption label='French' value='FR' />
                     <Divider />
                     <LanguageOption label='English' value='EN' />
@@ -113,55 +115,60 @@ function Settings() {
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        backgroundColor: '#f3f3f3',
-        paddingVertical: 20,
-        paddingHorizontal: 18,
-        width: '100%',
-    },
-    card: {
-        borderRadius: 10,
-        width: '100%',
-    },
-    optionRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingVertical: 15,
-    },
-    optionLabel: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    sectionTitle: {
-        fontWeight: 'bold',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        alignSelf: 'flex-start',
-        paddingTop: 25,
-        paddingLeft: 10
-    },
-    sectionTitleText:{
-        fontSize: 16,
-        fontWeight: '100',
-    },
-    profileSettinDropdown: {
-        backgroundColor: "white",
-        width: "100%",
-        paddingLeft: 20
-    },
-    profileSettingsConainer: {
-        width:'100%',
-        display: 'flex',
-        flexDirection: 'column',
-    }
-});
-
 export default Settings;
+
+const styles = () => {
+    const { theme } = useTheme();
+    return StyleSheet.create({
+        container: {
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            backgroundColor: theme.background,
+            paddingVertical: 20,
+            paddingHorizontal: 18,
+            width: '100%',
+        },
+        card: {
+            borderRadius: 10,
+            width: '100%',
+            backgroundColor:  theme.backgroundSecondary
+        },
+        optionRow: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingVertical: 15,
+        },
+        optionLabel: {
+            flexDirection: 'row',
+            alignItems: 'center',
+        },
+        sectionTitle: {
+            fontWeight: 'bold',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            alignSelf: 'flex-start',
+            paddingTop: 25,
+            paddingLeft: 10
+        },
+        sectionTitleText:{
+            fontSize: 16,
+            fontWeight: '100',
+            color: theme.textPrimary
+        },
+        profileSettinDropdown: {
+            backgroundColor: theme.backgroundSecondary,
+            width: "100%",
+            paddingLeft: 20
+        },
+        profileSettingsConainer: {
+            width:'100%',
+            display: 'flex',
+            flexDirection: 'column',
+        }
+    });
+};

@@ -19,8 +19,8 @@ export type ThemeOptionsProps = {
     value: string,
     icon: string,
     type: string,
-    theme: string,
-    setTheme: (newTheme: string) => void,
+    theme: 'auto' | 'dark' | 'light',
+    setTheme: (newTheme: 'auto' | 'dark' | 'light') => void,
 }
 
 export type CustomInputTextProps = {
