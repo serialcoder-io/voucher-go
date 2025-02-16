@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import {View, StyleSheet, Pressable, TouchableOpacity} from "react-native";
 import {Icon, Text} from "@rneui/themed";
-import {globalStyles, getGlobalStyles} from "@/styles/global";
+import {globalStyles, useGlobalStyles} from "@/styles/global";
 import ParentContainer from "@/components/parent-container"
 import PrimaryButton from "@/components/ui/primary-button";
 import BorderedInput from "@/components/ui/bordered-input";
-import useThemeStore from "@/store/store";
 import {useTheme} from "@/store/theme";
 
 const ScanScreen = () => {
@@ -16,7 +15,6 @@ const ScanScreen = () => {
         console.log("Checking reference:", reference);
         setReference("");
     };
-    const { themeMode, setThemeMode } = useTheme();
 
     const styles = getStyles();
 

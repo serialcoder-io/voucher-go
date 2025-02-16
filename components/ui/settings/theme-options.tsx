@@ -1,24 +1,26 @@
 import React from 'react'
 import {StyleSheet, TouchableOpacity, View} from "react-native";
 import {Icon, Text} from "@rneui/themed";
-import {globalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles/global";
 import {ThemeOptionsProps} from "@/lib/definitions";
+import {useTheme} from "@/store/theme";
 
 function ThemeOptions({
   label,
   value,
   icon,
   type='feather',
-  theme,
+  themeMode,
   setTheme
 }: ThemeOptionsProps ): React.ReactNode {
+    const {theme} = useTheme();
     return (
         <TouchableOpacity onPress={() => setTheme(value)} style={styles.optionRow}>
             <View style={styles.optionLabel}>
-                <Icon name={icon} type={type} size={20} style={globalStyles.icon} />
-                <Text>{label}</Text>
+                <Icon name={icon} type={type} size={20} style={useGlobalStyles().icon} color={theme.icon} />
+                <Text style={useGlobalStyles().textPrimary}>{label}</Text>
             </View>
-            <Icon name={theme === value ? 'check-circle' : 'circle'} type='feather' color={theme === value ? '#6200EE' : '#CCC'} />
+            <Icon name={themeMode === value ? 'check-circle' : 'circle'} type='feather' color={ theme.textSecondary} />
         </TouchableOpacity>
     )
 }

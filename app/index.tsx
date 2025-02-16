@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {View, StyleSheet, Image, TouchableOpacity} from "react-native";
 import {Text, CheckBox} from "@rneui/themed";
-import {globalStyles, getGlobalStyles} from "@/styles/global";
+import {globalStyles, useGlobalStyles} from "@/styles/global";
 import { useRouter } from "expo-router";
 import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";

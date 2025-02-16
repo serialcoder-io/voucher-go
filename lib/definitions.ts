@@ -16,10 +16,10 @@ export type TabBarIconProps = {
 
 export type ThemeOptionsProps = {
     label: string,
-    value: string,
+    value: 'auto' | 'dark' | 'light',
     icon: string,
     type: string,
-    theme: 'auto' | 'dark' | 'light',
+    themeMode: 'auto' | 'dark' | 'light',
     setTheme: (newTheme: 'auto' | 'dark' | 'light') => void,
 }
 
@@ -44,3 +44,13 @@ export type PrimaryButtonProps = {
     disabled?: boolean;
     width?: DimensionValue;
 }
+
+export type Theme = {
+    mode: 'light' | 'dark',
+    background: string,
+    backgroundSecondary: string,
+    textPrimary: string,
+    textSecondary: string,
+    icon: string,
+    tabIconDefault: string,
+};

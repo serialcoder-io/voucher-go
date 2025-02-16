@@ -1,29 +1,30 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet} from 'react-native';
 import { Text, Icon, Card, Divider } from '@rneui/themed';
 import CustomPressable from "@/components/ui/custom-pressable";
-import {getGlobalStyles, globalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles/global";
 import ThemeOptions from "@/components/ui/settings/theme-options";
-import useThemeStore from "@/store/store";
-import {commonColors} from "@/constants/Colors";
 import {useTheme} from "@/store/theme";
 
 function Settings() {
     const [language, setLanguage] = useState('FR');
     const [showProfileSettingss, setShowProfileSettings] = useState(false);
-    const { themeMode, setThemeMode } = useTheme();
+    const { themeMode, setThemeMode, theme } = useTheme();
 
     const LanguageOption = ({ label, value }: {label: string, value: string}) => (
         <TouchableOpacity onPress={() => setLanguage(value)} style={styles().optionRow}>
-            <Text>{label}</Text>
-            <Icon name={language === value ? 'check-circle' : 'circle'} type='feather' color={language === value ? '#6200EE' : '#CCC'} />
+            <Text style={useGlobalStyles().textPrimary}>{label}</Text>
+            <Icon name={language === value ? 'check-circle' : 'circle'} type='feather' color={theme.textSecondary} />
         </TouchableOpacity>
     );
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles().container}>
-                <StatusBar barStyle='dark-content' backgroundColor='white' />
+                <StatusBar
+                    barStyle={theme.mode === 'dark'? 'light-content': 'dark-content'}
+                    backgroundColor={theme.backgroundSecondary}
+                />
                 <Card containerStyle={styles().card}>
                     {/* profile settings */}
                     <View style={styles().profileSettingsConainer}>
@@ -66,7 +67,7 @@ function Settings() {
 
                 {/* Theme section */}
                 <View style={styles().sectionTitle}>
-                    <Icon name='contrast' type='material' size={20} style={globalStyles.icon} />
+                    <Icon name='contrast' type='material' size={20} style={useGlobalStyles().icon} color={theme.textSecondary} />
                     <Text style={styles().sectionTitleText}>Theme</Text>
                 </View>
 
@@ -76,7 +77,7 @@ function Settings() {
                         value='auto'
                         icon='contrast'
                         type='material'
-                        theme={themeMode}
+                        themeMode={themeMode}
                         setTheme={setThemeMode}
                     />
                     <Divider />
@@ -85,7 +86,7 @@ function Settings() {
                         value='light'
                         icon='sun'
                         type='feather'
-                        theme={themeMode}
+                        themeMode={themeMode}
                         setTheme={setThemeMode}
                     />
                     <Divider />
@@ -94,14 +95,14 @@ function Settings() {
                         value='dark'
                         icon='moon'
                         type='feather'
-                        theme={themeMode}
+                        themeMode={themeMode}
                         setTheme={setThemeMode}
                     />
                 </Card>
 
                 {/* Languages option section*/}
                 <View style={styles().sectionTitle}>
-                    <Icon name='translate' type='material' size={20} style={globalStyles.icon} />
+                    <Icon name='translate' type='material' size={20} style={useGlobalStyles().icon} color={theme.textSecondary} />
                     <Text style={styles().sectionTitleText}>Langues</Text>
                 </View>
 
@@ -161,7 +162,6 @@ const styles = () => {
             color: theme.textPrimary
         },
         profileSettinDropdown: {
-            backgroundColor: theme.backgroundSecondary,
             width: "100%",
             paddingLeft: 20
         },

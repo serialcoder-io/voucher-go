@@ -1,3 +1,4 @@
+import {Theme} from '@/lib/definitions'
 export const commonColors = {
     tabIconSelected: "#ffffff",
     primaryColor: '#4c8bf5',
@@ -5,21 +6,23 @@ export const commonColors = {
     dangerBg: '#f17b7b',
 }
 
-export const light = {
+export const light: Theme = {
+    mode: 'light',
     background: '#f3f3f3',
     backgroundSecondary: '#ffffff',
     textPrimary: '#070606',
     textSecondary: '#343434',
-    icon: '#6b6a6a',
+    icon: '#3f3f3f',
     tabIconDefault: '#626262',
 }
+//#232a2f
 
-
-export const dark = {
+export const dark: Theme = {
+    mode: 'dark',
     background: '#09090c',
-    backgroundSecondary: 'rgba(147,169,169,0.17)',
-    textPrimary: '#ffffff',
-    textSecondary: '#cecece',
-    icon: '#e6e8ef',
+    backgroundSecondary: '#1d2328',
+    textPrimary: '#eeeeee',
+    textSecondary: '#cccbcb',
+    icon: '#ffffff',
     tabIconDefault: '#dee4e7',
 }

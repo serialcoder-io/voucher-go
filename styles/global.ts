@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet, ViewStyle} from 'react-native';
 import {commonColors} from '@/constants/Colors'
 import {useTheme} from "@/store/theme";
 
@@ -54,23 +54,23 @@ export const globalStyles = StyleSheet.create({
 	},
 })
 
-export const getGlobalStyles = () => {
+export const useGlobalStyles = () => {
 	const { theme } = useTheme();
-	return {
+	return StyleSheet.create({
 		center:{
 			display: 'flex',
 			justifyContent: 'center',
-			alignItems: 'center',
+			alignItems: 'center'
 		},
 		container: {
 			flex: 1,
 			justifyContent: 'center',
 			alignItems: 'center',
 			backgroundColor: theme.background,
-		},
+		} as ViewStyle,
 		innerContainer: {
-			alignItems: "center",
-		},
+			alignItems: 'center',
+		} as ViewStyle,
 		primaryButtonStyle: {
 			backgroundColor: commonColors.primaryColor,
 			width: '100%',
@@ -104,13 +104,15 @@ export const getGlobalStyles = () => {
 			width: '100%',
 		},
 		icon: {
-			marginRight: 10
+			marginRight: 10,
+			color: "#ffffff",
 		},
 		textPrimary:{
 			color: theme.textPrimary,
+			fontSize: 15,
 		},
 		textSecondary:{
 			color: theme.textSecondary,
-		}
-	};
+		},
+	});
 };
