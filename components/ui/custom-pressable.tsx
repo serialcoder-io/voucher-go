@@ -15,7 +15,7 @@ function CustomPressable({
     const {theme} = useTheme();
     return (
         <TouchableOpacity style={styles.pressable} onPress={onPress}>
-            <Icon name={iconName} type={iconType} size={20} style={useGlobalStyles().icon} color={theme.textSecondary} />
+            <Icon name={iconName} type={iconType} size={20} style={useGlobalStyles().icon} color={theme.textPrimary} />
             <Text style={useGlobalStyles().textPrimary}>{text}</Text>
         </TouchableOpacity>
     )

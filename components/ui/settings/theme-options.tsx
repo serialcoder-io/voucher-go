@@ -17,7 +17,7 @@ function ThemeOptions({
     return (
         <TouchableOpacity onPress={() => setTheme(value)} style={styles.optionRow}>
             <View style={styles.optionLabel}>
-                <Icon name={icon} type={type} size={20} style={useGlobalStyles().icon} color={theme.icon} />
+                <Icon name={icon} type={type} size={20} style={useGlobalStyles().icon} color={theme.textPrimary} />
                 <Text style={useGlobalStyles().textPrimary}>{label}</Text>
             </View>
             <Icon name={themeMode === value ? 'check-circle' : 'circle'} type='feather' color={ theme.textSecondary} />

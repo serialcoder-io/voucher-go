@@ -19,10 +19,10 @@ export const light: Theme = {
 
 export const dark: Theme = {
     mode: 'dark',
-    background: '#09090c',
-    backgroundSecondary: '#1d2328',
-    textPrimary: '#eeeeee',
-    textSecondary: '#cccbcb',
+    background: '#000218',
+    backgroundSecondary: '#0c131f',
+    textPrimary: '#babee0',
+    textSecondary: '#b5b6c7',
     icon: '#ffffff',
     tabIconDefault: '#dee4e7',
 }

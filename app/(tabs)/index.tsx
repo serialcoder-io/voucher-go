@@ -7,7 +7,7 @@ import PrimaryButton from "@/components/ui/primary-button";
 import BorderedInput from "@/components/ui/bordered-input";
 import {useTheme} from "@/store/theme";
 
-const ScanScreen = () => {
+const HomeScreen = () => {
     const [showInput, setShowInput] = useState(false);
     const [reference, setReference] = useState("");
 
@@ -67,7 +67,7 @@ const ScanScreen = () => {
 };
 
 
-export default ScanScreen;
+export default HomeScreen;
 
 const getStyles = () => {
     const { theme } = useTheme();

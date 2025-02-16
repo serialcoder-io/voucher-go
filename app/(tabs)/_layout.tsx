@@ -15,11 +15,11 @@ function RootNavigator() {
             tabBarStyle: {
                 height: 75,
                 backgroundColor: theme.backgroundSecondary,
+                borderColor: theme.backgroundSecondary,
             },
             tabBarLabelStyle: {
                 fontSize: 12,
                 color: theme.textPrimary,
-
             },
             tabBarIconStyle: {
                 marginTop: 14,
@@ -31,7 +31,8 @@ function RootNavigator() {
                 name="index"
                 options={{
                     headerShown: true,
-                    headerTitle: 'Voucher Go',
+                    title: 'Home',
+                    headerTitle: 'Redemption',
                     headerTintColor: theme.textPrimary,
                     headerTitleStyle:{
                         fontSize: 18, paddingLeft: 18, fontWeight: 'bold'
@@ -42,7 +43,6 @@ function RootNavigator() {
                     headerRight: () => (
                         <HeaderRightAvatar />
                     ),
-                    title: 'Home',
                     tabBarIcon: ({ focused, color}) => (
                         <CustomTabBarIcon iconName="home" color={color} focused={focused} />
                     ),
