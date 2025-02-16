@@ -1,6 +1,7 @@
 import {Icon, Input} from "@rneui/themed";
 import React from "react";
-import {globalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles/global";
+import {InputPasswordProps} from "@/lib/definitions";
 
 function InputPassword({
    placeholder,
@@ -8,19 +9,15 @@ function InputPassword({
    value,
    onChangeText,
    onPressIcon,
-}: {
-    placeholder: string;
-    secureTextEntry: boolean;
-    value: string;
-    onChangeText: (e: string) => void;
-    onPressIcon: () => void;
-}) {
+}: InputPasswordProps) {
+    const styles = useGlobalStyles();
     return (
         <Input
             placeholder={placeholder}
             secureTextEntry={secureTextEntry}
             leftIcon={{ type: 'feather', name: 'lock', color: '#4c8bf5' }}
-            inputContainerStyle={globalStyles.inputContainer}
+            inputContainerStyle={styles.inputContainer}
+            inputStyle={styles.textInput}
             rightIcon={
                 <Icon
                     type="feather"

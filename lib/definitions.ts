@@ -54,3 +54,10 @@ export type Theme = {
     icon: string,
     tabIconDefault: string,
 };
+export type InputPasswordProps = {
+    placeholder: string;
+    secureTextEntry: boolean;
+    value: string;
+    onChangeText: (e: string) => void;
+    onPressIcon: () => void;
+}

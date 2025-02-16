@@ -114,5 +114,9 @@ export const useGlobalStyles = () => {
 		textSecondary:{
 			color: theme.textSecondary,
 		},
+		textInput:{
+			fontSize: 17,
+			color: theme.textPrimary
+		}
 	});
 };
