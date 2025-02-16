@@ -21,7 +21,7 @@ export const dark: Theme = {
     mode: 'dark',
     background: '#000218',
     backgroundSecondary: '#0c131f',
-    textPrimary: '#babee0',
+    textPrimary: '#bdc0de',
     textSecondary: '#b5b6c7',
     icon: '#ffffff',
     tabIconDefault: '#dee4e7',

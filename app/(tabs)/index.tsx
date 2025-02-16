@@ -6,17 +6,19 @@ import ParentContainer from "@/components/parent-container"
 import PrimaryButton from "@/components/ui/primary-button";
 import BorderedInput from "@/components/ui/bordered-input";
 import {useTheme} from "@/store/theme";
+import {Theme} from '@/lib/definitions'
 
 const HomeScreen = () => {
     const [showInput, setShowInput] = useState(false);
     const [reference, setReference] = useState("");
+    const {theme} = useTheme();
 
     const handleCheck = () => {
         console.log("Checking reference:", reference);
         setReference("");
     };
 
-    const styles = getStyles();
+    const styles = getStyles(theme);
 
     return (
         <ParentContainer width="90%">
@@ -69,8 +71,7 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 
-const getStyles = () => {
-    const { theme } = useTheme();
+const getStyles = (theme: Theme) => {
     return StyleSheet.create({
         CheckContainer:{
             backgroundColor: theme.backgroundSecondary,

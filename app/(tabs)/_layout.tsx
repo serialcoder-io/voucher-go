@@ -1,12 +1,17 @@
 import * as React from 'react';
 import { Tabs } from 'expo-router';
-import { View, Text, Platform} from 'react-native';
+import { Text, Platform} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import CustomTabBarIcon from "@/components/ui/settings/custom-tabBarIcon";
-import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import HeaderRightAvatar from "@/components/ui/_layout/headerRight-avatar";
 import {ThemeProvider, useTheme} from "@/store/theme";
+import {Theme} from '@/lib/definitions'
 
+function TabBarLabel({focused, theme, text}: {focused: boolean, theme: Theme, text: string}) {
+    return(
+        <Text style={{ marginTop: focused ? 5 : 0, color: theme.textPrimary, fontSize: 13 }}>{text}</Text>
+    )
+}
 
 function RootNavigator() {
     const {theme} = useTheme();
@@ -25,6 +30,7 @@ function RootNavigator() {
                 marginTop: 14,
                 justifyContent: 'center',
                 alignItems: 'center',
+                color: theme.textPrimary,
             },
         }}>
             <Tabs.Screen
@@ -43,11 +49,11 @@ function RootNavigator() {
                     headerRight: () => (
                         <HeaderRightAvatar />
                     ),
-                    tabBarIcon: ({ focused, color}) => (
-                        <CustomTabBarIcon iconName="home" color={color} focused={focused} />
+                    tabBarIcon: ({ focused }) => (
+                        <CustomTabBarIcon iconName="home" color={theme.textPrimary} focused={focused} />
                     ),
                     tabBarLabel: ({ focused }) => (
-                        <Text style={{ marginTop: focused ? 5 : 0, color: theme.textPrimary }}>Home</Text>
+                        <TabBarLabel focused={focused} theme={theme} text='Home' />
                     ),
                 }}
             />
@@ -66,11 +72,11 @@ function RootNavigator() {
                     headerRight: () => (
                         <HeaderRightAvatar />
                     ),
-                    tabBarIcon: ({ focused, color}) => (
-                        <CustomTabBarIcon iconName="receipt-outline" color={color} focused={focused} />
+                    tabBarIcon: ({ focused }) => (
+                        <CustomTabBarIcon iconName="receipt-outline" color={theme.textPrimary} focused={focused} />
                     ),
                     tabBarLabel: ({ focused }) => (
-                        <Text style={{ marginTop: focused ? 5 : 0, color: theme.textPrimary }}>Transactions</Text>
+                        <TabBarLabel focused={focused} theme={theme} text='Transactions' />
                     ),
                 }}
             />
@@ -89,15 +95,15 @@ function RootNavigator() {
                     headerRight: () => (
                         <HeaderRightAvatar />
                     ),
-                    tabBarIcon: ({ focused, color}) => (
+                    tabBarIcon: ({ focused}) => (
                         <CustomTabBarIcon
                             iconName={Platform.OS === 'ios' ? 'cog' : 'settings-outline'}
-                            color={color}
+                            color={theme.textPrimary}
                             focused={focused}
                         />
                     ),
                     tabBarLabel: ({ focused }) => (
-                        <Text style={{ marginTop: focused ? 5 : 0, color: theme.textPrimary }}>Settings</Text>
+                        <TabBarLabel focused={focused} theme={theme} text='Settings' />
                     ),
                 }}
             />
@@ -114,19 +120,3 @@ export default function MainLayout() {
     );
 }
 
-
-const screenOptions: BottomTabNavigationOptions = {
-    tabBarStyle: {
-        height: 75,
-        backgroundColor: 'white',
-    },
-    tabBarLabelStyle: {
-        fontSize: 12,
-        color: 'black',
-    },
-    tabBarIconStyle: {
-        marginTop: 14,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-}
