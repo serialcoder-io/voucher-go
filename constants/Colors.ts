@@ -11,7 +11,7 @@ export const light: Theme = {
     background: '#f3f3f3',
     backgroundSecondary: '#ffffff',
     textPrimary: '#070606',
-    textSecondary: '#343434',
+    textSecondary: '#525252',
     icon: '#3f3f3f',
     tabIconDefault: '#626262',
 }
@@ -22,7 +22,7 @@ export const dark: Theme = {
     background: '#000218',
     backgroundSecondary: '#0c131f',
     textPrimary: '#bdc0de',
-    textSecondary: '#b5b6c7',
+    textSecondary: '#7a7c8f',
     icon: '#ffffff',
     tabIconDefault: '#dee4e7',
 }

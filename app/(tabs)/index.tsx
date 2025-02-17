@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import {View, StyleSheet, Pressable, TouchableOpacity} from "react-native";
-import {Icon, Text} from "@rneui/themed";
-import {globalStyles, useGlobalStyles} from "@/styles/global";
-import ParentContainer from "@/components/parent-container"
-import PrimaryButton from "@/components/ui/primary-button";
+import React, { useState } from 'react';
+import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, TextInput, Pressable} from 'react-native';
+import { Text, Icon, Card, Button, Divider } from '@rneui/themed';
 import BorderedInput from "@/components/ui/bordered-input";
+import PrimaryButton from "@/components/ui/primary-button";
 import {useTheme} from "@/store/theme";
-import {Theme} from '@/lib/definitions'
+import {Theme} from "@/lib/definitions";
+import {useGlobalStyles} from "@/styles/global";
+import {commonColors} from "@/constants/Colors";
 
-const HomeScreen = () => {
+function Home() {
+    const [reference, setReference] = useState('VR-00000123/100');
+    const [amount, setAmount] = useState('1000 Rs');
     const [showInput, setShowInput] = useState(false);
-    const [reference, setReference] = useState("");
+    const [tillNo, setTillNo] = useState('');
     const {theme} = useTheme();
 
     const handleCheck = () => {
@@ -18,67 +20,176 @@ const HomeScreen = () => {
         setReference("");
     };
 
+    const checkStyles = getCheckStyles(theme);
     const styles = getStyles(theme);
 
     return (
-        <ParentContainer width="90%">
-            <View style={styles.CheckContainer}
-            >
-                {/* check-voucher container*/}
-                <View style={styles.checkVoucherConainer}>
-                    {/* button to show and hide voucher reference field */}
-                    <Pressable
-                        onPress={() => setShowInput(!showInput)}
-                        style={styles.showInputRefBtn}
-                        hitSlop={20}
-                    >
-                        <Icon
-                            name={showInput ? 'chevron-down': 'chevron-right'}
-                            size={25} color="grey" type="feather"
-                        />
-                        <Text style={{fontSize: 16}}>Enter the reference manually</Text>
-                    </Pressable>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <View style={styles.container}>
+                <StatusBar barStyle='dark-content' backgroundColor='white' />
+                <Card containerStyle={[styles.card, styles.storeCard]}>
+                    <Text style={styles.storeName}>Intermart</Text>
+                    <Text style={styles.storeLocation}>Location: Ebene</Text>
+                </Card>
 
-                    {showInput && (
-                        <View style={styles.inputContainer}>
-                            <BorderedInput
-                                placeholder="Voucher Reference"
-                                value={reference}
-                                onChangeText={setReference}
+                <View style={checkStyles.CheckContainer}
+                >
+                    {/* check-voucher container*/}
+                    <View style={checkStyles.checkVoucherConainer}>
+                        {/* button to show and hide voucher reference field */}
+                        <Pressable
+                            onPress={() => setShowInput(!showInput)}
+                            style={checkStyles.showInputRefBtn}
+                            hitSlop={20}
+                        >
+                            <Icon
+                                name={showInput ? 'chevron-down': 'chevron-right'}
+                                size={25} color={theme.textPrimary} type="feather"
                             />
-                            <PrimaryButton
-                                disabled={!reference}
-                                title="Check"
-                                loading={false}
-                                actionOnPress={handleCheck}
-                            />
-                        </View>
-                    )}
+                            <Text style={{fontSize: 16, color: theme.textPrimary}}>Enter the reference manually</Text>
+                        </Pressable>
+
+                        {showInput && (
+                            <View style={checkStyles.inputContainer}>
+                                <BorderedInput
+                                    placeholder="Voucher Reference"
+                                    value={reference}
+                                    onChangeText={setReference}
+                                />
+                                <PrimaryButton
+                                    disabled={!reference}
+                                    title="Check"
+                                    loading={false}
+                                    actionOnPress={handleCheck}
+                                />
+                            </View>
+                        )}
+                    </View>
+
+                    {/*scan button*/}
+                    <View style={{width: '100%', borderTopWidth: 0.5, borderTopColor: 'grey'}}>
+                        <TouchableOpacity style={checkStyles.scanButton}>
+                            <Icon name="qrcode" size={25} color={theme.textPrimary} type="font-awesome" />
+                            <Text style={{fontSize: 16, color: theme.textPrimary}}>Scan the QR code</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
-                {/*scan button*/}
-                <View style={{width: '100%', borderTopWidth: 0.5, borderTopColor: 'grey'}}>
-                    <TouchableOpacity style={styles.scanButton}>
-                        <Icon name="qrcode" size={25} color="grey" type="font-awesome" />
-                        <Text style={{fontSize: 16}}>Scan the QR code</Text>
+                <Card containerStyle={styles.card}>
+                    <Text style={styles.refText}>Ref: {reference}</Text>
+                    <View style={styles.amountRow}>
+                        <Text style={styles.amountText}>Amount : {amount}</Text>
+                        <Icon name='check-circle' type='feather' color='green' />
+                    </View>
+                    <Divider />
+                    <TouchableOpacity style={styles.optionRow}>
+                        <Text style={{color: theme.textPrimary}}>Select a Company</Text>
+                        <Icon name='chevron-down' type='feather' color={theme.textSecondary} />
                     </TouchableOpacity>
-                </View>
+                    <Divider />
+                    <TouchableOpacity style={styles.optionRow}>
+                        <Text style={{color: theme.textPrimary}}>Select a location</Text>
+                        <Icon name='chevron-down' type='feather' color={theme.textSecondary} />
+                    </TouchableOpacity>
+                    <Divider />
+                    <View style={styles.optionRow}>
+                        <BorderedInput
+                            placeholder="Enter till no"
+                            value={tillNo}
+                            onChangeText={setTillNo}
+                        />
+                    </View>
+                    <Button title='Redeem' buttonStyle={styles.redeemButton} disabled={!tillNo} />
+                    <Button title='Cancel' type='outline' buttonStyle={styles.cancelButton} />
+                </Card>
             </View>
-        </ParentContainer>
+        </ScrollView>
     );
-};
+}
+export default Home;
 
 
-export default HomeScreen;
+const getStyles = (theme: Theme) => StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: theme.background,
+        padding: 16,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    card: {
+        borderWidth: 0.3,
+        borderRadius: 10,
+        marginBottom: 15,
+        paddingVertical: 20,
+        width: '100%',
+        backgroundColor: theme.backgroundSecondary,
+    },
+    storeCard: {
+        borderLeftWidth: 5,
+        borderRightWidth: 0.3,
+        borderTopWidth: 0.3,
+        borderBottomWidth: 0.3,
+        borderLeftColor: commonColors.primaryColor,
+        paddingVertical: 15,
+        width: '100%',
+        backgroundColor: theme.backgroundSecondary,
+    },
+    storeName: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: theme.textPrimary,
+    },
+    storeLocation: {
+        color: theme.textSecondary,
+    },
+    optionRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: 15,
+    },
+    icon: {
+        marginRight: 10,
+    },
+    refText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: theme.textPrimary,
+    },
+    amountText:{color: theme.textSecondary,},
+    amountRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 10,
+    },
+    input: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#CCC',
+        flex: 1,
+        marginLeft: 10,
+    },
+    redeemButton: {
+        backgroundColor: commonColors.primaryColor,
+        borderRadius: 5,
+    },
+    cancelButton: {
+        borderRadius: 5,
+        marginTop: 10,
+        color: commonColors.dangercolor,
+    }
+});
 
-const getStyles = (theme: Theme) => {
+const getCheckStyles = (theme: Theme) => {
     return StyleSheet.create({
         CheckContainer:{
             backgroundColor: theme.backgroundSecondary,
-            ...globalStyles.center,
+            ...useGlobalStyles().center,
             width: '100%',
-            borderWidth: 0.5, borderRadius: 10,
-            borderColor: 'grey'
+            borderWidth: 0.3, borderRadius: 10,
+            borderColor: theme.textSecondary,
         },
         showInputRefBtn:{
             width:'100%',
@@ -88,7 +199,7 @@ const getStyles = (theme: Theme) => {
             columnGap: 10
         },
         toggleText: {
-            color: "#333",
+            color: theme.textPrimary,
             fontSize: 16,
             marginBottom: 10,
             width: "100%",
@@ -123,3 +234,5 @@ const getStyles = (theme: Theme) => {
         }
     })
 };
+
+

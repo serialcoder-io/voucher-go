@@ -3,9 +3,11 @@ import {StyleSheet, Image, StatusBar, Alert } from 'react-native';
 import {Text} from '@rneui/themed';
 import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
-import {globalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles/global";
 import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
+import {Link} from "expo-router";
+import {commonColors} from "@/constants/Colors";
 //import { useRouter } from "expo-router";
 
 const SignupScreen = () => {
@@ -17,7 +19,7 @@ const SignupScreen = () => {
 
     const validateEmail = (email: string) => {
         const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return regex.test(email);
+        return regex.test(email.trim());
     };
     const allFields = [username, email, password, confirmPassword];
     const allFieldsFilled = allFields.every((field) => {
@@ -38,6 +40,10 @@ const SignupScreen = () => {
         }
 
         console.log('Utilisateur inscrit avec succès');
+        setEmail('')
+        setUsername('')
+        setPassword('')
+        setConfirmPassword('')
         // Redirection après inscription
         // router.push('/login');
     };
@@ -47,8 +53,7 @@ const SignupScreen = () => {
             {/* Logo */}
             <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
 
-            <Text h3 style={globalStyles.title}>Create accont</Text>
-            <Text style={globalStyles.subtitle}>Remplissez les informations ci-dessous</Text>
+            <Text h3 style={useGlobalStyles().title}>Create accont</Text>
 
             {/* Username */}
             <CustomInputText
@@ -90,6 +95,10 @@ const SignupScreen = () => {
                 actionOnPress={handleSignup}
                 width='95%'
             />
+
+            <Link href='/' style={{...useGlobalStyles().textSecondary, marginTop: 10, fontSize: 15}}>
+                Already a member ? <Text style={{color: commonColors.primaryColor, fontWeight: 'bold'}}>Login</Text>
+            </Link>
         </ParentContainer>
     );
 };

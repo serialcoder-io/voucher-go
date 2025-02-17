@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {View, StyleSheet, Image, TouchableOpacity} from "react-native";
 import {Text, CheckBox} from "@rneui/themed";
-import {globalStyles, useGlobalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles/global";
 import { useRouter } from "expo-router";
 import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
@@ -27,13 +27,14 @@ const LoginScreen = () => {
         }
     };
 
+
     return (
         <ParentContainer width='90%'>
             {/* Logo */}
             <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
             {/* title */}
-            <Text h3 style={globalStyles.title}>Welcome Back</Text>
-            <Text style={globalStyles.subtitle}>Login to continue</Text>
+            <Text h3 style={useGlobalStyles().title}>Welcome Back</Text>
+            <Text style={useGlobalStyles().textSecondary}>Login to continue</Text>
 
             {/* Username field */}
 
@@ -58,8 +59,9 @@ const LoginScreen = () => {
                 <CheckBox
                     checked={checked}
                     onPress={() => setChecked(!checked)}
-                    title="Keep me signed in"
+                    title="Keep me signed infhghfh"
                     containerStyle={styles.checkboxContainer}
+                    textStyle={{ color: 'white', fontWeight: 'normal' }}
                     checkedColor="#4c8bf5"
                 />
                 <TouchableOpacity onPress={() => router.push("/reset-password")}>
@@ -75,7 +77,7 @@ const LoginScreen = () => {
                 width='95%'
             />
 
-            <TouchableOpacity onPress={() => router.push("/(pin-code)/lockScreen")}>
+            <TouchableOpacity onPress={() => router.push("/signup")}>
                 <Text style={styles.signupText}>Don't have an account ? <Text style={styles.signupLink}>Sign Up</Text></Text>
             </TouchableOpacity>
         </ParentContainer>

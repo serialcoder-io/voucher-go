@@ -1,6 +1,6 @@
 import { Button } from "@rneui/themed";
 import React from "react";
-import { globalStyles } from "@/styles/global";
+import {useGlobalStyles} from "@/styles/global";
 import {PrimaryButtonProps} from "@/lib/definitions";
 
 function PrimaryButton({
@@ -16,9 +16,9 @@ function PrimaryButton({
             title={title}
             loading={loading}
             loadingProps={{ size: 'small', color: 'white' }}
-            buttonStyle={globalStyles.primaryButtonStyle}
+            buttonStyle={useGlobalStyles().primaryButtonStyle}
             titleStyle={{ fontSize: 20 }}
-            containerStyle={[globalStyles.buttonContainer, { width }]}
+            containerStyle={[useGlobalStyles().buttonContainer, { width }]}
             onPress={actionOnPress}
         />
     );

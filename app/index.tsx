@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import {View, StyleSheet, Image, TouchableOpacity} from "react-native";
 import {Text, CheckBox} from "@rneui/themed";
-import {globalStyles, useGlobalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles/global";
 import { useRouter } from "expo-router";
 import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
 import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
+import {useTheme} from "@/store/theme";
+import {commonColors} from "@/constants/Colors";
 
 const LoginScreen = () => {
     const [username, setUsername] = useState("");
@@ -14,6 +16,7 @@ const LoginScreen = () => {
     const [checked, setChecked] = useState(false);
     const [secureTextEntry, setSecureTextEntry] = useState(true);
     const router = useRouter();
+    const {theme} = useTheme();
 
     const handleLogin = () => {
         if (username && password) {
@@ -32,8 +35,8 @@ const LoginScreen = () => {
             {/* Logo */}
             <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
             {/* title */}
-            <Text h3 style={globalStyles.title}>Welcome Back</Text>
-            <Text style={globalStyles.subtitle}>Login to continue</Text>
+            <Text h3 style={useGlobalStyles().title}>Welcome Back</Text>
+            <Text style={{fontSize: 15, marginBottom: 20, color: theme.textSecondary}}>Login to continue</Text>
 
             {/* Username field */}
 
@@ -59,6 +62,7 @@ const LoginScreen = () => {
                     checked={checked}
                     onPress={() => setChecked(!checked)}
                     title="Keep me signed in"
+                    textStyle={useGlobalStyles().textSecondary}
                     containerStyle={styles.checkboxContainer}
                     checkedColor="#4c8bf5"
                 />
@@ -75,8 +79,11 @@ const LoginScreen = () => {
                 width='95%'
             />
 
-            <TouchableOpacity onPress={() => router.push("/(pin-code)/lockScreen")}>
-                <Text style={styles.signupText}>Don't have an account ? <Text style={styles.signupLink}>Sign Up</Text></Text>
+            <TouchableOpacity onPress={() => router.push("/signup")}>
+                <Text style={{marginTop: 15, fontSize: 15, color: theme.textSecondary}}>
+                    Don't have an account ?
+                    <Text style={{color: commonColors.primaryColor, fontWeight: "bold",}}> Sign Up</Text>
+                </Text>
             </TouchableOpacity>
         </ParentContainer>
     );
@@ -105,15 +112,6 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 14,
         marginRight: 10
-    },
-    signupText: {
-        marginTop: 15,
-        fontSize: 14,
-        color: "#333",
-    },
-    signupLink: {
-        color: "#4c8bf5",
-        fontWeight: "bold",
     },
 });
 

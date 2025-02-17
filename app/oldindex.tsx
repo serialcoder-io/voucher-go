@@ -2,7 +2,7 @@ import React from "react";
 import { View, Image, StyleSheet, StatusBar } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
 import { useCallback } from "react";
-import {globalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles/global";
 
 const WelcomeScreen = () => {
     const router = useRouter();
@@ -22,7 +22,7 @@ const WelcomeScreen = () => {
     );
 
     return (
-        <View style={globalStyles.container}>
+        <View style={useGlobalStyles().container}>
             <StatusBar backgroundColor="white" barStyle="light-content" />
             <View>
                 <Image

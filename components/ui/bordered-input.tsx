@@ -1,12 +1,16 @@
 import {StyleSheet, TextInput} from "react-native";
 import React from "react";
 import {CustomInputTextProps} from "@/lib/definitions";
+import {useTheme} from "@/store/theme";
+import {Theme} from "@/lib/definitions";
 
 function BorderedInput({
    value,
    onChangeText,
    placeholder,
 } : CustomInputTextProps) {
+    const {theme} = useTheme();
+    const styles = getStyles(theme)
     return (
         <TextInput
             placeholder={placeholder}
@@ -20,15 +24,17 @@ function BorderedInput({
 
 export default BorderedInput;
 
-const styles = StyleSheet.create({
-    input: {
-        backgroundColor: "white",
-        padding: 12,
-        color: "#000",
-        borderRadius: 5,
-        width: "100%",
-        marginBottom: 10,
-        borderWidth: 1,
-        borderColor: "#CCC",
-    },
-});
+const getStyles = (theme: Theme) =>
+    StyleSheet.create({
+        input: {
+            backgroundColor: theme.backgroundSecondary,
+            padding: 12,
+            color: theme.textPrimary,
+            borderRadius: 5,
+            width: "100%",
+            marginBottom: 10,
+            borderWidth: 0.5,
+            borderColor: theme.textSecondary,
+        },
+    });
+
