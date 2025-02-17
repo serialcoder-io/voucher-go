@@ -14,6 +14,7 @@ function Home() {
     const [showInput, setShowInput] = useState(false);
     const [tillNo, setTillNo] = useState('');
     const {theme} = useTheme();
+    const [loading, setLoading] = useState(false);
 
     const handleCheck = () => {
         console.log("Checking reference:", reference);
@@ -95,12 +96,24 @@ function Home() {
                     <View style={styles.optionRow}>
                         <BorderedInput
                             placeholder="Enter till no"
+                            keyboardType='number-pad'
                             value={tillNo}
                             onChangeText={setTillNo}
                         />
                     </View>
-                    <Button title='Redeem' buttonStyle={styles.redeemButton} disabled={!tillNo} />
-                    <Button title='Cancel' type='outline' buttonStyle={styles.cancelButton} />
+                    <Button
+                        title='Redeem'
+                        buttonStyle={styles.redeemButton}
+                        disabled={!tillNo}
+                        loading={loading}
+                        onPress={() => setLoading(true)}
+                    />
+                    <Button
+                        title='Cancel'
+                        type='outline'
+                        buttonStyle={styles.cancelButton}
+                        titleStyle={{color: commonColors.dangercolor}}
+                    />
                 </Card>
             </View>
         </ScrollView>
@@ -178,7 +191,7 @@ const getStyles = (theme: Theme) => StyleSheet.create({
     cancelButton: {
         borderRadius: 5,
         marginTop: 10,
-        color: commonColors.dangercolor,
+        borderColor: commonColors.dangercolor,
     }
 });
 

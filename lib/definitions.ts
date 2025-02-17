@@ -2,7 +2,9 @@ import React from "react";
 import {DimensionValue, GestureResponderEvent} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
 
-{/*props for ParentContainer component*/}
+{/*props for ParentContainer component*/
+}
+
 export interface ParentContainerProps {
     children: React.ReactNode;
     width?: DimensionValue; // Use DimensionValue for width
@@ -25,9 +27,10 @@ export type ThemeOptionsProps = {
 
 export type CustomInputTextProps = {
     value: string,
-    onChangeText: (e: string) => void
+    onChangeText: (e: string) => void,
     iconName?: string,
     placeholder: string,
+    keyboardType?: string
 }
 
 export type PressableProps = {

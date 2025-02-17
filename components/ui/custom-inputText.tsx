@@ -8,7 +8,7 @@ function CustomInputText({
     onChangeText,
     iconName,
     placeholder,
-}: CustomInputTextProps): React.ReactElement<CustomInputTextProps> {
+}: CustomInputTextProps) {
     const styles = useGlobalStyles();
     return (
         <Input
