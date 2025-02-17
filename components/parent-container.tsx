@@ -2,7 +2,7 @@ import {StatusBar, View, ScrollView} from "react-native";
 import {useGlobalStyles} from "@/styles/global";
 import React from "react";
 import {ParentContainerProps} from "@/lib/definitions";
-import {useTheme} from "@/store/theme";
+import {useTheme} from "@/hooks/useTheme";
 
 function ParentContainer({children, width='85%'}: ParentContainerProps) {
     const styles = useGlobalStyles();

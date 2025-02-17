@@ -1,5 +1,5 @@
 import React from "react";
-import {DimensionValue, GestureResponderEvent} from "react-native";
+import {DimensionValue, GestureResponderEvent, KeyboardTypeOptions} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
 
 {/*props for ParentContainer component*/
@@ -30,7 +30,7 @@ export type CustomInputTextProps = {
     onChangeText: (e: string) => void,
     iconName?: string,
     placeholder: string,
-    keyboardType?: string
+    keyboardType?: KeyboardTypeOptions
 }
 
 export type PressableProps = {

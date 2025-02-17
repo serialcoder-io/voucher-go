@@ -5,7 +5,7 @@ import {useGlobalStyles} from "@/styles/global";
 import ParentContainer from "@/components/parent-container"
 import PrimaryButton from "@/components/ui/primary-button";
 import BorderedInput from "@/components/ui/bordered-input";
-import {useTheme} from "@/store/theme";
+import {useTheme} from "@/hooks/useTheme";
 import {Theme} from '@/lib/definitions'
 
 const HomeScreen = () => {

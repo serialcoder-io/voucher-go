@@ -1,4 +1,4 @@
-import {Pressable, View} from "react-native";
+import {Pressable} from "react-native";
 import {Avatar} from "@rneui/base";
 import * as React from "react";
 

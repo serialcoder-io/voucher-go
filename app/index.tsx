@@ -7,7 +7,7 @@ import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
 import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
-import {useTheme} from "@/store/theme";
+import {useTheme} from "@/hooks/useTheme";
 import {commonColors} from "@/constants/Colors";
 
 const LoginScreen = () => {

@@ -3,7 +3,7 @@ import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, TextInput, Pr
 import { Text, Icon, Card, Button, Divider } from '@rneui/themed';
 import BorderedInput from "@/components/ui/bordered-input";
 import PrimaryButton from "@/components/ui/primary-button";
-import {useTheme} from "@/store/theme";
+import {useTheme} from "@/hooks/useTheme";
 import {Theme} from "@/lib/definitions";
 import {useGlobalStyles} from "@/styles/global";
 import {commonColors} from "@/constants/Colors";

@@ -11,7 +11,7 @@ interface ThemeContextProps {
     theme: Theme;
 }
 
-const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const [themeMode, setThemeMode] = useState<ThemeMode>('auto');
@@ -34,12 +34,4 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
             {children}
         </ThemeContext.Provider>
     );
-};
-
-export const useTheme = () => {
-    const context = useContext(ThemeContext);
-    if (!context) {
-        throw new Error('useTheme doit être utilisé à l\'intérieur de ThemeProvider');
-    }
-    return context;
 };

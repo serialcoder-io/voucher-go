@@ -1,7 +1,7 @@
 import {Icon, Text} from "@rneui/themed";
 import {StyleSheet, TouchableOpacity} from "react-native";
 import React, {useState} from "react";
-import {useTheme} from "@/store/theme";
+import {useTheme} from "@/hooks/useTheme";
 import {useGlobalStyles} from "@/styles/global";
 
 

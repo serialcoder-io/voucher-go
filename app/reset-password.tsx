@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import {StyleSheet, Alert} from "react-native";
 import {Text} from "@rneui/themed";
-import {globalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles/global";
 //import { useRouter } from "expo-router";
 import PrimaryButton from "@/components/ui/primary-button";
 import ParentContainer from "@/components/parent-container";
@@ -28,7 +28,7 @@ const LoginScreen = () => {
     return (
         <ParentContainer>
             {/* title */}
-            <Text h3 style={globalStyles.title}>Reset password</Text>
+            <Text h3 style={useGlobalStyles().title}>Reset password</Text>
             <Text style={styles.subtitle}>Please provide the email address you used to create your account</Text>
 
             {/* Email field */}

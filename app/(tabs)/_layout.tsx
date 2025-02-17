@@ -4,7 +4,8 @@ import { Text, Platform} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import CustomTabBarIcon from "@/components/ui/settings/custom-tabBarIcon";
 import HeaderRightAvatar from "@/components/ui/_layout/headerRight-avatar";
-import {ThemeProvider, useTheme} from "@/store/theme";
+import {ThemeProvider} from "@/store/theme";
+import {useTheme} from "@/hooks/useTheme";
 import {Theme} from '@/lib/definitions'
 
 function TabBarLabel({focused, theme, text}: {focused: boolean, theme: Theme, text: string}) {

@@ -1,7 +1,7 @@
-import {KeyboardTypeOptions, StyleSheet, TextInput} from "react-native";
+import {StyleSheet, TextInput} from "react-native";
 import React from "react";
 import {CustomInputTextProps} from "@/lib/definitions";
-import {useTheme} from "@/store/theme";
+import {useTheme} from "@/hooks/useTheme";
 import {Theme} from "@/lib/definitions";
 
 function BorderedInput({
@@ -16,7 +16,7 @@ function BorderedInput({
         <TextInput
             placeholder={placeholder}
             placeholderTextColor="#666"
-            keyboardType={keyboardType as KeyboardTypeOptions}
+            keyboardType={keyboardType}
             value={value}
             onChangeText={onChangeText}
             style={styles.input}

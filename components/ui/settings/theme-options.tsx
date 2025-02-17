@@ -3,7 +3,7 @@ import {StyleSheet, TouchableOpacity, View} from "react-native";
 import {Icon, Text} from "@rneui/themed";
 import {useGlobalStyles} from "@/styles/global";
 import {ThemeOptionsProps} from "@/lib/definitions";
-import {useTheme} from "@/store/theme";
+import {useTheme} from "@/hooks/useTheme";
 
 function ThemeOptions({
   label,

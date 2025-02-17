@@ -3,7 +3,7 @@ import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet} from 'react-n
 import { Card, Divider } from '@rneui/themed';
 import CustomPressable from "@/components/ui/custom-pressable";
 import ThemeOptions from "@/components/ui/settings/theme-options";
-import {useTheme} from "@/store/theme";
+import {useTheme} from "@/hooks/useTheme";
 import {Theme} from '@/lib/definitions'
 import SectionTitle from "@/components/ui/section-title";
 import LanguageOption from "@/components/ui/settings/lang-option";

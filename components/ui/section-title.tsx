@@ -2,7 +2,7 @@ import {StyleSheet, View} from "react-native";
 import {Icon, Text} from "@rneui/themed";
 import React from "react";
 import {Theme} from "@/lib/definitions";
-import {useTheme} from "@/store/theme";
+import {useTheme} from "@/hooks/useTheme";
 import {useGlobalStyles} from "@/styles/global";
 
 type SectionTitleProps = {
