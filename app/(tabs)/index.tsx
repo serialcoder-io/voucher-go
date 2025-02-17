@@ -76,6 +76,7 @@ function Home() {
                     </View>
                 </View>
 
+                {/* redemption card*/}
                 <Card containerStyle={styles.card}>
                     <Text style={styles.refText}>Ref: {reference}</Text>
                     <View style={styles.amountRow}>
@@ -84,12 +85,12 @@ function Home() {
                     </View>
                     <Divider />
                     <TouchableOpacity style={styles.optionRow}>
-                        <Text style={{color: theme.textPrimary}}>Select a Company</Text>
+                        <Text style={{color: theme.textPrimary, fontSize: 16}}>Select a Company</Text>
                         <Icon name='chevron-down' type='feather' color={theme.textSecondary} />
                     </TouchableOpacity>
                     <Divider />
                     <TouchableOpacity style={styles.optionRow}>
-                        <Text style={{color: theme.textPrimary}}>Select a location</Text>
+                        <Text style={{color: theme.textPrimary, fontSize: 16}}>Select a location</Text>
                         <Icon name='chevron-down' type='feather' color={theme.textSecondary} />
                     </TouchableOpacity>
                     <Divider />
@@ -112,7 +113,7 @@ function Home() {
                         title='Cancel'
                         type='outline'
                         buttonStyle={styles.cancelButton}
-                        titleStyle={{color: commonColors.dangercolor}}
+                        titleStyle={{color: theme.textPrimary}}
                     />
                 </Card>
             </View>
@@ -190,8 +191,9 @@ const getStyles = (theme: Theme) => StyleSheet.create({
     },
     cancelButton: {
         borderRadius: 5,
-        marginTop: 10,
-        borderColor: commonColors.dangercolor,
+        marginTop: 20,
+        marginBottom: 15,
+        borderColor: theme.textPrimary,
     }
 });
 

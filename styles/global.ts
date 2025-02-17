@@ -1,6 +1,6 @@
 import {StyleSheet, ViewStyle} from 'react-native';
 import {commonColors} from '@/constants/Colors'
-import {useTheme} from "@/store/theme";
+import {useTheme} from "@/hooks/useTheme";
 
 export const useGlobalStyles = () => {
 	const { theme } = useTheme();

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import {View, StyleSheet, Image, TouchableOpacity} from "react-native";
 import {Text, CheckBox} from "@rneui/themed";
 import {useGlobalStyles} from "@/styles/global";
-import { useRouter } from "expo-router";
+import {Link, useRouter} from "expo-router";
 import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
 import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
+import {commonColors} from "@/constants/Colors";
 
 const LoginScreen = () => {
     const [username, setUsername] = useState("");
@@ -77,9 +78,10 @@ const LoginScreen = () => {
                 width='95%'
             />
 
-            <TouchableOpacity onPress={() => router.push("/signup")}>
-                <Text style={styles.signupText}>Don't have an account ? <Text style={styles.signupLink}>Sign Up</Text></Text>
-            </TouchableOpacity>
+            <Link href='/signup' style={styles.signupText}>
+                Don't have an account ?
+                <Text style={{fontWeight: "bold", color: commonColors.primaryColor}}>Sign Up</Text>
+            </Link>
         </ParentContainer>
     );
 };
@@ -112,10 +114,6 @@ const styles = StyleSheet.create({
         marginTop: 15,
         fontSize: 14,
         color: "#333",
-    },
-    signupLink: {
-        color: "#4c8bf5",
-        fontWeight: "bold",
     },
 });
 

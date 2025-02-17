@@ -4,15 +4,20 @@ import { Card, Divider } from '@rneui/themed';
 import CustomPressable from "@/components/ui/custom-pressable";
 import ThemeOptions from "@/components/ui/settings/theme-options";
 import {useTheme} from "@/hooks/useTheme";
-import {Theme} from '@/lib/definitions'
+import {Theme, ThemeMode} from '@/lib/definitions'
 import SectionTitle from "@/components/ui/section-title";
 import LanguageOption from "@/components/ui/settings/lang-option";
+import {setPreference} from "@/lib/utils";
 
 function Settings() {
     const [showProfileSettingss, setShowProfileSettings] = useState(false);
     const { themeMode, setThemeMode, theme } = useTheme();
     const currentStyles = styles(theme);
 
+    const changeThemeMode = async(theme: ThemeMode) => {
+        setThemeMode(theme)
+        await setPreference('themeMode', theme)
+    }
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={currentStyles.container}>
@@ -55,11 +60,11 @@ function Settings() {
                 <SectionTitle title='Theme' iconName='contrast' />
                 {/* theme options*/}
                 <Card containerStyle={currentStyles.card}>
-                    <ThemeOptions label='Automatique' value='auto' icon='contrast' type='material' themeMode={themeMode} setTheme={setThemeMode} />
+                    <ThemeOptions label='Automatique' value='auto' icon='contrast' type='material' themeMode={themeMode} setTheme={changeThemeMode} />
                     <Divider />
-                    <ThemeOptions label='Light' value='light' icon='sun' type='feather' themeMode={themeMode} setTheme={setThemeMode} />
+                    <ThemeOptions label='Light' value='light' icon='sun' type='feather' themeMode={themeMode} setTheme={changeThemeMode} />
                     <Divider />
-                    <ThemeOptions label='Dark' value='dark' icon='moon' type='feather' themeMode={themeMode} setTheme={setThemeMode} />
+                    <ThemeOptions label='Dark' value='dark' icon='moon' type='feather' themeMode={themeMode} setTheme={changeThemeMode} />
                 </Card>
 
                 {/* section title (language)*/}

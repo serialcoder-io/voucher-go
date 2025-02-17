@@ -1,30 +1,29 @@
-// noinspection JSUnusedGlobalSymbols
 import React, { useState } from "react";
 import {StyleSheet, Alert} from "react-native";
 import {Text} from "@rneui/themed";
 import {useGlobalStyles} from "@/styles/global";
-//import { useRouter } from "expo-router";
 import PrimaryButton from "@/components/ui/primary-button";
 import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
+import {Theme} from "@/lib/definitions";
+import {useTheme} from "@/hooks/useTheme";
+import {testStringRegEx} from '@/lib/utils'
 
 const LoginScreen = () => {
     const [email, setEmail] = useState("");
-    //const router = useRouter();
+    const {theme} = useTheme();
+    const styles = getstyles(theme)
 
+    const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const handleSubmit = () => {
-        const trimmedEmail = email.trim(); // Supprimer les espaces avant/après
-        if (trimmedEmail && validateEmail(trimmedEmail)) {
+        if (testStringRegEx(email, regexEmail)) {
             Alert.alert("We've sent you an email. Please check your inbox");
             setEmail('')
             return;
         }
         Alert.alert("Please enter a valid email address");
     };
-    const validateEmail = (email: string) => {
-        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return regex.test(email);
-    };
+
     return (
         <ParentContainer>
             {/* title */}
@@ -51,15 +50,14 @@ const LoginScreen = () => {
     );
 };
 
-
 export default LoginScreen;
 
 
-export const styles = StyleSheet.create({
-
+const getstyles = (theme: Theme) =>
+    StyleSheet.create({
     subtitle: {
         fontSize: 15,
-        color: '#444444',
+        color: theme.textSecondary,
         marginBottom: 20,
         textAlign: 'center',
         fontStyle: 'italic',

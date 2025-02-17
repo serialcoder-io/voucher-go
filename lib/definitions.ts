@@ -64,3 +64,9 @@ export type InputPasswordProps = {
     onChangeText: (e: string) => void;
     onPressIcon: () => void;
 }
+
+export type ThemeMode = 'auto' | 'dark' | 'light'
+export type Preferences = {
+    lang: string;
+    themeMode: ThemeMode;
+}

@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import {View, StyleSheet, Image, TouchableOpacity} from "react-native";
 import {Text, CheckBox} from "@rneui/themed";
 import {useGlobalStyles} from "@/styles/global";
-import { useRouter } from "expo-router";
+import {Link, useRouter} from "expo-router";
 import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
 import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
 import {useTheme} from "@/hooks/useTheme";
 import {commonColors} from "@/constants/Colors";
+import {Theme} from "@/lib/definitions";
 
 const LoginScreen = () => {
     const [username, setUsername] = useState("");
@@ -17,6 +18,8 @@ const LoginScreen = () => {
     const [secureTextEntry, setSecureTextEntry] = useState(true);
     const router = useRouter();
     const {theme} = useTheme();
+
+    const styles = getstyles(theme)
 
     const handleLogin = () => {
         if (username && password) {
@@ -79,17 +82,16 @@ const LoginScreen = () => {
                 width='95%'
             />
 
-            <TouchableOpacity onPress={() => router.push("/signup")}>
-                <Text style={{marginTop: 15, fontSize: 15, color: theme.textSecondary}}>
-                    Don't have an account ?
-                    <Text style={{color: commonColors.primaryColor, fontWeight: "bold",}}> Sign Up</Text>
-                </Text>
-            </TouchableOpacity>
+            <Link href='/signup' style={styles.signupText}>
+                Don't have an account ?
+                <Text style={{fontWeight: "bold", color: commonColors.primaryColor}}> Sign Up</Text>
+            </Link>
         </ParentContainer>
     );
 };
 
-const styles = StyleSheet.create({
+const getstyles = (theme: Theme) =>
+    StyleSheet.create({
     logo: {
         width: 120,
         height: 120,
@@ -112,6 +114,11 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 14,
         marginRight: 10
+    },
+    signupText: {
+        marginTop: 16,
+        fontSize: 15,
+        color: theme.textSecondary,
     },
 });
 
