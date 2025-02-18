@@ -15,7 +15,7 @@ function SectionTitle({title, iconName}: SectionTitleProps) {
     const currentStyles = styles(theme);
     return (
         <View style={currentStyles.sectionTitle}>
-            <Icon name={iconName} type='material' size={20} style={globalStyles.icon} color={theme.textPrimary} />
+            <Icon name={iconName} type='material' size={23} style={globalStyles.icon} color={theme.textSecondary} />
             <Text style={currentStyles.sectionTitleText}>{title}</Text>
         </View>
 
@@ -36,8 +36,8 @@ const styles = (theme: Theme) => StyleSheet.create({
         paddingLeft: 10
     },
     sectionTitleText: {
-        fontSize: 16,
+        fontSize: 17,
         fontWeight: '100',
-        color: theme.textPrimary
+        color: theme.textSecondary
     },
 });

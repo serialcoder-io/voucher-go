@@ -2,7 +2,7 @@ import React, { createContext, useState, useMemo, useEffect } from 'react';
 import { Appearance } from 'react-native';
 import { light, dark } from '@/constants/Colors';
 import {Theme} from '@/lib/definitions'
-import { getPreference, setPreference } from '@/lib/utils'
+import { getPreference } from '@/lib/utils'
 
 type ThemeMode = 'auto' | 'dark' | 'light';
 

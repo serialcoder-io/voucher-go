@@ -1,7 +1,8 @@
 import { Button } from "@rneui/themed";
 import React from "react";
-import {useGlobalStyles} from "@/styles/global";
 import {PrimaryButtonProps} from "@/lib/definitions";
+import {StyleSheet} from "react-native";
+import {commonColors} from "@/constants/Colors";
 
 function PrimaryButton({
    title,
@@ -16,12 +17,29 @@ function PrimaryButton({
             title={title}
             loading={loading}
             loadingProps={{ size: 'small', color: 'white' }}
-            buttonStyle={useGlobalStyles().primaryButtonStyle}
+            buttonStyle={buttonStyles.primaryButtonStyle}
             titleStyle={{ fontSize: 20 }}
-            containerStyle={[useGlobalStyles().buttonContainer, { width }]}
+            containerStyle={[buttonStyles.buttonContainer, { width }]}
             onPress={actionOnPress}
         />
     );
 }
 
 export default PrimaryButton;
+
+
+const buttonStyles = StyleSheet.create({
+    primaryButtonStyle: {
+        backgroundColor: commonColors.primaryColor,
+        width: '100%',
+        paddingVertical: 8,
+        borderRadius: 10,
+        elevation: 6
+    },
+    buttonContainer: {
+        marginHorizontal: 50,
+        height: 50,
+        width: '95%',
+        marginVertical: 0,
+    },
+});

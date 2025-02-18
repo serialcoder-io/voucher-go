@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import {View, Text, StyleSheet, Image, TextInput} from "react-native";
 //import { Link } from "expo-router";
 import {useRouter} from "expo-router";
 import PrimaryButton from "@/components/ui/primary-button";
 import { SafeAreaView } from "react-native-safe-area-context";
+import {Input} from '@rneui/themed'
 
 export default function WelcomeScreen() {
     const router = useRouter();

@@ -15,14 +15,15 @@ export const light: Theme = {
     icon: '#3f3f3f',
     tabIconDefault: '#626262',
 }
-//#232a2f
+//background: '#090e17',
+//backgroundSecondary: '#181c2f', rgb(27, 37, 51)
 
 export const dark: Theme = {
     mode: 'dark',
-    background: '#000218',
-    backgroundSecondary: '#0c131f',
-    textPrimary: '#bdc0de',
-    textSecondary: '#7a7c8f',
+    background: 'rgb(21,29,40)',
+    backgroundSecondary: 'rgb(5,20,37)',
+    textPrimary: '#d6d9fa',
+    textSecondary: '#9698af',
     icon: '#ffffff',
     tabIconDefault: '#dee4e7',
 }

@@ -31,12 +31,14 @@ const getStyles = (theme: Theme) =>
         input: {
             backgroundColor: theme.backgroundSecondary,
             padding: 12,
+            fontSize: 16,
             color: theme.textPrimary,
             borderRadius: 5,
             width: "100%",
             marginBottom: 10,
-            borderWidth: 0.5,
+            borderWidth: 0.1,
             borderColor: theme.textSecondary,
+            elevation: 8,
         },
     });
 

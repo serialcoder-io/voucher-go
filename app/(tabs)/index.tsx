@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, TextInput, Pressable} from 'react-native';
+import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, Pressable} from 'react-native';
 import { Text, Icon, Card, Button, Divider } from '@rneui/themed';
 import BorderedInput from "@/components/ui/bordered-input";
 import PrimaryButton from "@/components/ui/primary-button";
@@ -133,22 +133,24 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         alignItems: 'center',
     },
     card: {
-        borderWidth: 0.3,
+        borderWidth: 0,
         borderRadius: 10,
         marginBottom: 15,
         paddingVertical: 20,
         width: '100%',
         backgroundColor: theme.backgroundSecondary,
+        elevation: 6
     },
     storeCard: {
         borderLeftWidth: 5,
-        borderRightWidth: 0.3,
-        borderTopWidth: 0.3,
-        borderBottomWidth: 0.3,
+        borderRightWidth: 0,
+        borderTopWidth: 0,
+        borderBottomWidth: 0,
         borderLeftColor: commonColors.primaryColor,
         paddingVertical: 15,
         width: '100%',
         backgroundColor: theme.backgroundSecondary,
+        elevation: 6
     },
     storeName: {
         fontSize: 20,
@@ -203,8 +205,9 @@ const getCheckStyles = (theme: Theme) => {
             backgroundColor: theme.backgroundSecondary,
             ...useGlobalStyles().center,
             width: '100%',
-            borderWidth: 0.3, borderRadius: 10,
+            borderWidth: 0, borderRadius: 10,
             borderColor: theme.textSecondary,
+            elevation: 6
         },
         showInputRefBtn:{
             width:'100%',

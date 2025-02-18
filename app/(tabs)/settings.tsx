@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet} from 'react-native';
+import {ScrollView, View, StatusBar, StyleSheet} from 'react-native';
 import { Card, Divider } from '@rneui/themed';
 import CustomPressable from "@/components/ui/custom-pressable";
 import ThemeOptions from "@/components/ui/settings/theme-options";
@@ -62,6 +62,7 @@ function Settings() {
                 <Card containerStyle={currentStyles.card}>
                     <ThemeOptions label='Automatique' value='auto' icon='contrast' type='material' themeMode={themeMode} setTheme={changeThemeMode} />
                     <Divider />
+                    <View style={{width: '100%'}}></View>
                     <ThemeOptions label='Light' value='light' icon='sun' type='feather' themeMode={themeMode} setTheme={changeThemeMode} />
                     <Divider />
                     <ThemeOptions label='Dark' value='dark' icon='moon' type='feather' themeMode={themeMode} setTheme={changeThemeMode} />
@@ -94,10 +95,11 @@ const styles = (theme: Theme) => StyleSheet.create({
         width: '100%',
     },
     card: {
-        borderWidth: 0.2,
+        borderWidth: 0,
         borderRadius: 10,
         width: '100%',
-        backgroundColor: theme.backgroundSecondary
+        backgroundColor: theme.backgroundSecondary,
+        elevation: 6
     },
     optionRow: {
         flexDirection: 'row',
