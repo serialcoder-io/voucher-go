@@ -7,7 +7,9 @@ import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
 import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
+import {useTheme} from "@/hooks/useTheme";
 import {commonColors} from "@/constants/Colors";
+import {Theme} from "@/lib/definitions";
 
 const LoginScreen = () => {
     const [username, setUsername] = useState("");
@@ -15,6 +17,9 @@ const LoginScreen = () => {
     const [checked, setChecked] = useState(false);
     const [secureTextEntry, setSecureTextEntry] = useState(true);
     const router = useRouter();
+    const {theme} = useTheme();
+
+    const styles = getstyles(theme)
 
     const handleLogin = () => {
         if (username && password) {
@@ -28,14 +33,13 @@ const LoginScreen = () => {
         }
     };
 
-
     return (
         <ParentContainer width='90%'>
             {/* Logo */}
             <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
             {/* title */}
             <Text h3 style={useGlobalStyles().title}>Welcome Back</Text>
-            <Text style={useGlobalStyles().textSecondary}>Login to continue</Text>
+            <Text style={{fontSize: 15, marginBottom: 20, color: theme.textSecondary}}>Login to continue</Text>
 
             {/* Username field */}
 
@@ -60,9 +64,9 @@ const LoginScreen = () => {
                 <CheckBox
                     checked={checked}
                     onPress={() => setChecked(!checked)}
-                    title="Keep me signed infhghfh"
+                    title="Keep me signed in"
+                    textStyle={useGlobalStyles().textSecondary}
                     containerStyle={styles.checkboxContainer}
-                    textStyle={{ color: 'white', fontWeight: 'normal' }}
                     checkedColor="#4c8bf5"
                 />
                 <TouchableOpacity onPress={() => router.push("/reset-password")}>
@@ -78,43 +82,44 @@ const LoginScreen = () => {
                 width='95%'
             />
 
-            <Link href='/signup' style={styles.signupText}>
+            <Link href='../register' style={styles.signupText}>
                 Don't have an account ?
-                <Text style={{fontWeight: "bold", color: commonColors.primaryColor}}>Sign Up</Text>
+                <Text style={{fontWeight: "bold", color: commonColors.primaryColor}}> Sign Up</Text>
             </Link>
         </ParentContainer>
     );
 };
 
-const styles = StyleSheet.create({
-    logo: {
-        width: 120,
-        height: 120,
-        marginBottom: 10,
-        resizeMode: "contain",
-    },
-    optionsContainer: {
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: 10,
-    },
-    checkboxContainer: {
-        backgroundColor: "transparent",
-        borderWidth: 0,
-    },
-    forgotPassword: {
-        color: "#4c8bf5",
-        fontWeight: "bold",
-        fontSize: 14,
-        marginRight: 10
-    },
-    signupText: {
-        marginTop: 15,
-        fontSize: 14,
-        color: "#333",
-    },
-});
+const getstyles = (theme: Theme) =>
+    StyleSheet.create({
+        logo: {
+            width: 120,
+            height: 120,
+            marginBottom: 10,
+            resizeMode: "contain",
+        },
+        optionsContainer: {
+            width: "100%",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 10,
+        },
+        checkboxContainer: {
+            backgroundColor: "transparent",
+            borderWidth: 0,
+        },
+        forgotPassword: {
+            color: commonColors.primaryColor,
+            fontWeight: "bold",
+            fontSize: 14,
+            marginRight: 10
+        },
+        signupText: {
+            marginTop: 16,
+            fontSize: 15,
+            color: theme.textSecondary,
+        },
+    });
 
 export default LoginScreen;

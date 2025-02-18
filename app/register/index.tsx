@@ -96,7 +96,7 @@ const SignupScreen = () => {
                 width='95%'
             />
 
-            <Link href='/' style={{...useGlobalStyles().textSecondary, marginTop: 10, fontSize: 15}}>
+            <Link href='../login' style={{...useGlobalStyles().textSecondary, marginTop: 10, fontSize: 15}}>
                 Already a member ? <Text style={{color: commonColors.primaryColor, fontWeight: 'bold'}}>Login</Text>
             </Link>
         </ParentContainer>

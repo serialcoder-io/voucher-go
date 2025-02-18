@@ -1,6 +1,7 @@
 import {Pressable} from "react-native";
 import {Avatar} from "@rneui/base";
 import * as React from "react";
+import {commonColors} from "@/constants/Colors";
 
 function HeaderRightAvatar(){
     return (
@@ -11,7 +12,7 @@ function HeaderRightAvatar(){
                 size={40}
                 rounded
                 title="A"
-                containerStyle={{ backgroundColor: "#4c8bf5" }}
+                containerStyle={{ backgroundColor: commonColors.primaryColor }}
             />
 
         </Pressable>

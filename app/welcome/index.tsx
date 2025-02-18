@@ -1,12 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-//import { Link } from "expo-router";
-import {useRouter} from "expo-router";
-import PrimaryButton from "@/components/ui/primary-button";
+import { Button } from "@rneui/themed";
+import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function WelcomeScreen() {
-    const router = useRouter();
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.logoContainer}>
@@ -20,10 +18,11 @@ export default function WelcomeScreen() {
             <Text style={styles.subText}>
                 Create an account and access thousand of cool stuffs
             </Text>
-            <PrimaryButton
+            <Button
                 title="Get Started"
-                actionOnPress={() =>router.push("/login")}
-                width='70%'
+                buttonStyle={styles.getStartedButton}
+                titleStyle={styles.getStartedText}
+                onPress={() => {}}
             />
         </SafeAreaView>
     );
@@ -40,7 +39,7 @@ const styles = StyleSheet.create({
         marginBottom: 40,
     },
     logo: {
-        width: 130,
+        width: 100,
         height: 100,
     },
     welcomeText: {

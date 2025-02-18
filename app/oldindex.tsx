@@ -13,7 +13,7 @@ const WelcomeScreen = () => {
                 if(firstLaunch){
                     router.push("/(pin-code)/pinSetup");
                 }else{
-                    router.push("/login");
+                    router.push("/");
                 }
             }, 2000);
 

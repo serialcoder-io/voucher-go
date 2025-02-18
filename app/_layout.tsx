@@ -18,14 +18,14 @@ function RootNavigator() {
                     headerShown: false,
                 }}
             />
-            {/*<Stack.Screen
-                  name="login"
+            <Stack.Screen
+                  name="login/index"
                   options={{
                       headerShown: false,
                   }}
-              />*/}
+              />
             <Stack.Screen
-                name="signup"
+                name="register/index"
                 options={{
                     headerShown: true,
                     headerTitle: "Register",
@@ -35,8 +35,12 @@ function RootNavigator() {
                     headerTintColor: theme.textPrimary,
                 }}
             />
+
+            {/* welcom screen only displayed on first lunch */}
+            <Stack.Screen name="welcom/index" options={{ headerShown: false,}}/>
+
             <Stack.Screen
-                name="reset-password"
+                name="reset-password/index"
                 options={{
                     headerShown: true,
                     headerTitle: "Reset password",
