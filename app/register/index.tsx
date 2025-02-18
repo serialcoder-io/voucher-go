@@ -103,6 +103,9 @@ const SignupScreen = () => {
     );
 };
 
+export default SignupScreen;
+
+
 const styles = StyleSheet.create({
     logo: {
         width: 100,
@@ -112,4 +115,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SignupScreen;
+

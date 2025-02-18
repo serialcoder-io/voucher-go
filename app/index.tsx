@@ -18,7 +18,7 @@ export default function WelcomeScreen() {
             </View>
             <Text style={styles.welcomeText}>Welcome To</Text>
             <Text style={styles.subText}>
-                Create an account and access thousand of cool stuffs
+                Please press the button below to begin the setup process for the app.
             </Text>
             <PrimaryButton
                 title="Get Started"
@@ -49,26 +49,9 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     subText: {
-        fontSize: 16,
+        fontSize: 15,
         textAlign: "center",
         marginBottom: 30,
         paddingHorizontal: 20,
-    },
-    getStartedButton: {
-        backgroundColor: "#00509E",
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-    },
-    getStartedText: {
-        fontSize: 18,
-    },
-    loginText: {
-        marginTop: 20,
-        fontSize: 14,
-    },
-    loginLink: {
-        color: "#00509E",
-        fontWeight: "bold",
     },
 });

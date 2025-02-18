@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {View, StyleSheet, Image, TouchableOpacity} from "react-native";
+import {View, Image, TouchableOpacity} from "react-native";
 import {Text, CheckBox} from "@rneui/themed";
 import {useGlobalStyles} from "@/styles/global";
 import {Link, useRouter} from "expo-router";
@@ -9,7 +9,7 @@ import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
 import {useTheme} from "@/hooks/useTheme";
 import {commonColors} from "@/constants/Colors";
-import {Theme} from "@/lib/definitions";
+import {getstyles} from "./styles";
 
 const LoginScreen = () => {
     const [username, setUsername] = useState("");
@@ -89,37 +89,5 @@ const LoginScreen = () => {
         </ParentContainer>
     );
 };
-
-const getstyles = (theme: Theme) =>
-    StyleSheet.create({
-        logo: {
-            width: 120,
-            height: 120,
-            marginBottom: 10,
-            resizeMode: "contain",
-        },
-        optionsContainer: {
-            width: "100%",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: 10,
-        },
-        checkboxContainer: {
-            backgroundColor: "transparent",
-            borderWidth: 0,
-        },
-        forgotPassword: {
-            color: commonColors.primaryColor,
-            fontWeight: "bold",
-            fontSize: 14,
-            marginRight: 10
-        },
-        signupText: {
-            marginTop: 16,
-            fontSize: 15,
-            color: theme.textSecondary,
-        },
-    });
 
 export default LoginScreen;
