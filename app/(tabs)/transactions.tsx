@@ -3,10 +3,11 @@ import {Text} from "@rneui/themed"
 import {getPreference} from "@/lib/utils";
 import {useState, useEffect} from "react";
 import {Preferences} from "@/lib/definitions";
+import {useTheme} from "@/hooks/useTheme";
 
 function Transactions(){
     const [prefs, setPrefs] = useState<Preferences | null>(null);
-
+    const {themeMode, theme} = useTheme();
     useEffect(() => {
         const getPrefs = async() =>{
             try {
@@ -21,10 +22,11 @@ function Transactions(){
             }
         }
         getPrefs()
-    }, []);
+    }, [theme, themeMode]);
     return (
         <View>
             <Text>{prefs ? JSON.stringify(prefs) : 'No preferences found'}</Text>
+            <Text>{JSON.stringify(theme)}</Text>
         </View>
     )
 }

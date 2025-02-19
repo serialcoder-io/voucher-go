@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import {Theme} from "@/lib/definitions";
+import {useTheme} from "@/hooks/useTheme";
 
 function PinLoginScreen() {
     const [pin, setPin] = useState(['', '', '', '']);
-
+    const {theme} = useTheme();
     const handlePinChange = (value: string, index: number) => {
         const newPin = [...pin];
         newPin[index] = value;
         setPin(newPin);
     };
-
+    const styles = currentstyles(theme)
     return (
         <View style={styles.container}>
             {/* Logo */}
@@ -41,12 +43,12 @@ function PinLoginScreen() {
     );
 }
 
-const styles = StyleSheet.create({
+const currentstyles = (theme: Theme) => StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5F5F5',
+        backgroundColor: theme.background,
         padding: 16,
     },
     logo: {
@@ -57,12 +59,12 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#000',
+        color: theme.textPrimary,
         marginBottom: 8,
     },
     subtitle: {
         fontSize: 16,
-        color: '#5E5E5E',
+        color: theme.textSecondary,
         marginBottom: 20,
     },
     pinContainer: {
@@ -75,15 +77,16 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderWidth: 1,
-        borderColor: '#D0D0D0',
+        borderColor: theme.backgroundSecondary,
+        color: theme.textPrimary,
         borderRadius: 10,
         textAlign: 'center',
         fontSize: 24,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: theme.backgroundSecondary,
     },
     forgotPin: {
         fontSize: 14,
-        color: '#5E5E5E',
+        color: theme.textPrimary,
         marginTop: 10,
     },
 });

@@ -6,7 +6,7 @@ import {useGlobalStyles} from "@/styles/global";
 
 
 function LanguageOption({ label, value }: {label: string, value: string}) {
-    const [language, setLanguage] = useState('FR');
+    const [language, setLanguage] = useState('fr');
     const {theme} = useTheme();
     return (
         <TouchableOpacity onPress={() => setLanguage(value)} style={styles.optionRow}>

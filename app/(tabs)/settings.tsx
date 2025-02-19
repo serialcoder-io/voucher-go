@@ -8,15 +8,16 @@ import {Theme, ThemeMode} from '@/lib/definitions'
 import SectionTitle from "@/components/ui/section-title";
 import LanguageOption from "@/components/ui/settings/lang-option";
 import {setPreference} from "@/lib/utils";
+import {useRouter} from "expo-router";
 
 function Settings() {
     const [showProfileSettingss, setShowProfileSettings] = useState(false);
     const { themeMode, setThemeMode, theme } = useTheme();
     const currentStyles = styles(theme);
-
-    const changeThemeMode = async(theme: ThemeMode) => {
-        setThemeMode(theme)
-        await setPreference('themeMode', theme)
+    const router = useRouter();
+    const changeThemeMode = async(newThemeMode: ThemeMode) => {
+        setThemeMode(newThemeMode)
+        await setPreference('themeMode', newThemeMode)
     }
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -51,7 +52,9 @@ function Settings() {
                         )}
                     </View>
                     <Divider />
-                    <CustomPressable text='Pin' iconName='lock' iconType='feather' />
+                    <CustomPressable
+                        text='Pin' iconName='lock'
+                        iconType='feather' onPress={()=>router.push('../(pin-code)/lockScreen')} />
                     <Divider />
                     <CustomPressable text='About shop' iconName='info' iconType='feather' />
                 </Card>
@@ -72,9 +75,9 @@ function Settings() {
                 <SectionTitle title='Langues' iconName='translate' />
                 {/* language options*/}
                 <Card containerStyle={currentStyles.card}>
-                    <LanguageOption label='French' value='FR' />
+                    <LanguageOption label='French' value='fr' />
                     <Divider />
-                    <LanguageOption label='English' value='EN' />
+                    <LanguageOption label='English' value='en' />
                 </Card>
             </View>
         </ScrollView>

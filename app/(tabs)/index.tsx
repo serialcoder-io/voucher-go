@@ -7,6 +7,7 @@ import {useTheme} from "@/hooks/useTheme";
 import {Theme} from "@/lib/definitions";
 import {useGlobalStyles} from "@/styles/global";
 import {commonColors} from "@/constants/Colors";
+import {useRouter} from "expo-router";
 
 function Home() {
     const [reference, setReference] = useState('VR-00000123/100');
@@ -23,6 +24,8 @@ function Home() {
 
     const checkStyles = getCheckStyles(theme);
     const styles = getStyles(theme);
+
+    const router = useRouter();
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -114,6 +117,7 @@ function Home() {
                         type='outline'
                         buttonStyle={styles.cancelButton}
                         titleStyle={{color: theme.textPrimary}}
+                        onPress={() => router.push('../(login)')}
                     />
                 </Card>
             </View>

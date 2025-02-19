@@ -34,7 +34,6 @@ const buttonStyles = StyleSheet.create({
         width: '100%',
         paddingVertical: 8,
         borderRadius: 10,
-        elevation: 6
     },
     buttonContainer: {
         marginHorizontal: 50,

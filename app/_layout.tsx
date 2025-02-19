@@ -4,7 +4,7 @@ import {ThemeProvider} from '@/store/theme';
 import {useTheme} from "@/hooks/useTheme";
 
 function RootNavigator() {
-    const { theme } = useTheme();
+    const { themeMode, theme } = useTheme();
 
     return (
         <Stack
@@ -18,38 +18,8 @@ function RootNavigator() {
                     headerShown: false,
                 }}
             />
-            <Stack.Screen
-                  name="login/index"
-                  options={{
-                      headerShown: false,
-                  }}
-              />
-            <Stack.Screen
-                name="register/index"
-                options={{
-                    headerShown: true,
-                    headerTitle: "Register",
-                    headerStyle: {
-                        backgroundColor: theme.backgroundSecondary,
-                    },
-                    headerTintColor: theme.textPrimary,
-                }}
-            />
-
             {/* welcom screen only displayed on first lunch */}
-            <Stack.Screen name="welcom/index" options={{ headerShown: false,}}/>
-
-            <Stack.Screen
-                name="reset-password/index"
-                options={{
-                    headerShown: true,
-                    headerTitle: "Reset password",
-                    headerStyle: {
-                        backgroundColor: theme.backgroundSecondary,
-                    },
-                    headerTintColor: theme.textPrimary,
-                }}
-            />
+            <Stack.Screen name="welcome/index" options={{ headerShown: false,}}/>
         </Stack>
     );
 }
