@@ -1,10 +1,8 @@
 import { Stack } from "expo-router";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {ThemeProvider} from '@/store/theme';
-import {useTheme} from "@/hooks/useTheme";
 
 function RootNavigator() {
-    const { themeMode, theme } = useTheme();
 
     return (
         <Stack

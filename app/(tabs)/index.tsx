@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, Pressable} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, Pressable, BackHandler} from 'react-native';
 import { Text, Icon, Card, Button, Divider } from '@rneui/themed';
 import BorderedInput from "@/components/ui/bordered-input";
 import PrimaryButton from "@/components/ui/primary-button";
@@ -11,7 +11,6 @@ import {useRouter} from "expo-router";
 
 function Home() {
     const [reference, setReference] = useState('VR-00000123/100');
-    const [amount, setAmount] = useState('1000 Rs');
     const [showInput, setShowInput] = useState(false);
     const [tillNo, setTillNo] = useState('');
     const {theme} = useTheme();
@@ -83,7 +82,7 @@ function Home() {
                 <Card containerStyle={styles.card}>
                     <Text style={styles.refText}>Ref: {reference}</Text>
                     <View style={styles.amountRow}>
-                        <Text style={styles.amountText}>Amount : {amount}</Text>
+                        <Text style={styles.amountText}>Amount : 1000 Rs</Text>
                         <Icon name='check-circle' type='feather' color='green' />
                     </View>
                     <Divider />
@@ -117,7 +116,7 @@ function Home() {
                         type='outline'
                         buttonStyle={styles.cancelButton}
                         titleStyle={{color: theme.textPrimary}}
-                        onPress={() => router.push('../(login)')}
+                        onPress={() => router.push('../(auth)')}
                     />
                 </Card>
             </View>

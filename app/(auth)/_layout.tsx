@@ -1,18 +1,20 @@
-import { Stack } from "expo-router";
+import {Stack} from "expo-router";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import {ThemeProvider} from '@/store/theme';
-import {useTheme} from "@/hooks/useTheme";
+import { ThemeProvider } from '@/store/theme';
+import { useTheme } from "@/hooks/useTheme";
 
 function RootNavigator() {
     const { themeMode, theme } = useTheme();
+    const themeKey = themeMode === 'auto' ? themeMode : 'fixed';
+
     return (
         <Stack
+            key={themeKey}
             screenOptions={{
                 headerShown: false,
             }}
         >
             <Stack.Screen
-                key={themeMode}
                 name="index"
                 options={{
                     headerShown: false,
@@ -29,7 +31,6 @@ function RootNavigator() {
                     headerTintColor: theme.textPrimary,
                 }}
             />
-
             <Stack.Screen
                 name="reset-password"
                 options={{
