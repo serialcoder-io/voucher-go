@@ -21,7 +21,7 @@ function RootNavigator() {
                 }}
             />
             <Stack.Screen
-                name="(profile)/account-settings"
+                name="profile/account"
                 options={{
                     headerShown: true,
                     headerTitle: "Account Settings",
@@ -32,7 +32,7 @@ function RootNavigator() {
                 }}
             />
             <Stack.Screen
-                name="(profile)/profile-infos"
+                name="profile/profile"
                 options={{
                     headerShown: true,
                     headerTitle: "Personal informations",

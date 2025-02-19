@@ -28,10 +28,19 @@ type Jwt = {
     refresh_token: string;
 };
 
+interface User{
+    id: number;
+    first_name?: string;
+    last_name?: string;
+    email: string;
+    username: string;
+}
+
 interface AuthState {
     tokens: Jwt;
     setToken: (key: TokenName, token: string) => void;
     clearToken: () => void;
+    user?: User | null;
 }
 
 export const useAuthStore = createSelectors(
@@ -41,6 +50,8 @@ export const useAuthStore = createSelectors(
                 access_token: '',
                 refresh_token: '',
             },
+            user: null,
+
             setToken: async (key: TokenName, token: string) => {
                 set((state) => {
                     state.tokens[key] = token;

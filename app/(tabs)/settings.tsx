@@ -19,7 +19,8 @@ function Settings() {
         setThemeMode(newThemeMode)
         await setPreference('themeMode', newThemeMode)
     }
-    type AllowedUrls = "../(profile)/account-settings" | "../(profile)/profile-infos"
+
+    type AllowedUrls = "../profile/account" | "../profile/profile"
     const navigate = (url: AllowedUrls) => {
         if(showProfileSettingss) {
             setShowProfileSettings(false);
@@ -49,14 +50,14 @@ function Settings() {
                                     text='Account settings'
                                     iconName='user'
                                     iconType='feather'
-                                    onPress={() => navigate('../(profile)/account-settings')}
+                                    onPress={() => navigate('../profile/account')}
                                 />
                                 <Divider />
                                 <CustomPressable
                                     text='Personal informations'
                                     iconName='info'
                                     iconType='feather'
-                                    onPress={() => navigate('../(profile)/profile-infos')}
+                                    onPress={() => navigate('../profile/profile')}
                                 />
                             </View>
                         )}
@@ -64,7 +65,7 @@ function Settings() {
                     <Divider />
                     <CustomPressable
                         text='Pin' iconName='lock'
-                        iconType='feather' onPress={()=>router.push('../(pin-code)/lockScreen')} />
+                        iconType='feather' onPress={()=>router.push('../pin/lockScreen')} />
                     <Divider />
                     <CustomPressable text='About shop' iconName='info' iconType='feather' />
                 </Card>

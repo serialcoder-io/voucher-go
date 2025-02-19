@@ -71,7 +71,7 @@ const LoginScreen = () => {
                     containerStyle={styles.checkboxContainer}
                     checkedColor="#4c8bf5"
                 />
-                <TouchableOpacity onPress={() => router.push("/reset-password")}>
+                <TouchableOpacity onPress={() => router.push("/auth/reset-password")}>
                     <Text style={styles.forgotPassword}>Forgot password?</Text>
                 </TouchableOpacity>
             </View>
@@ -84,7 +84,7 @@ const LoginScreen = () => {
                 width='95%'
             />
 
-            <Link href='/register' style={styles.signupText}>
+            <Link href='/auth/register' style={styles.signupText}>
                 Don't have an account ?
                 <Text style={{fontWeight: "bold", color: commonColors.primaryColor}}> Sign Up</Text>
             </Link>

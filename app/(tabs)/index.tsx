@@ -126,7 +126,7 @@ function Home() {
                         type='outline'
                         buttonStyle={styles.cancelButton}
                         titleStyle={{color: theme.textPrimary}}
-                        onPress={() => router.push('../(auth)')}
+                        onPress={() => router.push('../auth')}
                     />
                 </Card>
             </View>

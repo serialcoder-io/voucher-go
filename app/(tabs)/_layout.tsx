@@ -7,7 +7,7 @@ import HeaderRightAvatar from "@/components/ui/_layout/headerRight-avatar";
 import { ThemeProvider } from "@/store/theme";
 import { useTheme } from "@/hooks/useTheme";
 import { Theme } from '@/lib/definitions';
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 
 function TabBarLabel({ focused, theme, text }: { focused: boolean, theme: Theme, text: string }) {
     return (

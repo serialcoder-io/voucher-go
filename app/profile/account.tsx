@@ -1,7 +1,7 @@
 import {ScrollView, View, Text} from "react-native";
 import {useAuthStore} from "@/store/AuthStore";
 
-function AccountSettings(){
+function Account(){
     const access_token = useAuthStore.use.tokens().access_token
     const refresh_token = useAuthStore.use.tokens().refresh_token
     const trimed_token = access_token.trim().length > 0
@@ -23,4 +23,4 @@ function AccountSettings(){
     )
 }
 
-export default AccountSettings
+export default Account
