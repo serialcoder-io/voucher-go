@@ -19,6 +19,14 @@ function Settings() {
         setThemeMode(newThemeMode)
         await setPreference('themeMode', newThemeMode)
     }
+    type AllowedUrls = "../(profile)/account-settings" | "../(profile)/profile-infos"
+    const navigate = (url: AllowedUrls) => {
+        if(showProfileSettingss) {
+            setShowProfileSettings(false);
+        }
+        router.push(url);
+    }
+
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={currentStyles.container}>
@@ -38,15 +46,17 @@ function Settings() {
                             <View style={currentStyles.profileSettinDropdown}>
                                 <Divider />
                                 <CustomPressable
-                                    text='Account'
+                                    text='Account settings'
                                     iconName='user'
                                     iconType='feather'
+                                    onPress={() => navigate('../(profile)/account-settings')}
                                 />
                                 <Divider />
                                 <CustomPressable
                                     text='Personal informations'
                                     iconName='info'
                                     iconType='feather'
+                                    onPress={() => navigate('../(profile)/profile-infos')}
                                 />
                             </View>
                         )}
