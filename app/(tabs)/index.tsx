@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, Pressable, BackHandler} from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, Pressable, Modal} from 'react-native';
 import { Text, Icon, Card, Button, Divider } from '@rneui/themed';
 import BorderedInput from "@/components/ui/bordered-input";
 import PrimaryButton from "@/components/ui/primary-button";
@@ -15,6 +15,7 @@ function Home() {
     const [tillNo, setTillNo] = useState('');
     const {theme} = useTheme();
     const [loading, setLoading] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
 
     const handleCheck = () => {
         console.log("Checking reference:", reference);
@@ -29,6 +30,15 @@ function Home() {
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                >
+                    <View>
+                        <Text>OK</Text>
+                    </View>
+                </Modal>
                 <StatusBar barStyle='dark-content' backgroundColor='white' />
                 <Card containerStyle={[styles.card, styles.storeCard]}>
                     <Text style={styles.storeName}>Intermart</Text>

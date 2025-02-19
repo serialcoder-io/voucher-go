@@ -7,7 +7,7 @@ import HeaderRightAvatar from "@/components/ui/_layout/headerRight-avatar";
 import { ThemeProvider } from "@/store/theme";
 import { useTheme } from "@/hooks/useTheme";
 import { Theme } from '@/lib/definitions';
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 
 function TabBarLabel({ focused, theme, text }: { focused: boolean, theme: Theme, text: string }) {
     return (
@@ -24,7 +24,7 @@ function RootNavigator() {
     useEffect(() => {
         // Fonction pour gérer le bouton retour
         const backAction = () => {
-            if (pathname === '/' || pathname === '/(tabs)/index') {
+            if (pathname === '/') {
                 // Affiche une alerte quand on est sur la page d'index
                 Alert.alert('Exit', 'Do you really want to exit?', [
                     {
@@ -77,7 +77,7 @@ function RootNavigator() {
                     headerShown: true,
                     title: 'Redemptions',
                     headerTintColor: theme.textPrimary,
-                    headerTitleStyle: { fontSize: 18, paddingLeft: 18, fontWeight: 'bold' },
+                    headerTitleStyle: { fontSize: 22, paddingLeft: 18, fontWeight: 'bold' },
                     headerStyle: { backgroundColor: theme.backgroundSecondary },
                     headerRight: () => <HeaderRightAvatar />,
                     tabBarIcon: ({ focused }) => (
@@ -94,7 +94,7 @@ function RootNavigator() {
                     headerShown: true,
                     title: 'Transactions',
                     headerTintColor: theme.textPrimary,
-                    headerTitleStyle: { fontSize: 18, paddingLeft: 18, fontWeight: 'bold' },
+                    headerTitleStyle: { fontSize: 22, paddingLeft: 18, fontWeight: 'bold' },
                     headerStyle: { backgroundColor: theme.backgroundSecondary },
                     headerRight: () => <HeaderRightAvatar />,
                     tabBarIcon: ({ focused }) => (
@@ -111,9 +111,8 @@ function RootNavigator() {
                     headerShown: true,
                     title: 'Settings',
                     headerTintColor: theme.textPrimary,
-                    headerTitleStyle: { fontSize: 18, paddingLeft: 18, fontWeight: 'bold' },
+                    headerTitleStyle: { fontSize: 25, paddingLeft: 18, fontWeight: 'bold' },
                     headerStyle: { backgroundColor: theme.backgroundSecondary },
-                    headerRight: () => <HeaderRightAvatar />,
                     tabBarIcon: ({ focused }) => (
                         <CustomTabBarIcon iconName={Platform.OS === 'ios' ? 'cog' : 'settings-outline'} color={theme.textPrimary} focused={focused} />
                     ),

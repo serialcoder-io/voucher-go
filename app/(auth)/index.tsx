@@ -1,8 +1,8 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {View, Image, TouchableOpacity} from "react-native";
+import React, {useState} from "react";
+import {View, Image, TouchableOpacity, Modal} from "react-native";
 import {Text, CheckBox} from "@rneui/themed";
 import {useGlobalStyles} from "@/styles/global";
-import {Link, useFocusEffect, useRouter} from "expo-router";
+import {Link, useRouter} from "expo-router";
 import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
 import ParentContainer from "@/components/parent-container";
@@ -10,8 +10,7 @@ import CustomInputText from "@/components/ui/custom-inputText";
 import {useTheme} from "@/hooks/useTheme";
 import {commonColors} from "@/constants/Colors";
 import {getstyles} from "./styles";
-import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
-import {ThemeMode} from "@/lib/definitions";
+
 
 const LoginScreen = () => {
     const [username, setUsername] = useState("");

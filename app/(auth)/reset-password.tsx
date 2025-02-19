@@ -9,7 +9,7 @@ import {Theme} from "@/lib/definitions";
 import {useTheme} from "@/hooks/useTheme";
 import {testStringRegEx} from '@/lib/utils'
 
-const LoginScreen = () => {
+const RsetPasswordScreen = () => {
     const [email, setEmail] = useState("");
     const {theme} = useTheme();
     const styles = getstyles(theme)
@@ -50,7 +50,7 @@ const LoginScreen = () => {
     );
 };
 
-export default LoginScreen;
+export default RsetPasswordScreen;
 
 
 const getstyles = (theme: Theme) =>
