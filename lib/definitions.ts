@@ -70,3 +70,9 @@ export type Preferences = {
     lang: string;
     themeMode: ThemeMode;
 }
+
+
+export type Jwt = {
+    access: string;
+    refresh: string;
+};

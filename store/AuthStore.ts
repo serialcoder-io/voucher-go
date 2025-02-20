@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import * as SecureStore from 'expo-secure-store';
 import { immer } from 'zustand/middleware/immer';
 import { StoreApi, UseBoundStore } from 'zustand'
+import {Jwt} from "@/lib/definitions";
 
 
 type WithSelectors<S> = S extends { getState: () => infer T }
@@ -21,12 +22,7 @@ const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
 }
 
 
-type TokenName = 'access_token' | 'refresh_token';
-
-type Jwt = {
-    access_token: string;
-    refresh_token: string;
-};
+export type TokenName = 'access' | 'refresh';
 
 interface User{
     id: number;
@@ -47,8 +43,8 @@ export const useAuthStore = createSelectors(
     create<AuthState>()(
         immer((set) => ({
             tokens: {
-                access_token: '',
-                refresh_token: '',
+                access: '',
+                refresh: '',
             },
             user: null,
 
@@ -60,8 +56,8 @@ export const useAuthStore = createSelectors(
             },
             clearToken: async () => {
                 set((state) => {
-                    state.tokens.access_token = '';
-                    state.tokens.refresh_token = '';
+                    state.tokens.access = '';
+                    state.tokens.refresh = '';
                 });
                 await SecureStore.deleteItemAsync('access_token');
                 await SecureStore.deleteItemAsync('refresh_token');

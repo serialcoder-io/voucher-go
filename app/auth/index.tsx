@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, Image, TouchableOpacity, Modal} from "react-native";
+import {View, Image, TouchableOpacity} from "react-native";
 import {Text, CheckBox} from "@rneui/themed";
 import {useGlobalStyles} from "@/styles/global";
 import {Link, useRouter} from "expo-router";
