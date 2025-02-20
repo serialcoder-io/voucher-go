@@ -127,6 +127,17 @@ export const useAuthStore = createSelectors(
                     console.error("Error clearing tokens:", error);
                 }
             },
+            cleanStore: async () => {
+                try {
+                    set((state) => {
+                        state.clearToken();
+                    });
+                    await asyncStorage.removeItem('username');
+                    console.log('All user data has been cleared successfully.');
+                } catch (error) {
+                    console.error('Error while cleaning tokens and user data:', error);
+                }
+            }
         }))
     )
 )

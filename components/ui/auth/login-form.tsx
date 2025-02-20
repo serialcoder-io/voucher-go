@@ -23,7 +23,7 @@ const LoginForm = ({
     secureTextEntry: boolean;
     setSecureTextEntry: (secureTextEntry: boolean) => void;
     loading: boolean;
-    handleSubmit: (event:React.SyntheticEvent<HTMLInputElement>) => void;
+    handleSubmit: () => void
 }) => {
     const {theme} = useTheme();
     const styles = getstyles(theme)
