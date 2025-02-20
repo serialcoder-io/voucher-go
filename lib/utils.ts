@@ -52,39 +52,3 @@ export async function getPreference(): Promise<Preferences | null> {
         return null;
     }
 }
-
-type loginResponse = {
-    results: Jwt | string,
-    http_status_code: number,
-}
-
-export async function Login(username: string, password: string): Promise<loginResponse> {
-    try {
-        const response = await fetch('http://127.0.0.1:8000/vms/auth/token/', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-        });
-
-        const data = await response.json();
-        if (!response.ok) {
-            return {
-                results: data.detail || 'Une erreur est survenue',
-                http_status_code: response.status,
-            };
-        }
-        return {
-            results: data as Jwt,
-            http_status_code: response.status,
-        };
-    } catch (e: unknown) {
-        if (e instanceof Error) {
-            throw e;
-        } else {
-            throw new Error('Sorry, something went wrong: ' + JSON.stringify(e));
-        }
-    }
-}

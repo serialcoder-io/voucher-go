@@ -24,7 +24,7 @@ function RootNavigator() {
     useEffect(() => {
         // Fonction pour gérer le bouton retour
         const backAction = () => {
-            if (pathname === '/') {
+
                 // Affiche une alerte quand on est sur la page d'index
                 Alert.alert('Exit', 'Do you really want to exit?', [
                     {
@@ -38,9 +38,6 @@ function RootNavigator() {
                     },
                 ]);
                 return true; // Empêche l'action de retour par défaut
-            }
-            // Si ce n'est pas l'écran index, on permet la navigation en arrière
-            return false;
         };
 
         // Ajouter l'écouteur pour le bouton retour

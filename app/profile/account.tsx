@@ -2,8 +2,8 @@ import {ScrollView, View, Text} from "react-native";
 import {useAuthStore} from "@/store/AuthStore";
 
 function Account(){
-    const access_token = useAuthStore.use.tokens().access_token
-    const refresh_token = useAuthStore.use.tokens().refresh_token
+    const access_token = useAuthStore.use.tokens().access
+    const refresh_token = useAuthStore.use.tokens().refresh
     const trimed_token = access_token.trim().length > 0
     return (
         <ScrollView>

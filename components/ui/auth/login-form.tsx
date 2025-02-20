@@ -10,52 +10,25 @@ import CustomInputText from "@/components/ui/custom-inputText";
 import {useTheme} from "@/hooks/useTheme";
 import {commonColors} from "@/constants/Colors";
 import {getstyles} from "./styles";
-import {login, LoginParams, loginResponse} from "@/lib/services/auth";
-import {useMutation} from "@tanstack/react-query";
-import {useAuthStore} from "@/store/AuthStore";
-import {Jwt} from "@/lib/definitions";
 
-const LoginScreen = () => {
+const LoginForm = ({
+    username, setUsername, password, setPassword, checked, setChecked, secureTextEntry, setSecureTextEntry, loading, handleSubmit,
+}:{
+    username: string;
+    password: string;
+    setUsername: (name: string) => void;
+    setPassword: (name: string) => void;
+    checked: boolean;
+    setChecked: (checked: boolean) => void;
+    secureTextEntry: boolean;
+    setSecureTextEntry: (secureTextEntry: boolean) => void;
+    loading: boolean;
+    handleSubmit: (event:React.SyntheticEvent<HTMLInputElement>) => void;
+}) => {
     const {theme} = useTheme();
     const styles = getstyles(theme)
-    const [username, setUsername] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [checked, setChecked] = useState(false);
-    const [secureTextEntry, setSecureTextEntry] = useState(true);
     const router = useRouter();
-    //const setToken = useAuthStore.use.setToken()
-    const setToken = useAuthStore((state)=> state.setToken)
 
-    const mutation = useMutation<loginResponse, Error, LoginParams>({
-        mutationFn: login,
-    }) ;
-
-    const handleSubmit = async () => {
-        try {
-            const result = await mutation.mutateAsync({ username, password });
-            switch (result.http_status_code) {
-                case 200:
-                    setUsername("")
-                    setPassword("")
-                    const tokens = result.results as Jwt
-                    setToken('access', tokens.access);
-                    setToken('refresh', tokens.refresh);
-                    router.push("/auth/redirect");
-                    break;
-                case 401:
-                    Alert.alert('Invalid credentials', 'invalid usename and/or password');
-                    break;
-                default:
-                    console.log(result.results)
-            }
-        } catch (error) {
-            console.error('Error posting data:', error);
-        }
-    };
-
-    if(true){
-        return <View><Text>Stored data are avalilable</Text></View>
-    }
     return (
         <ParentContainer width='90%'>
             {/* Logo */}
@@ -99,7 +72,7 @@ const LoginScreen = () => {
             <PrimaryButton
                 disabled={!username || !password}
                 title="Login"
-                loading={mutation.isPending}
+                loading={loading}
                 actionOnPress={handleSubmit}
                 width='95%'
             />
@@ -115,4 +88,4 @@ const LoginScreen = () => {
     );
 };
 
-export default LoginScreen;
+export default LoginForm;
