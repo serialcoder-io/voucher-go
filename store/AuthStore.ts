@@ -55,8 +55,7 @@ export const useAuthStore = createSelectors(
                         state.user = null;
                     });
                     await asyncStorage.removeItem('username');
-                    // Si tu utilises React Router ou un autre système de navigation, redirige l'utilisateur
-                    // router.push("/auth"); // Exemple avec React Router
+                    router.push("/auth");
                 } catch (error) {
                     console.error("Error signing out:", error);
                 }
@@ -99,6 +98,13 @@ export const useAuthStore = createSelectors(
                 set((state) =>{
                     if(state.user && state.user[key]){
                         state.user[key] = newValue;
+                    }
+                })
+            },
+            setLastLogin: (dateTime: string) => {
+                set((state) =>{
+                    if(state.user){
+                        state.user.last_login = dateTime;
                     }
                 })
             },

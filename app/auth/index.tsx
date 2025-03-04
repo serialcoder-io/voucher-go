@@ -1,32 +1,51 @@
-import React, {useState} from "react";
-import {View, Image, TouchableOpacity, Alert, StyleSheet} from "react-native";
-import {Text, CheckBox, Button} from "@rneui/themed";
-import {useGlobalStyles} from "@/styles/global";
-import {Link, useRouter} from "expo-router";
-import PrimaryButton from "@/components/ui/primary-button";
-import InputPassword from "@/components/ui/input-password";
-import ParentContainer from "@/components/parent-container";
-import CustomInputText from "@/components/ui/custom-inputText";
-import {useTheme} from "@/hooks/useTheme";
-import {commonColors} from "@/constants/Colors";
-import {getstyles} from "./styles";
+import React, {useState, useCallback, useEffect} from "react";
+import {View, Alert} from "react-native";
+import {Text} from "@rneui/themed";
+import {useRouter} from "expo-router";
 import {login, LoginParams, loginResponse} from "@/lib/services/auth";
 import {useMutation} from "@tanstack/react-query";
 import {useAuthStore} from "@/store/AuthStore";
 import {Jwt} from "@/lib/definitions";
 import LoginForm from "@/components/ui/auth/login-form";
-import {Avatar} from "@rneui/base";
+import {useQuery} from "@tanstack/react-query";
 
 const LoginScreen = () => {
-    const {theme} = useTheme();
-    const styles = getstyles(theme)
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [checked, setChecked] = useState(false);
     const [secureTextEntry, setSecureTextEntry] = useState(true);
-    const [isStoredData, setIsStoredData] = useState<boolean>(true);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const router = useRouter();
     const setToken = useAuthStore.use.setToken()
+    const accessToken = useAuthStore.use.tokens().access
+    const user = useAuthStore.use.user();
+    const initializeUser = useAuthStore.use.initializeUser()
+
+    const fetchUserData = useCallback(async () => {
+        try {
+            const response = await fetch("http://192.168.248.83:8000/vms/auth/users/me/",{
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            });
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            const userData = await response.json();
+            return userData;
+        }catch(err) {
+            console.log(err);
+        }
+    }, [user])
+
+    const { data, isLoading, isSuccess, error } = useQuery({
+        queryKey: ["userData"],
+        queryFn: fetchUserData,
+        enabled: isAuthenticated,
+    });
 
     const mutation = useMutation<loginResponse, Error, LoginParams>({
         mutationFn: login,
@@ -42,12 +61,14 @@ const LoginScreen = () => {
                     const tokens = result.results as Jwt
                     setToken('access', tokens.access);
                     setToken('refresh', tokens.refresh);
-                    router.push("/(tabs)");
+                    //router.push("/(tabs)");
+                    setIsAuthenticated(true);
                     break;
                 case 401:
                     Alert.alert('Invalid credentials', 'invalid usename and/or password');
                     break;
                 default:
+                    Alert.alert('Sorry, something went wrong, please try again later');
                     console.log(result.results)
             }
         } catch (error) {
@@ -55,39 +76,22 @@ const LoginScreen = () => {
         }
     };
 
-    if(isStoredData){
+    useEffect(() => {
+        if (isSuccess) {
+            initializeUser(data)
+            console.log(data)
+            router.push("/(tabs)");
+        }
+        if(error){
+            console.log(error)
+        }
+    }, [isSuccess, data, initializeUser, router]); // Ajout des dépendances
+
+
+    if(isLoading){
         return (
             <View style={{flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', paddingHorizontal: 30}}>
-                <View style={{width:'100%', flex: 0.6, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', rowGap: 45,}}>
-                    <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', rowGap: 15}}>
-                        <Avatar
-                            size={120}
-                            rounded
-                            title="A"
-                            titleStyle={{color: theme.textPrimary}}
-                            containerStyle={{ backgroundColor: theme.backgroundSecondary }}
-                        />
-                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Omar</Text>
-                    </View>
-                    <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', rowGap: 15, width: "100%"}}>
-                        <PrimaryButton
-                            title="Se connecter"
-                            actionOnPress={()=>console.log('logged in using stored date')}
-                        />
-                        <TouchableOpacity onPress={()=> setIsStoredData(false)}>
-                            <Text style={{fontSize: 16, fontWeight: '700', color: theme.textSecondary}}>Se connecter à un autre compte</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', width: "100%"}}>
-                    <Button
-                        title="create account"
-                        type="outline"
-                        titleStyle={{color: commonColors.primaryColor}}
-                        buttonStyle={{width: '100%', borderColor: commonColors.primaryColor, borderRadius: 10}}
-                        containerStyle={{width: '100%'}}
-                    />
-                </View>
+                <Text>Fetching user_data...</Text>
             </View>
         )
     }

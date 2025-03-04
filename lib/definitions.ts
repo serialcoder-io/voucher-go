@@ -84,4 +84,5 @@ export interface User{
     last_name?: string;
     email: string;
     username: string;
+    last_login?: string;
 }
