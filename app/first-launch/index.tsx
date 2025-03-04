@@ -21,7 +21,7 @@ export default function WelcomeScreen() {
             </Text>
             <PrimaryButton
                 title="Get Started"
-                actionOnPress={() =>router.push("/(auth)")}
+                actionOnPress={() =>router.push("/auth")}
                 width='70%'
             />
         </SafeAreaView>

@@ -1,7 +1,7 @@
 import {ScrollView, View, Text} from "react-native";
 import {useAuthStore} from "@/store/AuthStore";
 
-function Account(){
+function Index(){
     const access_token = useAuthStore.use.tokens().access
     const refresh_token = useAuthStore.use.tokens().refresh
     const trimed_token = access_token.trim().length > 0
@@ -23,4 +23,4 @@ function Account(){
     )
 }
 
-export default Account
+export default Index

@@ -12,11 +12,13 @@ function RootNavigator() {
                 headerShown: false,
             }}
         >
+            {/* welcom screen only displayed on first lunch */}
+
             <Stack.Screen
-                name="account"
+                name="index"
                 options={{
                     headerShown: true,
-                    headerTitle: "Index Settings",
+                    title: 'Account',
                     headerStyle: {
                         backgroundColor: theme.backgroundSecondary,
                     },
@@ -27,7 +29,7 @@ function RootNavigator() {
                 name="profile"
                 options={{
                     headerShown: true,
-                    headerTitle: "Personal informations",
+                    headerTitle: "Profile",
                     headerStyle: {
                         backgroundColor: theme.backgroundSecondary,
                     },

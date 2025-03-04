@@ -78,7 +78,7 @@ function RootNavigator() {
                     headerStyle: { backgroundColor: theme.backgroundSecondary },
                     headerRight: () => <HeaderRightAvatar />,
                     tabBarIcon: ({ focused }) => (
-                        <CustomTabBarIcon iconName="home" color={theme.textPrimary} focused={focused} />
+                        <CustomTabBarIcon iconName="home-outline" color={theme.textPrimary} focused={focused} />
                     ),
                     tabBarLabel: ({ focused }) => (
                         <TabBarLabel focused={focused} theme={theme} text="Home" />
@@ -119,6 +119,7 @@ function RootNavigator() {
                 }}
             />
         </Tabs>
+
     );
 }
 

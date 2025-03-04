@@ -20,7 +20,7 @@ function Settings() {
         await setPreference('themeMode', newThemeMode)
     }
 
-    type AllowedUrls = "../profile/account" | "../profile/profile"
+    type AllowedUrls = "/account/index" | "/account/profile"
     const navigate = (url: AllowedUrls) => {
         if(showProfileSettingss) {
             setShowProfileSettings(false);
@@ -47,17 +47,17 @@ function Settings() {
                             <View style={currentStyles.profileSettinDropdown}>
                                 <Divider />
                                 <CustomPressable
-                                    text='Account settings'
+                                    text='Index settings'
                                     iconName='user'
                                     iconType='feather'
-                                    onPress={() => navigate('../profile/account')}
+                                    onPress={() => navigate('/account/index')}
                                 />
                                 <Divider />
                                 <CustomPressable
                                     text='Personal informations'
                                     iconName='info'
                                     iconType='feather'
-                                    onPress={() => navigate('../profile/profile')}
+                                    onPress={() => navigate('/account/profile')}
                                 />
                             </View>
                         )}

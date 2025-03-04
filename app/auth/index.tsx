@@ -42,7 +42,7 @@ const LoginScreen = () => {
                     const tokens = result.results as Jwt
                     setToken('access', tokens.access);
                     setToken('refresh', tokens.refresh);
-                    router.push("/auth/redirect");
+                    router.push("/(tabs)");
                     break;
                 case 401:
                     Alert.alert('Invalid credentials', 'invalid usename and/or password');
