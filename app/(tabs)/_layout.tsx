@@ -22,31 +22,28 @@ function RootNavigator() {
     const pathname = usePathname();
 
     useEffect(() => {
-        // Fonction pour gérer le bouton retour
         const backAction = () => {
 
                 // Affiche une alerte quand on est sur la page d'index
                 Alert.alert('Exit', 'Do you really want to exit?', [
                     {
                         text: 'Cancel',
-                        onPress: () => null, // Ne rien faire si on appuie sur 'Cancel'
+                        onPress: () => null,
                         style: 'cancel',
                     },
                     {
                         text: 'YES',
-                        onPress: () => BackHandler.exitApp() // Ferme l'application si on appuie sur 'YES'
+                        onPress: () => BackHandler.exitApp()
                     },
                 ]);
-                return true; // Empêche l'action de retour par défaut
+                return true;
         };
 
-        // Ajouter l'écouteur pour le bouton retour
         const backHandler = BackHandler.addEventListener(
             'hardwareBackPress',
             backAction
         );
 
-        // Nettoyer l'écouteur lorsque le composant est démonté
         return () => backHandler.remove();
     }, [pathname]);
 

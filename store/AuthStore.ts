@@ -5,7 +5,6 @@ import { StoreApi, UseBoundStore } from 'zustand'
 import {Jwt, User} from "@/lib/definitions";
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 
-
 type WithSelectors<S> = S extends { getState: () => infer T }
     ? S & { use: { [K in keyof T]: () => T[K] } }
     : never
@@ -27,9 +26,13 @@ export type TokenName = 'access' | 'refresh';
 
 interface AuthState {
     tokens: Jwt;
-    setToken: (key: TokenName, token: string) => void;
+    setToken: (key: TokenName, token: string, keepMoSignedIn: boolean) => void;
     clearToken: () => void;
-    user?: User | null;
+    user: User | null;
+    initializeUser: (user: User) => void;
+    signOut: () => void;
+    isAuthenticated: boolean;
+    setIsAuthenticated: (isAuthenticated: boolean) => void;
 }
 
 export const useAuthStore = createSelectors(
@@ -40,22 +43,23 @@ export const useAuthStore = createSelectors(
                 refresh: '',
             },
             user: null,
-            initializeUser: async (userdata: User, keepSignedIn: boolean = false) => {
+            isAuthenticated: false,
+            setIsAuthenticated: (value: boolean) => set((state) => {
+                state.isAuthenticated = value;
+            }),
+
+            initializeUser: async (user: User) => {
                 set((state)=>{
-                    state.user = userdata || null;
+                    state.user = user;
                 });
-                if (keepSignedIn) {
-                    await asyncStorage.setItem('username', userdata.username);
-                }
             },
             signOut: async () => {
                 try {
                     set((state) => {
                         state.clearToken();
                         state.user = null;
+                        state.isAuthenticated = false;
                     });
-                    await asyncStorage.removeItem('username');
-                    router.push("/auth");
                 } catch (error) {
                     console.error("Error signing out:", error);
                 }
@@ -76,16 +80,12 @@ export const useAuthStore = createSelectors(
                     console.error('Error loading stored data:', error);
                 }
             },
-            setUsername: async (username: string, keepSignedIn: boolean) => {
+            setUsername: async (username: string) => {
                 set((state) =>{
                     if(state.user){
                         state.user.username = username;
                     }
                 })
-                const storedUserName = await SecureStore.getItemAsync('username');
-                if (storedUserName || keepSignedIn) {
-                    await asyncStorage.setItem('username', username);
-                }
             },
             setEmail: (email: string) => {
                 set((state) =>{
@@ -113,8 +113,8 @@ export const useAuthStore = createSelectors(
                     set((state) => {
                         state.tokens[key] = token;
                     });
-                    const storedToken = await SecureStore.getItemAsync(key);
-                    if (keepSignedIn || !storedToken) {
+                    //const storedToken = await SecureStore.getItemAsync(key);
+                    if (keepSignedIn) {
                         await SecureStore.setItemAsync(key, token);
                     }
                 } catch (error) {

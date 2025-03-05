@@ -1,57 +1,99 @@
-import React from "react";
-import {View, Text, StyleSheet, Image} from "react-native";
-//import { Link } from "expo-router";
-import {useRouter} from "expo-router";
-import PrimaryButton from "@/components/ui/primary-button";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, {useState} from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import {Theme} from "@/lib/definitions";
+import {Input} from "@rneui/themed";
+import {useTheme} from "@/hooks/useTheme";
+import {useGlobalStyles} from "@/styles/global";
+import {Link} from "expo-router";
 
-export default function WelcomeScreen() {
-    const router = useRouter();
+
+function PinLoginScreen() {
+    const [pin, setPin] = useState('');
+    const { theme } = useTheme();
+
+    const styles = currentstyles(theme);
+    const globalStyles = useGlobalStyles();
+    const handleChangePin = (pin: string) => {
+        setPin(pin);
+        if (pin.length === 4) {
+            console.log(pin);
+        }
+    }
+
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.logoContainer}>
-                {/* Add your logo image here */}
-                <Image
-                    source={require("@/assets/icons/adaptive-icon.png")}
-                    style={styles.logo}
+        <View style={styles.container}>
+            {/* Logo */}
+            <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
+
+            {/* Title */}
+            <Text style={styles.title}>Login</Text>
+            <Text style={styles.subtitle}>Accéder à l’application avec le code pin</Text>
+
+            {/* Pin Inputs */}
+            <View style={styles.pinContainer}>
+
+                <Input
+                    secureTextEntry={true}
+                    leftIcon={{ type: 'feather', name: 'lock', color: '#4c8bf5' }}
+                    maxLength={4}
+                    keyboardType="number-pad"
+                    inputContainerStyle={globalStyles.inputContainer}
+                    inputStyle={styles.textInput}
+                    value={pin}
+                    onChangeText={(value) => handleChangePin(value)}
                 />
+
             </View>
-            <Text style={styles.welcomeText}>Welcome To</Text>
-            <Text style={styles.subText}>
-                Please press the button below to begin the setup process for the app.
-            </Text>
-            <PrimaryButton
-                title="Get Started"
-                actionOnPress={() =>router.push("/auth")}
-                width='70%'
-            />
-        </SafeAreaView>
+            {/* Forgot Pin */}
+            <Link href="/auth" style={styles.forgotPin}>
+                j’ai oublié mon code pin
+            </Link>
+        </View>
     );
 }
 
-const styles = StyleSheet.create({
+
+const currentstyles = (theme: Theme) => StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#fff",
-    },
-    logoContainer: {
-        marginBottom: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: theme.background,
+        padding: 16,
     },
     logo: {
-        width: 130,
+        width: 100,
         height: 100,
+        marginBottom: 40,
     },
-    welcomeText: {
+    title: {
         fontSize: 24,
-        fontWeight: "bold",
-        marginBottom: 10,
+        fontWeight: 'bold',
+        color: theme.textPrimary,
+        marginBottom: 8,
     },
-    subText: {
-        fontSize: 15,
-        textAlign: "center",
-        marginBottom: 30,
-        paddingHorizontal: 20,
+    subtitle: {
+        fontSize: 16,
+        color: theme.textSecondary,
+        marginBottom: 20,
+    },
+    pinContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '80%',
+        marginBottom: 20,
+    },
+    textInput:{
+        fontSize: 25,
+        color: theme.textPrimary,
+        letterSpacing: 8,
+        paddingLeft: 60
+    },
+    forgotPin: {
+        fontSize: 14,
+        color: theme.textPrimary,
+        marginTop: 10,
     },
 });
+
+export default PinLoginScreen;

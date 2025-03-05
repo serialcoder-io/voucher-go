@@ -45,6 +45,17 @@ function RootNavigator() {
                     headerTintColor: theme.textPrimary,
                 }}
             />
+            <Stack.Screen
+                name="logout"
+                options={{
+                    headerShown: true,
+                    headerTitle: "logout",
+                    headerStyle: {
+                        backgroundColor: theme.backgroundSecondary,
+                    },
+                    headerTintColor: theme.textPrimary,
+                }}
+            />
         </Stack>
     );
 }

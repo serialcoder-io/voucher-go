@@ -44,7 +44,6 @@ const SignupScreen = () => {
         setUsername('')
         setPassword('')
         setConfirmPassword('')
-        // Redirection après inscription
         // router.push('/auth');
     };
 
