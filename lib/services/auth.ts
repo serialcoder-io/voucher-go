@@ -13,7 +13,7 @@ export interface LoginParams {
 
 export async function login(credentials: LoginParams): Promise<loginResponse> {
     try {
-        const response = await fetch('http://192.168.13.83:8000/vms/auth/token/', {
+        const response = await fetch('http://192.168.243.83:8000/vms/auth/token/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

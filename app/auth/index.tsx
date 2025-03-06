@@ -9,6 +9,8 @@ import {Jwt} from "@/lib/definitions";
 import LoginForm from "@/components/ui/auth/login-form";
 import {useQuery} from "@tanstack/react-query";
 import {commonColors} from "@/constants/Colors";
+import {queryClient} from "@/lib/queryClient";
+import fetchUserData from "@/lib/services/user";
 
 const LoginScreen = () => {
     const [username, setUsername] = useState<string>("");
@@ -22,30 +24,13 @@ const LoginScreen = () => {
     const isAuthenticated = useAuthStore.use.isAuthenticated()
     const setIsAuthenticated = useAuthStore.use.setIsAuthenticated();
 
-    const fetchUserData = useCallback(async () => {
-        try {
-            const response = await fetch("http://192.168.13.83:8000/vms/auth/users/me/", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-            if (!response.ok) {
-                throw new Error(`Failed to fetch user data: ${response.statusText}`);
-            }
-            const userData = await response.json();
-            return userData ?? {};
-        } catch (err) {
-            console.error("Error fetching user data:", err);
-            return {};
-        }
+    const fetchSignedInUserData = useCallback(async () => {
+        return await fetchUserData(accessToken);
     }, [accessToken]);
 
     const { data, isLoading, isSuccess, error } = useQuery({
         queryKey: ["userData"],
-        queryFn: fetchUserData,
+        queryFn: fetchSignedInUserData,
         enabled: isAuthenticated,
     });
 
@@ -78,15 +63,19 @@ const LoginScreen = () => {
 
 
     useEffect(() => {
-        console.log("useEffet redirect after fetched user_data")
-        if (isSuccess && isAuthenticated) {
+        if (isSuccess && isAuthenticated && data != null) {
             initializeUser(data)
+            queryClient.resetQueries({
+                queryKey: ["userData"],
+                exact: true,
+            });
             router.push("/(tabs)");
         }
         if(error){
             console.log(error)
         }
     }, [isSuccess, data, isAuthenticated, initializeUser]);
+
 
 
 

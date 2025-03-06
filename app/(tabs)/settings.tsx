@@ -20,7 +20,7 @@ function Settings() {
         await setPreference('themeMode', newThemeMode)
     }
 
-    type AllowedUrls = "/account/index" | "/account/profile"
+    type AllowedUrls = "/account" | "/account/profile"
     const navigate = (url: AllowedUrls) => {
         if(showProfileSettingss) {
             setShowProfileSettings(false);
@@ -50,7 +50,7 @@ function Settings() {
                                     text='Index settings'
                                     iconName='user'
                                     iconType='feather'
-                                    onPress={() => navigate('/account/index')}
+                                    onPress={() => navigate('/account')}
                                 />
                                 <Divider />
                                 <CustomPressable
