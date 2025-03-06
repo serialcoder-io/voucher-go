@@ -64,11 +64,7 @@ const LoginScreen = () => {
 
     useEffect(() => {
         if (isSuccess && isAuthenticated && data != null) {
-            initializeUser(data)
-            queryClient.resetQueries({
-                queryKey: ["userData"],
-                exact: true,
-            });
+            initializeUser(data, checked)
             router.push("/(tabs)");
         }
         if(error){

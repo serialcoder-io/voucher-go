@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {ScrollView, View, StatusBar, StyleSheet} from 'react-native';
-import { Card, Divider } from '@rneui/themed';
+import {Button, Card, Divider} from '@rneui/themed';
 import CustomPressable from "@/components/ui/custom-pressable";
 import ThemeOptions from "@/components/ui/settings/theme-options";
 import {useTheme} from "@/hooks/useTheme";
@@ -9,6 +9,9 @@ import SectionTitle from "@/components/ui/section-title";
 import LanguageOption from "@/components/ui/settings/lang-option";
 import {setPreference} from "@/lib/utils";
 import {useRouter} from "expo-router";
+import {useAuthStore} from "@/store/AuthStore";
+import {commonColors} from "@/constants/Colors";
+
 
 function Settings() {
     const [showProfileSettingss, setShowProfileSettings] = useState(false);
@@ -26,6 +29,11 @@ function Settings() {
             setShowProfileSettings(false);
         }
         router.push(url);
+    }
+    const signOut = useAuthStore.use.signOut();
+    const logout = async () => {
+        signOut()
+        router.push("/auth")
     }
 
     return (
@@ -90,6 +98,20 @@ function Settings() {
                     <Divider />
                     <LanguageOption label='English' value='en' />
                 </Card>
+                <SectionTitle title='Log Out' iconName='logout' />
+                {/* language options*/}
+
+                    <Button
+                        type="solid"
+                        style={{width: '100%'}}
+                        containerStyle={{width:'100%', paddingVertical: 10}}
+                        buttonStyle={{borderWidth: 0, borderRadius: 10, backgroundColor: commonColors.dangercolor}}
+                        loadingProps={{size: 60, color: 'white'}}
+                        onPress={()=>logout()}
+                    >
+                        Log Out
+                    </Button>
+
             </View>
         </ScrollView>
     );

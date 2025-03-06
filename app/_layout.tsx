@@ -15,8 +15,7 @@ function RootNavigator() {
             <Stack.Screen
                 name="account"
                 options={{
-                    headerShown: true,
-                    headerTitle: "Index Settings",
+                    headerShown: false,
                     headerStyle: {
                         backgroundColor: theme.backgroundSecondary,
                     },
@@ -26,8 +25,7 @@ function RootNavigator() {
             <Stack.Screen
                 name="profile"
                 options={{
-                    headerShown: true,
-                    headerTitle: "Personal informations",
+                    headerShown: false,
                     headerStyle: {
                         backgroundColor: theme.backgroundSecondary,
                     },

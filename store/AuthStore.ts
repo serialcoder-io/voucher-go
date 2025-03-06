@@ -29,7 +29,7 @@ interface AuthState {
     setToken: (key: TokenName, token: string, keepMoSignedIn: boolean) => void;
     clearToken: () => void;
     user: User | null;
-    initializeUser: (user: User) => void;
+    initializeUser: (user: User, keepMeSignedIn: boolean) => void;
     signOut: () => void;
     isAuthenticated: boolean;
     setIsAuthenticated: (isAuthenticated: boolean) => void;
@@ -48,10 +48,13 @@ export const useAuthStore = createSelectors(
                 state.isAuthenticated = value;
             }),
 
-            initializeUser: async (user: User) => {
+            initializeUser: async (user: User, keepMeSignedIn: boolean) => {
                 set((state)=>{
                     state.user = user;
                 });
+                if (user !== null && keepMeSignedIn) {
+                    await asyncStorage.setItem("last_login", JSON.stringify(user.last_login));
+                }
             },
             signOut: async () => {
                 try {
@@ -60,6 +63,7 @@ export const useAuthStore = createSelectors(
                         state.user = null;
                         state.isAuthenticated = false;
                     });
+                    await asyncStorage.removeItem('last_login');
                 } catch (error) {
                     console.error("Error signing out:", error);
                 }
@@ -138,7 +142,6 @@ export const useAuthStore = createSelectors(
                     set((state) => {
                         state.clearToken();
                     });
-                    await asyncStorage.removeItem('username');
                 } catch (error) {
                     console.error('Error while cleaning tokens and user data:', error);
                 }

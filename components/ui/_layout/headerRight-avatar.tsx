@@ -9,7 +9,7 @@ function HeaderRightAvatar(){
     const user = useAuthStore.use.user()
     const router = useRouter();
     return (
-        <Pressable style={{ paddingRight: 20 }} onPress={()=>router.push('/auth/logout')}>
+        <Pressable style={{ paddingRight: 20 }} onPress={()=>router.push('/account')}>
 
             {/* Avatar à droite */}
             <Avatar
