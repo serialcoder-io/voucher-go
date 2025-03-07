@@ -1,27 +1,77 @@
-import React, {useState} from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {View, Text, Image, StyleSheet, Alert} from 'react-native';
 import {Theme} from "@/lib/definitions";
 import {Input} from "@rneui/themed";
 import {useTheme} from "@/hooks/useTheme";
 import {useGlobalStyles} from "@/styles/global";
-import {Link} from "expo-router";
+import {Link, useRouter} from "expo-router";
+import * as SplashScreen from 'expo-splash-screen';
+import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
+import {useAuthStore} from "@/store/AuthStore";
+import * as SecureStore from "expo-secure-store";
 
+SplashScreen.preventAutoHideAsync();
 
 function PinLoginScreen() {
     const [pin, setPin] = useState('');
     const { theme } = useTheme();
+    const [appIsReady, setAppIsReady] = useState(false);
+    const setToken = useAuthStore.use.setToken()
+    const setIsAuthenticated = useAuthStore.use.setIsAuthenticated();
+    const router = useRouter()
 
     const styles = currentstyles(theme);
     const globalStyles = useGlobalStyles();
     const handleChangePin = (pin: string) => {
         setPin(pin);
         if (pin.length === 4) {
-            console.log(pin);
+            if (pin === "5464"){
+                router.push("/auth");
+            }else{
+                Alert.alert("Access denied", "The access code is incorrect");
+            }
         }
     }
 
+    useEffect(() => {
+        async function prepare() {
+            try {
+                // if the time since the last login is less than 29 days and there are jwt stored in secure storage
+                // set is authenticated to true and redirect the user to the home page
+                const accessToken = await SecureStore.getItemAsync('access')
+                const refreshToken = await SecureStore.getItemAsync('refresh')
+                const userLastLogin = await asyncStorage.getItem("last_login")
+                const lastLogin = userLastLogin ? new Date(userLastLogin) : new Date()
+                const currentDate = new Date();
+                const differencesInDays = (currentDate.getTime() - lastLogin.getTime()) / (1000 * 3600 * 24)
+                if (differencesInDays < 29) {
+                    if (accessToken && refreshToken) {
+                        setToken("access", accessToken, true)
+                        setToken("refresh", refreshToken, true)
+                        setIsAuthenticated(true);
+                    }
+                }
+            } catch (e) {
+                console.warn(e);
+            } finally {
+                setAppIsReady(true);
+            }
+        }
+        prepare();
+    }, []);
+
+    const onLayoutRootView = useCallback(() => {
+        if (appIsReady) {
+            SplashScreen.hide();
+        }
+    }, [appIsReady]);
+
+    if (!appIsReady) {
+        return null;
+    }
+
     return (
-        <View style={styles.container}>
+        <View style={styles.container} onLayout={onLayoutRootView}>
             {/* Logo */}
             <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
 

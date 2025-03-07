@@ -9,7 +9,6 @@ import {Jwt} from "@/lib/definitions";
 import LoginForm from "@/components/ui/auth/login-form";
 import {useQuery} from "@tanstack/react-query";
 import {commonColors} from "@/constants/Colors";
-import {queryClient} from "@/lib/queryClient";
 import fetchUserData from "@/lib/services/user";
 
 const LoginScreen = () => {
@@ -61,19 +60,17 @@ const LoginScreen = () => {
         }
     };
 
-
     useEffect(() => {
         if (isSuccess && isAuthenticated && data != null) {
             initializeUser(data, checked)
+            setChecked(false)
+            setIsAuthenticated(false)
             router.push("/(tabs)");
         }
         if(error){
             console.log(error)
         }
     }, [isSuccess, data, isAuthenticated, initializeUser]);
-
-
-
 
     if(isLoading){
         return (

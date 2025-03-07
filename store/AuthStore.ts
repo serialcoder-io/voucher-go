@@ -28,6 +28,7 @@ interface AuthState {
     tokens: Jwt;
     setToken: (key: TokenName, token: string, keepMoSignedIn: boolean) => void;
     clearToken: () => void;
+    loadStoredTokens: () => void;
     user: User | null;
     initializeUser: (user: User, keepMeSignedIn: boolean) => void;
     signOut: () => void;
@@ -47,13 +48,14 @@ export const useAuthStore = createSelectors(
             setIsAuthenticated: (value: boolean) => set((state) => {
                 state.isAuthenticated = value;
             }),
-
             initializeUser: async (user: User, keepMeSignedIn: boolean) => {
                 set((state)=>{
                     state.user = user;
                 });
                 if (user !== null && keepMeSignedIn) {
-                    await asyncStorage.setItem("last_login", JSON.stringify(user.last_login));
+                    if (user.last_login != null) {
+                        await asyncStorage.setItem("last_login", user.last_login);
+                    }
                 }
             },
             signOut: async () => {
@@ -68,7 +70,7 @@ export const useAuthStore = createSelectors(
                     console.error("Error signing out:", error);
                 }
             },
-            loadStoredToekns: async () => {
+            loadStoredTokens: async () => {
                 try {
                     const storedAccess = await SecureStore.getItemAsync('access');
                     const storedRefresh = await SecureStore.getItemAsync('refresh');

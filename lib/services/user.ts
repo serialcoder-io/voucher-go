@@ -2,7 +2,7 @@ import {User} from "@/lib/definitions";
 
 async function fetchUserData(accessToken: string): Promise<User | null> {
     try {
-        const response = await fetch("http://192.168.243.83:8000/vms/auth/users/me/", {
+        const response = await fetch("http://192.168.150.83:8000/vms/auth/users/me/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
