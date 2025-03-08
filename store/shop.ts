@@ -26,126 +26,24 @@ type Company = {
     company_name: string
 }
 type Shop = {
-    id: number
+    id: number,
+    location: string,
+    address: string,
+    company: Company
 }
 
 interface ShopState {
-    company: Company
-    shop: Shop
+    shop: Shop | null
 }
-
 export const useAuthStore = createSelectors(
-    create<AuthState>()(
+    create<ShopState>()(
         immer((set) => ({
-            tokens: {
-                access: '',
-                refresh: '',
-            },
-            user: null,
-            isAuthenticated: false,
-            setIsAuthenticated: (value: boolean) => set((state) => {
-                state.isAuthenticated = value;
-            }),
-            initializeUser: async (user: User, keepMeSignedIn: boolean) => {
-                set((state)=>{
-                    state.user = user;
-                });
-                if (user !== null && keepMeSignedIn) {
-                    if (user.last_login != null) {
-                        await asyncStorage.setItem("last_login", user.last_login);
-                    }
+            shop: null,
+            setShop: (shop: Shop)=> set((state)=>{
+                if(state.shop !== null){
+                    state.shop = shop
                 }
-            },
-            signOut: async () => {
-                try {
-                    set((state) => {
-                        state.clearToken();
-                        state.user = null;
-                        state.isAuthenticated = false;
-                    });
-                    await asyncStorage.removeItem('last_login');
-                } catch (error) {
-                    console.error("Error signing out:", error);
-                }
-            },
-            loadStoredTokens: async () => {
-                try {
-                    const storedAccess = await SecureStore.getItemAsync('access');
-                    const storedRefresh = await SecureStore.getItemAsync('refresh');
-
-                    if (storedAccess && storedRefresh) {
-                        set((state) => {
-                            state.tokens.access = storedAccess;
-                            state.tokens.refresh = storedRefresh;
-                        });
-                    }
-
-                } catch (error) {
-                    console.error('Error loading stored data:', error);
-                }
-            },
-            setUsername: async (username: string) => {
-                set((state) =>{
-                    if(state.user){
-                        state.user.username = username;
-                    }
-                })
-            },
-            setEmail: (email: string) => {
-                set((state) =>{
-                    if(state.user){
-                        state.user.email = email;
-                    }
-                })
-            },
-            setFistOrLastName: (key: 'first_name' | 'last_name', newValue: string) => {
-                set((state) =>{
-                    if(state.user && state.user[key]){
-                        state.user[key] = newValue;
-                    }
-                })
-            },
-            setLastLogin: (dateTime: string) => {
-                set((state) =>{
-                    if(state.user){
-                        state.user.last_login = dateTime;
-                    }
-                })
-            },
-            setToken: async (key: TokenName, token: string, keepSignedIn: boolean = false) => {
-                try {
-                    set((state) => {
-                        state.tokens[key] = token;
-                    });
-                    //const storedToken = await SecureStore.getItemAsync(key);
-                    if (keepSignedIn) {
-                        await SecureStore.setItemAsync(key, token);
-                    }
-                } catch (error) {
-                    console.error(`Error saving token ${key}:`, error);
-                }
-            },
-            clearToken: async () => {
-                try {
-                    set((state) => {
-                        state.tokens.access = '';
-                        state.tokens.refresh = '';
-                    });
-                    await SecureStore.deleteItemAsync('access');
-                    await SecureStore.deleteItemAsync('refresh');
-                } catch (error) {
-                    console.error("Error clearing tokens:", error);
-                }
-            },
-            cleanStore: async () => {
-                try {
-                    set((state) => {
-                        state.clearToken();
-                    });
-                } catch (error) {
-                    console.error('Error while cleaning tokens and user data:', error);
-                }
-            }
+            })
         }))
     )
 )

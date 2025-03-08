@@ -2,12 +2,12 @@ import ParentContainer from "@/components/parent-container";
 import {View, Text, StyleSheet, Pressable} from "react-native";
 import React, { useState } from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import {Icon} from "@rneui/themed";
 import {useTheme} from "@/hooks/useTheme";
 import {Theme} from "@/lib/definitions";
 import PrimaryButton from "@/components/ui/primary-button";
 import {useRouter} from "expo-router";
+import RenderItem from "@/components/ui/shop/render-item";
 
 const data = [
     { label: 'Item 1', value: '1' },
@@ -28,26 +28,16 @@ function Label({ title }: { title: string }) {
 
 function ShopSetup(){
     const [company, setCompany] = useState(null);
+    const [companies, setCompanies] = useState([]);
     const [location, setLocation] = useState(null);
     const {theme} = useTheme();
     const styles = getStyles(theme)
     const router = useRouter();
 
-    const renderItem = (item: {label: string, value: string}, valueName: string) => {
-        return (
-            <View style={styles.item}>
-                <Text style={styles.textItem}>{item.label}</Text>
-                {item.value === valueName && (
-                    <AntDesign
-                        style={styles.icon}
-                        color="black"
-                        name="Safety"
-                        size={20}
-                    />
-                )}
-            </View>
-        );
-    };
+    const saveShop = async()=>{
+        console.log("Saving...");
+    }
+
     return (
         <ParentContainer>
             <View style={styles.dropdownContainer}>
@@ -58,7 +48,7 @@ function ShopSetup(){
                     selectedTextStyle={styles.selectedTextStyle}
                     inputSearchStyle={styles.inputSearchStyle}
                     iconStyle={styles.iconStyle}
-                    data={data}
+                    data={companies}
                     search
                     maxHeight={300}
                     labelField="label"
@@ -73,7 +63,7 @@ function ShopSetup(){
                             style={styles.icon} color={theme.textSecondary}
                         />
                     )}
-                    renderItem={(item)=>renderItem({label: item.label, value: item.value}, "company")}
+                    renderItem={(item)=>RenderItem({label: item.label, value: item.value}, "company")}
                 />
             </View>
             <View style={styles.dropdownContainer}>
@@ -99,14 +89,14 @@ function ShopSetup(){
                             style={styles.icon} color={theme.textSecondary}
                         />
                     )}
-                    renderItem={(item)=>renderItem({label: item.label, value: item.value}, "location")}
+                    renderItem={(item)=>RenderItem({label: item.label, value: item.value}, "location")}
                 />
             </View>
             <View style={styles.dropdownContainer}>
                 <PrimaryButton
                     title="Save"
                     disabled={!company || !location}
-                    actionOnPress={() =>console.log(company + " " + location)}
+                    actionOnPress={() =>saveShop()}
                     width='100%'
                 />
             </View>
@@ -142,15 +132,6 @@ const getStyles = (theme: Theme)=> StyleSheet.create({
     },
     icon: {
         marginRight: 5,
-    },
-    item: {
-        padding: 17, flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    textItem: {
-        flex: 1, fontSize: 16,
-        color: "black",
     },
     placeholderStyle: {
         fontSize: 16,
