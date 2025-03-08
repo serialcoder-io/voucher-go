@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {ScrollView, View, StatusBar, StyleSheet} from 'react-native';
+import {ScrollView, View, StatusBar, StyleSheet, Alert} from 'react-native';
 import {Button, Card, Divider} from '@rneui/themed';
 import CustomPressable from "@/components/ui/custom-pressable";
 import ThemeOptions from "@/components/ui/settings/theme-options";
@@ -35,6 +35,22 @@ function Settings() {
         signOut()
         router.push("/auth")
     }
+
+    const confirmLogout = () => {
+        Alert.alert('Log Out', 'Do you really want to log out ?', [
+            {
+                text: 'Cancel',
+                onPress: () => null, // La fonction Cancel ne fait rien
+                style: 'cancel',
+            },
+            {
+                text: 'YES',
+                onPress: () => {
+                    logout();
+                },
+            },
+        ]);
+    };
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -107,7 +123,7 @@ function Settings() {
                         containerStyle={{width:'100%', paddingVertical: 10}}
                         buttonStyle={{borderWidth: 0, borderRadius: 10, backgroundColor: commonColors.dangercolor}}
                         loadingProps={{size: 60, color: 'white'}}
-                        onPress={()=>logout()}
+                        onPress={()=>confirmLogout()}
                     >
                         Log Out
                     </Button>

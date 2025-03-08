@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {View, Image, TouchableOpacity, Alert, ToastAndroid} from "react-native";
+import React from "react";
+import {View, Image, TouchableOpacity} from "react-native";
 import {Text, CheckBox} from "@rneui/themed";
 import {useGlobalStyles} from "@/styles/global";
 import {Link, useRouter} from "expo-router";
@@ -10,21 +10,20 @@ import CustomInputText from "@/components/ui/custom-inputText";
 import {useTheme} from "@/hooks/useTheme";
 import {commonColors} from "@/constants/Colors";
 import {getstyles} from "./styles";
+import {LoginFormProps} from "@/lib/definitions";
 
 const LoginForm = ({
-    username, setUsername, password, setPassword, checked, setChecked, secureTextEntry, setSecureTextEntry, loading, handleSubmit,
-}:{
-    username: string;
-    password: string;
-    setUsername: (name: string) => void;
-    setPassword: (name: string) => void;
-    checked: boolean;
-    setChecked: (checked: boolean) => void;
-    secureTextEntry: boolean;
-    setSecureTextEntry: (secureTextEntry: boolean) => void;
-    loading: boolean;
-    handleSubmit: () => void
-}) => {
+   username,
+   setUsername,
+   password,
+   setPassword,
+   checked,
+   setChecked,
+   secureTextEntry,
+   setSecureTextEntry,
+   loading,
+   handleSubmit,
+}:LoginFormProps) => {
     const {theme} = useTheme();
     const styles = getstyles(theme)
     const router = useRouter();
@@ -81,9 +80,6 @@ const LoginForm = ({
                 Don't have an account ?
                 <Text style={{fontWeight: "bold", color: commonColors.primaryColor}}> Sign Up</Text>
             </Link>
-            {/*<Link href='/auth/redirect' style={styles.signupText}>
-                <Text style={{fontWeight: "bold", color: commonColors.primaryColor}}>redirect</Text>
-            </Link>*/}
         </ParentContainer>
     );
 };

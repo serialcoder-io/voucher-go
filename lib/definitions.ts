@@ -63,6 +63,8 @@ export type InputPasswordProps = {
     value: string;
     onChangeText: (e: string) => void;
     onPressIcon: () => void;
+    keyboardType?: KeyboardTypeOptions
+    maxLength?: number;
 }
 
 export type ThemeMode = 'auto' | 'dark' | 'light'
@@ -85,4 +87,17 @@ export interface User{
     email: string;
     username: string;
     last_login?: string;
+}
+
+export type LoginFormProps = {
+    username: string;
+    password: string;
+    setUsername: (name: string) => void;
+    setPassword: (name: string) => void;
+    checked: boolean;
+    setChecked: (checked: boolean) => void;
+    secureTextEntry: boolean;
+    setSecureTextEntry: (secureTextEntry: boolean) => void;
+    loading: boolean;
+    handleSubmit: () => void
 }

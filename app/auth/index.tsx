@@ -1,7 +1,7 @@
 import React, {useState, useCallback, useEffect} from "react";
 import {View, Alert} from "react-native";
 import {Button} from "@rneui/themed";
-import {useFocusEffect, usePathname, useRouter} from "expo-router";
+import {useRouter} from "expo-router";
 import {login, LoginParams, loginResponse} from "@/lib/services/auth";
 import {useMutation} from "@tanstack/react-query";
 import {useAuthStore} from "@/store/AuthStore";
@@ -10,6 +10,7 @@ import LoginForm from "@/components/ui/auth/login-form";
 import {useQuery} from "@tanstack/react-query";
 import {commonColors} from "@/constants/Colors";
 import fetchUserData from "@/lib/services/user";
+import {queryClient} from "@/lib/queryClient";
 
 const LoginScreen = () => {
     const [username, setUsername] = useState<string>("");
@@ -65,6 +66,7 @@ const LoginScreen = () => {
             initializeUser(data, checked)
             setChecked(false)
             setIsAuthenticated(false)
+            queryClient.resetQueries({ queryKey: "userData", exact: true })
             router.push("/(tabs)");
         }
         if(error){
@@ -72,7 +74,7 @@ const LoginScreen = () => {
         }
     }, [isSuccess, data, isAuthenticated, initializeUser]);
 
-    if(isLoading){
+    if(isLoading || isAuthenticated){
         return (
             <View style={{flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', paddingHorizontal: 30}}>
                 <Button

@@ -32,10 +32,14 @@ function PinLoginScreen() {
             }
         }
     }
-
     useEffect(() => {
         async function prepare() {
             try {
+                const firstLaunch = await asyncStorage.getItem("first_launche");
+                if (firstLaunch == null && !firstLaunch) {
+                    router.push("/first-launch");
+                    return
+                }
                 // if the time since the last login is less than 29 days and there are jwt stored in secure storage
                 // set is authenticated to true and redirect the user to the home page
                 const accessToken = await SecureStore.getItemAsync('access')

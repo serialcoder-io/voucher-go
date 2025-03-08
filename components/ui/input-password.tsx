@@ -9,6 +9,8 @@ function InputPassword({
    value,
    onChangeText,
    onPressIcon,
+   keyboardType="default",
+   maxLength,
 }: InputPasswordProps) {
     const styles = useGlobalStyles();
     return (
@@ -18,6 +20,8 @@ function InputPassword({
             leftIcon={{ type: 'feather', name: 'lock', color: '#4c8bf5' }}
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.textInput}
+            keyboardType={keyboardType}
+            maxLength={maxLength}
             rightIcon={
                 <Icon
                     type="feather"
