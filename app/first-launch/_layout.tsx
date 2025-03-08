@@ -22,6 +22,32 @@ function RootNavigator() {
                     headerTintColor: theme.textPrimary,
                 }}
             />
+            <Stack.Screen
+                name="access-code"
+                options={{
+                    headerShown: true,
+                    headerTitle: "Setup",
+                    headerBackVisible: false,
+                    headerStyle: {
+                        backgroundColor: theme.backgroundSecondary,
+                    },
+                    headerTintColor: theme.textPrimary,
+                }}
+            />
+            <Stack.Screen
+                name="shop"
+                options={{
+                    headerShown: true,
+                    headerTitle: "Setup",
+                    headerTitleStyle:{fontSize: 25, color: theme.textPrimary},
+                    headerBackVisible: false,
+                    headerStyle: {
+                        backgroundColor: theme.backgroundSecondary,
+                    },
+                    headerTintColor: theme.textPrimary,
+                }}
+            />
+
         </Stack>
     );
 }

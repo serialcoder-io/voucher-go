@@ -1,5 +1,6 @@
 import {Jwt, User} from "@/lib/definitions";
 import {TokenName} from "@/store/AuthStore";
+import {baseUrl} from "@/lib/utils";
 
 export type loginResponse = {
     results: Jwt | string;
@@ -13,7 +14,7 @@ export interface LoginParams {
 
 export async function login(credentials: LoginParams): Promise<loginResponse> {
     try {
-        const response = await fetch('http://192.168.217.83:8000/vms/auth/token/', {
+        const response = await fetch(`${baseUrl}/vms/auth/token/`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

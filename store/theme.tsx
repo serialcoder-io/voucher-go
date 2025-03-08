@@ -17,7 +17,7 @@ interface ThemeContextProps {
 export const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-    const [themeMode, setThemeMode] = useState<ThemeMode>('auto');
+    const [themeMode, setThemeMode] = useState<ThemeMode>('light');
     const [systemTheme, setSystemTheme] = useState(Appearance.getColorScheme());
 
     useEffect(() => {

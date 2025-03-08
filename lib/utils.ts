@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Preferences, ThemeMode} from "@/lib/definitions";
-import {Jwt} from "@/lib/definitions";
+
+export const baseUrl = "http://192.168.69.83:8000"
 
 export function testStringRegEx(str: string, regEx: RegExp): boolean {
     return regEx.test(str.trim());

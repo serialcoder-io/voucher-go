@@ -69,7 +69,7 @@ function RootNavigator() {
                 name="index"
                 options={{
                     headerShown: true,
-                    title: 'Redemptions',
+                    title: 'Redemption',
                     headerTintColor: theme.textPrimary,
                     headerTitleStyle: { fontSize: 22, paddingLeft: 18, fontWeight: 'bold' },
                     headerStyle: { backgroundColor: theme.backgroundSecondary },
