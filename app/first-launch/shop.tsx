@@ -1,24 +1,17 @@
 import ParentContainer from "@/components/parent-container";
 import {View, Text, StyleSheet, Pressable} from "react-native";
-import React, { useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
-import {Icon} from "@rneui/themed";
+import {Button, Icon} from "@rneui/themed";
 import {useTheme} from "@/hooks/useTheme";
-import {Theme} from "@/lib/definitions";
+import {Company, Theme} from "@/lib/definitions";
 import PrimaryButton from "@/components/ui/primary-button";
 import {useRouter} from "expo-router";
 import RenderItem from "@/components/ui/shop/render-item";
-
-const data = [
-    { label: 'Item 1', value: '1' },
-    { label: 'Item 2', value: '2' },
-    { label: 'Item 3', value: '3' },
-    { label: 'Item 4', value: '4' },
-    { label: 'Item 5', value: '5' },
-    { label: 'Item 6', value: '6' },
-    { label: 'Item 7', value: '7' },
-    { label: 'Item 8', value: '8' },
-];
+import {fetchAllCompanies} from "@/lib/services/company";
+import {useQuery} from "@tanstack/react-query";
+import {queryClient} from "@/lib/queryClient";
+import {commonColors} from "@/constants/Colors";
 
 function Label({ title }: { title: string }) {
     const {theme} = useTheme();
@@ -28,7 +21,8 @@ function Label({ title }: { title: string }) {
 
 function ShopSetup(){
     const [company, setCompany] = useState(null);
-    const [companies, setCompanies] = useState([]);
+    const [companies, setCompanies] = useState<Company[]>([]);
+    const [shops, setShops] = useState([]);
     const [location, setLocation] = useState(null);
     const {theme} = useTheme();
     const styles = getStyles(theme)
@@ -36,6 +30,39 @@ function ShopSetup(){
 
     const saveShop = async()=>{
         console.log("Saving...");
+    }
+
+    const fetchCompanies = useCallback(async () => {
+        return await fetchAllCompanies();
+    }, []);
+
+    const { data, isLoading, isSuccess, error } = useQuery({
+        queryKey: ["companies"],
+        queryFn: fetchCompanies,
+    });
+
+    useEffect(() => {
+        if (isSuccess && data) {
+            setCompanies(data);
+            console.log(companies)
+        }
+        if (error) {
+            console.error("Error fetching companies:", error);
+        }
+    }, [isSuccess, data, error, queryClient, router, companies, setCompanies]);
+
+    if(isLoading){
+        return (
+            <View style={{flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', paddingHorizontal: 30}}>
+                <Button
+                    title="Solid"
+                    type="outline"
+                    loading
+                    buttonStyle={{borderWidth: 0}}
+                    loadingProps={{size: 60, color: commonColors.primaryColor,}}
+                />
+            </View>
+        )
     }
 
     return (
@@ -48,7 +75,7 @@ function ShopSetup(){
                     selectedTextStyle={styles.selectedTextStyle}
                     inputSearchStyle={styles.inputSearchStyle}
                     iconStyle={styles.iconStyle}
-                    data={companies}
+                    data={companies.map(c => ({ label: c.company_name, value: c.id }))}
                     search
                     maxHeight={300}
                     labelField="label"
@@ -56,14 +83,14 @@ function ShopSetup(){
                     placeholder="Select comapany"
                     searchPlaceholder="Search company ..."
                     value={company}
-                    onChange={item => {setCompany(item.value)}}
+                    onChange={item => { setCompany(item.value); }}
                     renderLeftIcon={() => (
                         <Icon
                             name="apartment" type='material' size={23}
                             style={styles.icon} color={theme.textSecondary}
                         />
                     )}
-                    renderItem={(item)=>RenderItem({label: item.label, value: item.value}, "company")}
+                    renderItem={(company) => RenderItem({ label: company.label, value: company.value }, company.value)}
                 />
             </View>
             <View style={styles.dropdownContainer}>
@@ -74,7 +101,7 @@ function ShopSetup(){
                     selectedTextStyle={styles.selectedTextStyle}
                     inputSearchStyle={styles.inputSearchStyle}
                     iconStyle={styles.iconStyle}
-                    data={data}
+                    data={shops}
                     search
                     maxHeight={300}
                     labelField="label"

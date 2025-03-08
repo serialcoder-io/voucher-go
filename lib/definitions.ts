@@ -101,3 +101,14 @@ export type LoginFormProps = {
     loading: boolean;
     handleSubmit: () => void
 }
+
+export type Company = {
+    id: number
+    company_name: string
+}
+export type Shop = {
+    id: number,
+    location: string,
+    address: string,
+    company: Company
+}

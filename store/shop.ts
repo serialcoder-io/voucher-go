@@ -1,8 +1,7 @@
 import { create } from 'zustand';
-import * as SecureStore from 'expo-secure-store';
 import { immer } from 'zustand/middleware/immer';
-import { StoreApi, UseBoundStore } from 'zustand'
-import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
+import { StoreApi, UseBoundStore } from 'zustand';
+import {Company, Shop} from "@/lib/definitions";
 
 type WithSelectors<S> = S extends { getState: () => infer T }
     ? S & { use: { [K in keyof T]: () => T[K] } }
@@ -18,18 +17,6 @@ const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
     }
 
     return store
-}
-
-
-type Company = {
-    id: number
-    company_name: string
-}
-type Shop = {
-    id: number,
-    location: string,
-    address: string,
-    company: Company
 }
 
 interface ShopState {

@@ -4,7 +4,7 @@ import {Text, View} from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React from "react";
 
-export const baseUrl = "http://192.168.200.83:8000"
+export const baseUrl = "http://192.168.200.83:8000/"
 
 export function testStringRegEx(str: string, regEx: RegExp): boolean {
     return regEx.test(str.trim());

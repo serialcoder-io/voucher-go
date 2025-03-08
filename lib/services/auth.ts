@@ -2,6 +2,7 @@ import {Jwt, User} from "@/lib/definitions";
 import {TokenName} from "@/store/AuthStore";
 import {baseUrl} from "@/lib/utils";
 
+
 export type loginResponse = {
     results: Jwt | string;
     http_status_code: number;
@@ -77,6 +78,7 @@ export async function fetchSignedInUserData(accessToken: TokenName): Promise<Use
         }
     }
 }
+
 
 
 
