@@ -32,7 +32,7 @@ function ShopSetup(){
     const saveShop = async()=>{
         const shop = shops.find((shop) => shop.id === location);
         if(shop){
-            await asyncStorage.setItem("shops", JSON.stringify(shop));
+            await asyncStorage.setItem("shop", JSON.stringify(shop));
             await asyncStorage.setItem("first_launch", "1");
             router.push("/auth/register");
         }else{

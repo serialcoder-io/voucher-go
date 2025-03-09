@@ -40,7 +40,7 @@ function Settings() {
         Alert.alert('Log Out', 'Do you really want to log out ?', [
             {
                 text: 'Cancel',
-                onPress: () => null, // La fonction Cancel ne fait rien
+                onPress: () => null,
                 style: 'cancel',
             },
             {
@@ -71,7 +71,7 @@ function Settings() {
                             <View style={currentStyles.profileSettinDropdown}>
                                 <Divider />
                                 <CustomPressable
-                                    text='Index settings'
+                                    text='Account settings'
                                     iconName='user'
                                     iconType='feather'
                                     onPress={() => navigate('/account')}
@@ -94,9 +94,8 @@ function Settings() {
                     <CustomPressable text='About shop' iconName='info' iconType='feather' />
                 </Card>
 
-                {/* section title (theme)*/}
-                <SectionTitle title='Theme' iconName='contrast' />
                 {/* theme options*/}
+                <SectionTitle title='Theme' iconName='contrast' />
                 <Card containerStyle={currentStyles.card}>
                     <ThemeOptions label='Automatique' value='auto' icon='contrast' type='material' themeMode={themeMode} setTheme={changeThemeMode} />
                     <Divider />
@@ -106,17 +105,16 @@ function Settings() {
                     <ThemeOptions label='Dark' value='dark' icon='moon' type='feather' themeMode={themeMode} setTheme={changeThemeMode} />
                 </Card>
 
-                {/* section title (language)*/}
-                <SectionTitle title='Langues' iconName='translate' />
                 {/* language options*/}
+                <SectionTitle title='Langues' iconName='translate' />
                 <Card containerStyle={currentStyles.card}>
                     <LanguageOption label='French' value='fr' />
                     <Divider />
                     <LanguageOption label='English' value='en' />
                 </Card>
-                <SectionTitle title='Log Out' iconName='logout' />
-                {/* language options*/}
 
+                {/* Logout*/}
+                <SectionTitle title='Log Out' iconName='logout' />
                     <Button
                         type="solid"
                         style={{width: '100%'}}

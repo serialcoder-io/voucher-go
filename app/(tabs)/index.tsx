@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, Pressable, Modal} from 'react-native';
 import { Text, Icon, Card, Button, Divider } from '@rneui/themed';
 import BorderedInput from "@/components/ui/bordered-input";
@@ -7,6 +7,8 @@ import {useTheme} from "@/hooks/useTheme";
 import {Theme} from "@/lib/definitions";
 import {useGlobalStyles} from "@/styles/global";
 import {commonColors} from "@/constants/Colors";
+import {useShopStore} from "@/store/shop";
+import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 import {useRouter} from "expo-router";
 
 function Home() {
@@ -15,6 +17,19 @@ function Home() {
     const [tillNo, setTillNo] = useState('');
     const {theme} = useTheme();
     const [loading, setLoading] = useState(false);
+    const shop = useShopStore.use.shop();
+    const setShop = useShopStore.use.setShop()
+
+    useEffect(() => {
+        const findShop = async()=>{
+            const json = await asyncStorage.getItem("shop");
+            if(json !== null){
+                const shop = JSON.parse(json);
+                setShop(shop)
+            }
+        }
+        findShop()
+    }, [shop, setShop])
 
     const handleCheck = () => {
         console.log("Checking reference:", reference);
@@ -31,8 +46,8 @@ function Home() {
             <View style={styles.container}>
                 <StatusBar barStyle='dark-content' backgroundColor='white' />
                 <Card containerStyle={[styles.card, styles.storeCard]}>
-                    <Text style={styles.storeName}>Intermart</Text>
-                    <Text style={styles.storeLocation}>Location: Ebene</Text>
+                    <Text style={styles.storeName}>{shop?.company?.company_name || 'no company'}</Text>
+                    <Text style={styles.storeLocation}>Location: {shop?.location}</Text>
                 </Card>
 
                 <View style={checkStyles.CheckContainer}

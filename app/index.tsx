@@ -9,6 +9,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 import {useAuthStore} from "@/store/AuthStore";
 import * as SecureStore from "expo-secure-store";
+import {useShopStore} from "@/store/shop";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -18,6 +19,7 @@ function PinLoginScreen() {
     const [appIsReady, setAppIsReady] = useState(false);
     const setToken = useAuthStore.use.setToken()
     const setIsAuthenticated = useAuthStore.use.setIsAuthenticated();
+    const setShop = useShopStore.use.setShop();
     const router = useRouter()
 
     const styles = currentstyles(theme);
@@ -37,10 +39,12 @@ function PinLoginScreen() {
         async function prepare() {
             try {
                 const firstLaunch = await asyncStorage.getItem("first_launch") || "0";
-                if (parseInt(firstLaunch) === 0) {
+                const shopJson = await asyncStorage.getItem("shop");
+                if (parseInt(firstLaunch) === 0 || shopJson === null) {
                     router.push("/first-launch");
                     return
                 }
+                setShop(JSON.parse(shopJson));
                 // if the time since the last login is less than 29 days and there are jwt stored in secure storage
                 // set is authenticated to true and redirect the user to the home page
                 const accessToken = await SecureStore.getItemAsync('access')

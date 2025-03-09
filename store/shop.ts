@@ -6,15 +6,14 @@ import {createSelectors} from "@/lib/utils";
 
 interface ShopState {
     shop: Shop | null
+    setShop: (shop: Shop) => void
 }
-export const useAuthStore = createSelectors(
+export const useShopStore = createSelectors(
     create<ShopState>()(
         immer((set) => ({
             shop: null,
             setShop: (shop: Shop)=> set((state)=>{
-                if(state.shop !== null){
-                    state.shop = shop
-                }
+                state.shop = shop;
             })
         }))
     )
