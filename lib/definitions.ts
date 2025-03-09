@@ -5,6 +5,10 @@ import {Ionicons} from "@expo/vector-icons";
 {/*props for ParentContainer component*/
 }
 
+export type WithSelectors<S> = S extends { getState: () => infer T }
+    ? S & { use: { [K in keyof T]: () => T[K] } }
+    : never
+
 export interface ParentContainerProps {
     children: React.ReactNode;
     width?: DimensionValue; // Use DimensionValue for width
@@ -109,6 +113,6 @@ export type Company = {
 export type Shop = {
     id: number,
     location: string,
-    address: string,
+    address?: string,
     company: Company
 }

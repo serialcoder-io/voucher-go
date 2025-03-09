@@ -72,7 +72,7 @@ const LoginScreen = () => {
         if(error){
             console.log(error)
         }
-    }, [isSuccess, data, isAuthenticated, initializeUser]);
+    }, [isSuccess, data, isAuthenticated, initializeUser, router]);
 
     if(isLoading || isAuthenticated){
         return (

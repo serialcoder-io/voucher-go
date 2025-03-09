@@ -4,9 +4,11 @@ import * as React from "react";
 import {commonColors} from "@/constants/Colors";
 import {useAuthStore} from "@/store/AuthStore";
 import {useRouter} from "expo-router";
+import {useEffect} from "react";
 
 function HeaderRightAvatar(){
     const user = useAuthStore.use.user()
+
     const router = useRouter();
     return (
         <Pressable style={{ paddingRight: 20 }} onPress={()=>router.push('/account')}>

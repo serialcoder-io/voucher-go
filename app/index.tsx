@@ -22,10 +22,11 @@ function PinLoginScreen() {
 
     const styles = currentstyles(theme);
     const globalStyles = useGlobalStyles();
-    const handleChangePin = (pin: string) => {
+    const handleChangePin = async(pin: string) => {
         setPin(pin);
+        const accesCode = await SecureStore.getItemAsync("accessCode")
         if (pin.length === 4) {
-            if (pin === "5464"){
+            if (pin === accesCode) {
                 router.push("/auth");
             }else{
                 Alert.alert("Access denied", "The access code is incorrect");
@@ -35,8 +36,8 @@ function PinLoginScreen() {
     useEffect(() => {
         async function prepare() {
             try {
-                const firstLaunch = await asyncStorage.getItem("first_launche");
-                if (firstLaunch == null && !firstLaunch) {
+                const firstLaunch = await asyncStorage.getItem("first_launch") || "0";
+                if (parseInt(firstLaunch) === 0) {
                     router.push("/first-launch");
                     return
                 }

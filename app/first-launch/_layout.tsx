@@ -42,7 +42,6 @@ function RootNavigator() {
                     headerShown: true,
                     headerTitle: "Setup",
                     headerTitleStyle:{fontSize: 25, color: theme.textPrimary},
-                    headerBackVisible: false,
                     headerStyle: {
                         backgroundColor: theme.backgroundSecondary,
                     },

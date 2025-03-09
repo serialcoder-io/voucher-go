@@ -51,7 +51,7 @@ type UserResponse = {
 
 export async function fetchSignedInUserData(accessToken: TokenName): Promise<UserResponse> {
     try {
-        const response = await fetch('http://192.168.123.83:8000/vms/auth/users/me/', {
+        const response = await fetch(`${baseUrl}/vms/auth/users/me/`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

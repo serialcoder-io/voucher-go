@@ -1,10 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Preferences, ThemeMode} from "@/lib/definitions";
-import {Text, View} from "react-native";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import React from "react";
+import {Preferences, ThemeMode, WithSelectors} from "@/lib/definitions";
+import {StoreApi, UseBoundStore} from "zustand/index";
 
-export const baseUrl = "http://192.168.200.83:8000/"
+
+export const baseUrl = "http://192.168.204.83:8000"
 
 export function testStringRegEx(str: string, regEx: RegExp): boolean {
     return regEx.test(str.trim());
@@ -55,4 +54,16 @@ export async function getPreference(): Promise<Preferences | null> {
         console.error('Erreur lors de la récupération des préférences:', error);
         return null;
     }
+}
+
+export const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
+    _store: S,
+) => {
+    let store = _store as WithSelectors<typeof _store>
+    store.use = {}
+    for (let k of Object.keys(store.getState())) {
+        ;(store.use as any)[k] = () => store((s) => s[k as keyof typeof s])
+    }
+
+    return store
 }

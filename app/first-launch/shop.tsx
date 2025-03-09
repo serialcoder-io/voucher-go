@@ -1,17 +1,18 @@
 import ParentContainer from "@/components/parent-container";
-import {View, Text, StyleSheet, Pressable} from "react-native";
+import {View, Text, StyleSheet, Pressable, Alert} from "react-native";
 import React, {useCallback, useEffect, useState} from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
 import {Button, Icon} from "@rneui/themed";
 import {useTheme} from "@/hooks/useTheme";
-import {Company, Theme} from "@/lib/definitions";
+import {Company, Shop, Theme} from "@/lib/definitions";
 import PrimaryButton from "@/components/ui/primary-button";
 import {useRouter} from "expo-router";
 import RenderItem from "@/components/ui/shop/render-item";
-import {fetchAllCompanies} from "@/lib/services/company";
+import {fetchAllCompanies, fetchShops} from "@/lib/services/company";
 import {useQuery} from "@tanstack/react-query";
 import {queryClient} from "@/lib/queryClient";
 import {commonColors} from "@/constants/Colors";
+import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 
 function Label({ title }: { title: string }) {
     const {theme} = useTheme();
@@ -20,38 +21,69 @@ function Label({ title }: { title: string }) {
 }
 
 function ShopSetup(){
-    const [company, setCompany] = useState(null);
+    const [company, setCompany] = useState<number | null>(null);
     const [companies, setCompanies] = useState<Company[]>([]);
-    const [shops, setShops] = useState([]);
+    const [shops, setShops] = useState<Shop[]>([]);
     const [location, setLocation] = useState(null);
     const {theme} = useTheme();
     const styles = getStyles(theme)
     const router = useRouter();
 
     const saveShop = async()=>{
-        console.log("Saving...");
+        const shop = shops.find((shop) => shop.id === location);
+        if(shop){
+            await asyncStorage.setItem("shops", JSON.stringify(shop));
+            await asyncStorage.setItem("first_launch", "1");
+            router.push("/auth/register");
+        }else{
+            Alert.alert("Shop not found", "The specified shop does not exist. Please contact support.");
+        }
+
     }
 
     const fetchCompanies = useCallback(async () => {
         return await fetchAllCompanies();
     }, []);
 
-    const { data, isLoading, isSuccess, error } = useQuery({
+    const fetchRelatedShops = useCallback(async () => {
+        if (company) {
+            return await fetchShops(company);
+        }
+        return [];
+    }, [company]);
+
+
+    const { data: relatedShops, isSuccess: isShopsSuccess, error: shopsError } = useQuery({
+        queryKey: ["shops", company],
+        queryFn: fetchRelatedShops,
+        enabled: !!company,
+    });
+
+
+    const { data: companiesData, isLoading: isCompaniesLoading, isSuccess: isCompaniesSuccess, error: companiesError } = useQuery({
         queryKey: ["companies"],
         queryFn: fetchCompanies,
     });
+    useEffect(() => {
+        if (isCompaniesSuccess && companiesData) {
+            setCompanies(companiesData);
+        }
+        if (companiesError) {
+            console.error("Error fetching companies:", companiesError);
+        }
+    }, [isCompaniesSuccess, companiesData, companiesError, queryClient, router, companies, setCompanies]);
 
     useEffect(() => {
-        if (isSuccess && data) {
-            setCompanies(data);
-            console.log(companies)
+        if (isShopsSuccess && relatedShops) {
+            setShops(relatedShops);
         }
-        if (error) {
-            console.error("Error fetching companies:", error);
+        if (shopsError) {
+            console.error("Error fetching shops:", shopsError);
         }
-    }, [isSuccess, data, error, queryClient, router, companies, setCompanies]);
+    }, [isShopsSuccess, relatedShops, shopsError]);
 
-    if(isLoading){
+
+    if(isCompaniesLoading) {
         return (
             <View style={{flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around', paddingHorizontal: 30}}>
                 <Button
@@ -67,6 +99,11 @@ function ShopSetup(){
 
     return (
         <ParentContainer>
+            <View style={{paddingVertical: 25, paddingHorizontal: 10, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", rowGap: 6}}>
+                <Text style={{fontSize: 25, color: theme.textPrimary}}>
+                    Shop
+                </Text>
+            </View>
             <View style={styles.dropdownContainer}>
                 <Label title="Select Company" />
                 <Dropdown
@@ -101,7 +138,7 @@ function ShopSetup(){
                     selectedTextStyle={styles.selectedTextStyle}
                     inputSearchStyle={styles.inputSearchStyle}
                     iconStyle={styles.iconStyle}
-                    data={shops}
+                    data={shops.map(s =>({ label: s.location, value: s.id }))}
                     search
                     maxHeight={300}
                     labelField="label"
@@ -116,7 +153,7 @@ function ShopSetup(){
                             style={styles.icon} color={theme.textSecondary}
                         />
                     )}
-                    renderItem={(item)=>RenderItem({label: item.label, value: item.value}, "location")}
+                    renderItem={(shop)=>RenderItem({label: shop.label, value: shop.value}, shop.value)}
                 />
             </View>
             <View style={styles.dropdownContainer}>
@@ -126,15 +163,6 @@ function ShopSetup(){
                     actionOnPress={() =>saveShop()}
                     width='100%'
                 />
-            </View>
-            <View style={{width:'100%', paddingLeft: 10}}>
-                <Pressable style={styles.backButton} onPress={() => router.back()}>
-                    <Icon
-                        name="keyboard-backspace" type='material' size={33}
-                        style={styles.icon} color={theme.textSecondary}
-                    />
-                    <Text style={{fontSize: 18, color: theme.textSecondary}}>Back</Text>
-                </Pressable>
             </View>
         </ParentContainer>
     );

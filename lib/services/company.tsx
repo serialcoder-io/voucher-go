@@ -1,4 +1,4 @@
-import { Company } from "@/lib/definitions";
+import {Company, Shop} from "@/lib/definitions";
 import {baseUrl} from "@/lib/utils";
 
 export type CompanyResponse = {
@@ -6,7 +6,7 @@ export type CompanyResponse = {
     http_status_code: number;
 }
 
-export async function fetchAllCompanies(): Promise<Company[]> {
+export async function fetchAllCompanies(): Promise<Company[] | []> {
     try {
         const response = await fetch(`${baseUrl}/vms/api/companies/`, {
             method: 'GET',
@@ -21,7 +21,31 @@ export async function fetchAllCompanies(): Promise<Company[]> {
         }
 
         const data = await response.json();
-        return data as Company[]; // On s'assure que `data` est un tableau d'entreprises
+        return data as Company[] || [];
+    } catch (e: unknown) {
+        if (e instanceof Error) {
+            throw new Error('Sorry, something went wrong: ' + e.message);
+        }
+        throw new Error('Unknown error occurred');
+    }
+}
+
+export async function fetchShops(companyId: number): Promise<Shop[] | []> {
+    try {
+        const response = await fetch(`${baseUrl}/vms/api/shops/?company=${companyId}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data as Shop[] || [];
     } catch (e: unknown) {
         if (e instanceof Error) {
             throw new Error('Sorry, something went wrong: ' + e.message);
