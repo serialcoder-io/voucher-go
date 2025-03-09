@@ -4,7 +4,7 @@ import { Text, Icon, Card, Button, Divider } from '@rneui/themed';
 import BorderedInput from "@/components/ui/bordered-input";
 import PrimaryButton from "@/components/ui/primary-button";
 import {useTheme} from "@/hooks/useTheme";
-import {Theme} from "@/lib/definitions";
+import {Theme, Voucher} from "@/lib/definitions";
 import {useGlobalStyles} from "@/styles/global";
 import {commonColors} from "@/constants/Colors";
 import {useShopStore} from "@/store/shop";
@@ -19,6 +19,10 @@ function Home() {
     const [loading, setLoading] = useState(false);
     const shop = useShopStore.use.shop();
     const setShop = useShopStore.use.setShop()
+    const checkStyles = getCheckStyles(theme);
+    const styles = getStyles(theme);
+    const [shopRedemptionCards, setShopRedemptionCards] = useState(false);
+    const [voucher, setVoucher] = useState<Voucher | null>(null);
 
     useEffect(() => {
         const findShop = async()=>{
@@ -36,9 +40,6 @@ function Home() {
         setReference("");
     };
 
-    const checkStyles = getCheckStyles(theme);
-    const styles = getStyles(theme);
-
     const router = useRouter();
 
     return (
@@ -49,7 +50,6 @@ function Home() {
                     <Text style={styles.storeName}>{shop?.company?.company_name || 'no company'}</Text>
                     <Text style={styles.storeLocation}>Location: {shop?.location}</Text>
                 </Card>
-
                 <View style={checkStyles.CheckContainer}
                 >
                     {/* check-voucher container*/}
@@ -94,46 +94,59 @@ function Home() {
                 </View>
 
                 {/* redemption card*/}
-                <Card containerStyle={styles.card}>
-                    <Text style={styles.refText}>Ref: {reference}</Text>
-                    <View style={styles.amountRow}>
-                        <Text style={styles.amountText}>Amount : 1000 Rs</Text>
-                        <Icon name='check-circle' type='feather' color='green' />
-                    </View>
-                    <Divider />
-                    <TouchableOpacity style={styles.optionRow}>
-                        <Text style={{color: theme.textPrimary, fontSize: 16}}>Select a Company</Text>
-                        <Icon name='chevron-down' type='feather' color={theme.textSecondary} />
-                    </TouchableOpacity>
-                    <Divider />
-                    <TouchableOpacity style={styles.optionRow}>
-                        <Text style={{color: theme.textPrimary, fontSize: 16}}>Select a location</Text>
-                        <Icon name='chevron-down' type='feather' color={theme.textSecondary} />
-                    </TouchableOpacity>
-                    <Divider />
-                    <View style={styles.optionRow}>
-                        <BorderedInput
-                            placeholder="Enter till no"
-                            keyboardType='number-pad'
-                            value={tillNo}
-                            onChangeText={setTillNo}
+                {voucher !== null && (
+                    <Card containerStyle={styles.card}>
+                        <View style={styles.refRow}>
+                            <Icon name='check-circle' type='feather' color='green' />
+                            <Text style={styles.refText}>Ref: {voucher?.voucher_ref}</Text>
+                        </View>
+                        <View style={{display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+                            <View style={styles.optionRow} >
+                                <Icon
+                                    name="money" type='material' size={23}
+                                    style={styles.icon} color={theme.textSecondary}
+                                />
+                                <Text style={{color: theme.textPrimary, fontSize: 16}}>Amount :</Text>
+                            </View>
+                            <Text style={styles.amountText}>{voucher?.amount || 1000} Rs</Text>
+                        </View>
+                        <Divider />
+                        <Divider />
+                        <View style={{display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+                            <View style={styles.optionRow} >
+                                <Icon
+                                    name="shop" type='material' size={23}
+                                    style={styles.icon} color={theme.textSecondary}
+                                />
+                                <Text style={{color: theme.textPrimary, fontSize: 16}}>Shop :</Text>
+                            </View>
+                            <Text style={styles.amountText}>{(shop?.company?.company_name + "  " + shop?.location) || "intermart  Ebene"}</Text>
+                        </View>
+                        <Divider />
+                        <View style={styles.optionRow}>
+                            <BorderedInput
+                                placeholder="Enter till no"
+                                keyboardType='number-pad'
+                                value={tillNo}
+                                onChangeText={setTillNo}
+                            />
+                        </View>
+                        <Button
+                            title='Redeem'
+                            buttonStyle={styles.redeemButton}
+                            disabled={!tillNo}
+                            loading={loading}
+                            onPress={() => setLoading(true)}
                         />
-                    </View>
-                    <Button
-                        title='Redeem'
-                        buttonStyle={styles.redeemButton}
-                        disabled={!tillNo}
-                        loading={loading}
-                        onPress={() => setLoading(true)}
-                    />
-                    <Button
-                        title='Cancel'
-                        type='outline'
-                        buttonStyle={styles.cancelButton}
-                        titleStyle={{color: theme.textPrimary}}
-                        onPress={() => console.log("redeemed")}
-                    />
-                </Card>
+                        <Button
+                            title='Cancel'
+                            type='outline'
+                            buttonStyle={styles.cancelButton}
+                            titleStyle={{color: theme.textPrimary}}
+                            onPress={() => console.log("redeemed")}
+                        />
+                    </Card>
+                )}
             </View>
         </ScrollView>
     );
@@ -181,7 +194,15 @@ const getStyles = (theme: Theme) => StyleSheet.create({
     optionRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
+        columnGap: 5,
+        paddingVertical: 15,
+    },
+    refRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        columnGap: 15,
         paddingVertical: 15,
     },
     icon: {

@@ -2,9 +2,7 @@ import React from "react";
 import {DimensionValue, GestureResponderEvent, KeyboardTypeOptions} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
 
-{/*props for ParentContainer component*/
-}
-
+// zustand
 export type WithSelectors<S> = S extends { getState: () => infer T }
     ? S & { use: { [K in keyof T]: () => T[K] } }
     : never
@@ -116,3 +114,25 @@ export type Shop = {
     address?: string,
     company: Company
 }
+
+export type Redemption = {
+    id: number;
+    redeemed_on: string;
+    till_no: number;
+    redeemed_by: string;
+    redeemed_at: string;
+    voucher: number;
+};
+
+// Type pour Voucher
+export type Voucher = {
+    id: number;
+    voucher_ref: string;
+    amount: string;
+    voucher_request: number;
+    date_time_created: string;
+    expiry_date: string | null;
+    extention_date: string | null;
+    voucher_status: "provisional" | "issued" |  "expired" | "redeemed" | "cancelled";
+    redemption: Redemption | null;
+};
