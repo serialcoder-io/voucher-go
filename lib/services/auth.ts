@@ -1,7 +1,5 @@
-import {Jwt, User} from "@/lib/definitions";
-import {TokenName} from "@/store/AuthStore";
+import {Jwt} from "@/lib/definitions";
 import {baseUrl} from "@/lib/utils";
-
 
 export type loginResponse = {
     results: Jwt | string;
@@ -13,6 +11,11 @@ export interface LoginParams {
     password: string;
 }
 
+/**
+ * Obtains tokens pair (JWT)
+ * @param credentials - Login parameters containing username and password
+ * @returns - JWT tokens or error message
+ */
 export async function login(credentials: LoginParams): Promise<loginResponse> {
     try {
         const response = await fetch(`${baseUrl}/vms/auth/token/`, {

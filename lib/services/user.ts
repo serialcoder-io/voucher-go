@@ -1,6 +1,12 @@
 import {User} from "@/lib/definitions";
 import {baseUrl} from "@/lib/utils";
 
+
+/**
+ * Fetches user data using the provided access token.
+ * @param accessToken - The access token used for authentication in the request.
+ * @returns - A promise that resolves to the user data or null if the request fails.
+ */
 async function fetchUserData(accessToken: string): Promise<User | null> {
     try {
         const response = await fetch(`${baseUrl}/vms/auth/users/me/`, {

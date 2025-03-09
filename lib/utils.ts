@@ -14,6 +14,12 @@ const defaultPreferences = {
     themeMode: 'auto' as ThemeMode,
 }
 
+/**
+ * Stores the preferences in AsyncStorage.
+ * @param key - The key under which the preferences are saved (default is 'preferences').
+ * @param preferences - The preferences to store (default is the `defaultPreferences` object).
+ * @throws Will throw an error if there is a problem with saving the preferences.
+ */
 export async function storePreference(key: string = 'preferences', preferences: Preferences = defaultPreferences) {
     try {
         const jsonValue = JSON.stringify(preferences);
@@ -27,6 +33,12 @@ export async function storePreference(key: string = 'preferences', preferences: 
     }
 }
 
+/**
+ * Sets a preference by updating the value for a given key.
+ * @param key - The key of the preference to update.
+ * @param newValue - The new value to set for the preference.
+ * @throws Will throw an error if there is a problem with saving the preference.
+ */
 export async function setPreference(key: string, newValue: string) {
     try {
         const jsonValue = await AsyncStorage.getItem('preferences');
@@ -46,6 +58,10 @@ export async function setPreference(key: string, newValue: string) {
     }
 }
 
+/**
+ * Retrieves the stored preferences.
+ * @returns A promise that resolves to the preferences object or null if not found.
+ */
 export async function getPreference(): Promise<Preferences | null> {
     try {
         const jsonValue = await AsyncStorage.getItem('preferences');
