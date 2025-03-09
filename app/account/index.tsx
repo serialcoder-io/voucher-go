@@ -1,23 +1,16 @@
 import {ScrollView, View, Text} from "react-native";
 import {useAuthStore} from "@/store/AuthStore";
+//import {useEffect} from "react";
+//import {useRouter} from "expo-router";
 
 function Index(){
-    const access_token = useAuthStore.use.tokens().access
-    const refresh_token = useAuthStore.use.tokens().refresh
-    const trimed_token = access_token.trim().length > 0
+    const user = useAuthStore()    // Accède à l'utilisateur depuis Zustand
+
+    //const router = useRouter();
     return (
         <ScrollView>
             <View>
-                {trimed_token ? (
-                    <View><Text>{access_token}</Text></View>
-                ): (
-                    <View><Text>access token is empty</Text></View>
-                )}
-                {refresh_token.trim().length > 0 ? (
-                    <View><Text>{refresh_token}</Text></View>
-                ): (
-                    <View><Text>refresh token is empty</Text></View>
-                )}
+                <Text>{JSON.stringify(user, null, 2)}</Text>
             </View>
         </ScrollView>
     )
