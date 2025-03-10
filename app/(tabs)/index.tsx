@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, Pressable, Modal} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, Pressable, Alert} from 'react-native';
 import { Text, Icon, Card, Button, Divider } from '@rneui/themed';
 import BorderedInput from "@/components/ui/bordered-input";
 import PrimaryButton from "@/components/ui/primary-button";
@@ -10,19 +10,27 @@ import {commonColors} from "@/constants/Colors";
 import {useShopStore} from "@/store/shop";
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 import {useRouter} from "expo-router";
+import {useQuery} from "@tanstack/react-query";
+import {findVoucherByRef} from "@/lib/services/voucher";
+import {useAuthStore} from "@/store/AuthStore";
+import {queryClient} from "@/lib/queryClient";
+import {useVoucherStore} from "@/store/voucher";
 
 function Home() {
-    const [reference, setReference] = useState('VR-00000123/100');
+    const [reference, setReference] = useState('');
     const [showInput, setShowInput] = useState(false);
     const [tillNo, setTillNo] = useState('');
     const {theme} = useTheme();
     const [loading, setLoading] = useState(false);
     const shop = useShopStore.use.shop();
     const setShop = useShopStore.use.setShop()
+    const accessToken = useAuthStore.use.tokens().access
     const checkStyles = getCheckStyles(theme);
     const styles = getStyles(theme);
-    const [shopRedemptionCards, setShopRedemptionCards] = useState(false);
-    const [voucher, setVoucher] = useState<Voucher | null>(null);
+    const [searchVoucher, setSearchVoucher] = useState(false);
+    const {voucher, setVoucher} = useVoucherStore();
+    const router = useRouter();
+
 
     useEffect(() => {
         const findShop = async()=>{
@@ -37,10 +45,40 @@ function Home() {
 
     const handleCheck = () => {
         console.log("Checking reference:", reference);
-        setReference("");
+        setSearchVoucher(true);
     };
 
-    const router = useRouter();
+    const findVoucher = useCallback(async () => {
+        if(searchVoucher){
+            return await findVoucherByRef(reference.trim(), accessToken.trim());
+        }
+        return []
+    }, [reference, setReference, searchVoucher]);
+
+    const { data, isLoading, isSuccess, error } = useQuery({
+        queryKey: ["voucher"],
+        queryFn: findVoucher,
+        enabled: reference.length > 0 && searchVoucher,
+    });
+
+    useEffect(() => {
+        if (isSuccess && data) {
+            setVoucher(Array.isArray(data) ? data : [data]);
+            const timer = setTimeout(() => {
+                setSearchVoucher(false);
+                setReference("")
+                setShowInput(false);
+                queryClient.resetQueries({ queryKey: "voucher", exact: true });
+            }, 300);
+            return () => clearTimeout(timer);
+        }
+        if (error) {
+            Alert.alert("Sorry, something went wrong, please try again later");
+        }
+    }, [isSuccess, data, error, setSearchVoucher, queryClient]);
+
+
+
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -77,7 +115,7 @@ function Home() {
                                 <PrimaryButton
                                     disabled={!reference}
                                     title="Check"
-                                    loading={false}
+                                    loading={isLoading}
                                     actionOnPress={handleCheck}
                                 />
                             </View>
@@ -94,11 +132,11 @@ function Home() {
                 </View>
 
                 {/* redemption card*/}
-                {voucher !== null && (
+                {voucher.length > 0 && (
                     <Card containerStyle={styles.card}>
                         <View style={styles.refRow}>
                             <Icon name='check-circle' type='feather' color='green' />
-                            <Text style={styles.refText}>Ref: {voucher?.voucher_ref}</Text>
+                            <Text style={styles.refText}>Ref: {voucher[0]?.voucher_ref}</Text>
                         </View>
                         <View style={{display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
                             <View style={styles.optionRow} >
@@ -108,7 +146,7 @@ function Home() {
                                 />
                                 <Text style={{color: theme.textPrimary, fontSize: 16}}>Amount :</Text>
                             </View>
-                            <Text style={styles.amountText}>{voucher?.amount || 1000} Rs</Text>
+                            <Text style={styles.amountText}>{voucher[0]?.amount} Rs</Text>
                         </View>
                         <Divider />
                         <Divider />
@@ -136,7 +174,7 @@ function Home() {
                             buttonStyle={styles.redeemButton}
                             disabled={!tillNo}
                             loading={loading}
-                            onPress={() => setLoading(true)}
+                            onPress={() => handleCheck()}
                         />
                         <Button
                             title='Cancel'
