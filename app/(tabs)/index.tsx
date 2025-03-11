@@ -4,7 +4,7 @@ import { Text, Icon, Card, Button, Divider } from '@rneui/themed';
 import BorderedInput from "@/components/ui/bordered-input";
 import PrimaryButton from "@/components/ui/primary-button";
 import {useTheme} from "@/hooks/useTheme";
-import {Theme, Voucher} from "@/lib/definitions";
+import {Theme} from "@/lib/definitions";
 import {useGlobalStyles} from "@/styles/global";
 import {commonColors} from "@/constants/Colors";
 import {useShopStore} from "@/store/shop";
@@ -21,7 +21,6 @@ function Home() {
     const [showInput, setShowInput] = useState(false);
     const [tillNo, setTillNo] = useState('');
     const {theme} = useTheme();
-    const [loading, setLoading] = useState(false);
     const shop = useShopStore.use.shop();
     const setShop = useShopStore.use.setShop()
     const accessToken = useAuthStore.use.tokens().access
@@ -43,7 +42,7 @@ function Home() {
         findShop()
     }, [shop, setShop])
 
-    const handleCheck = () => {
+    const handleSubmitRef = () => {
         console.log("Checking reference:", reference);
         setSearchVoucher(true);
     };
@@ -86,7 +85,7 @@ function Home() {
                 <StatusBar barStyle='dark-content' backgroundColor='white' />
                 <Card containerStyle={[styles.card, styles.storeCard]}>
                     <Text style={styles.storeName}>{shop?.company?.company_name || 'no company'}</Text>
-                    <Text style={styles.storeLocation}>Location: {shop?.location}</Text>
+                    <Text style={styles.storeLocation}>Location: {shop?.location || 'no shop'}</Text>
                 </Card>
                 <View style={checkStyles.CheckContainer}
                 >
@@ -116,7 +115,7 @@ function Home() {
                                     disabled={!reference}
                                     title="Check"
                                     loading={isLoading}
-                                    actionOnPress={handleCheck}
+                                    actionOnPress={handleSubmitRef}
                                 />
                             </View>
                         )}
@@ -146,7 +145,7 @@ function Home() {
                                 />
                                 <Text style={{color: theme.textPrimary, fontSize: 16}}>Amount :</Text>
                             </View>
-                            <Text style={styles.amountText}>{voucher[0]?.amount} Rs</Text>
+                            <Text style={styles.amountText}>{voucher[0]?.amount || 'no amount'} Rs</Text>
                         </View>
                         <Divider />
                         <Divider />
@@ -158,7 +157,7 @@ function Home() {
                                 />
                                 <Text style={{color: theme.textPrimary, fontSize: 16}}>Shop :</Text>
                             </View>
-                            <Text style={styles.amountText}>{(shop?.company?.company_name + "  " + shop?.location) || "intermart  Ebene"}</Text>
+                            <Text style={styles.amountText}>{(shop?.company?.company_name + "  " + shop?.location) || "no shop"}</Text>
                         </View>
                         <Divider />
                         <View style={styles.optionRow}>
@@ -173,15 +172,17 @@ function Home() {
                             title='Redeem'
                             buttonStyle={styles.redeemButton}
                             disabled={!tillNo}
-                            loading={loading}
-                            onPress={() => handleCheck()}
+                            onPress={() => router.push({
+                                pathname: '/redeem-voucher/[till_no]',
+                                params: { till_no: tillNo }
+                            })}
                         />
                         <Button
                             title='Cancel'
                             type='outline'
                             buttonStyle={styles.cancelButton}
                             titleStyle={{color: theme.textPrimary}}
-                            onPress={() => console.log("redeemed")}
+                            onPress={() => setVoucher([])}
                         />
                     </Card>
                 )}
