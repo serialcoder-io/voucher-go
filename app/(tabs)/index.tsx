@@ -1,7 +1,6 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, Pressable, Alert} from 'react-native';
-import { Text, Icon, Card, Button, Divider } from '@rneui/themed';
-import BorderedInput from "@/components/ui/bordered-input";
+import React, {useEffect, useState} from 'react';
+import {ScrollView, View, StatusBar, StyleSheet, Pressable, Alert} from 'react-native';
+import { Text, Icon} from '@rneui/themed';
 import {useTheme} from "@/hooks/useTheme";
 import {Theme} from "@/lib/definitions";
 import {useGlobalStyles} from "@/styles/global";
@@ -15,12 +14,12 @@ import {useAuthStore} from "@/store/AuthStore";
 import {queryClient} from "@/lib/queryClient";
 import {useVoucherStore} from "@/store/voucher";
 import InputVoucherRef from "@/components/ui/(tabs)/index/input-voucher-ref";
-import CardRow from "@/components/ui/(tabs)/index/card-row";
 import {isVoucherExpired, isVoucherInvalidStatus} from "@/lib/utils";
 import CustomAlert from "@/components/ui/custom-alert";
 import ScanButton from "@/components/ui/(tabs)/index/scanButton";
 import ShopCard from "@/components/ui/(tabs)/index/shopCard";
 import RedemptionCard from "@/components/ui/(tabs)/index/redemptionCard";
+import ToogleInputRefBtn from "@/components/ui/(tabs)/index/toogleInputRefBtn";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -115,23 +114,15 @@ function Home() {
                     companyName={shop?.company?.company_name || 'no company'}
                     shopLocation={shop?.location || 'no shop'}
                 />
-                <View style={checkStyles.CheckContainer}
-                >
+                <View style={checkStyles.CheckContainer}>
                     {/* check-voucher container*/}
                     <View style={checkStyles.checkVoucherConainer}>
                         {/* button to show and hide voucher reference field */}
-                        <Pressable
-                            onPress={() => setShowInput(!showInput)}
-                            style={checkStyles.showInputRefBtn}
-                            hitSlop={20}
-                        >
-                            <Icon
-                                name={showInput ? 'chevron-down': 'chevron-right'}
-                                size={25} color={theme.textPrimary} type="feather"
-                            />
-                            <Text style={{fontSize: 16, color: theme.textPrimary}}>Enter the reference manually</Text>
-                        </Pressable>
-
+                        <ToogleInputRefBtn
+                            theme={theme}
+                            showInput={showInput}
+                            setShowInput={setShowInput}
+                        />
                         {showInput && (
                             <InputVoucherRef
                                 styles={checkStyles.inputContainer}
@@ -177,60 +168,6 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
     },
-    card: {
-        borderWidth: 0,
-        borderRadius: 10,
-        marginBottom: 15,
-        paddingVertical: 20,
-        width: '100%',
-        backgroundColor: theme.backgroundSecondary,
-        elevation: 6
-    },
-    optionRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        columnGap: 5,
-        paddingVertical: 15,
-    },
-    refRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        columnGap: 15,
-        paddingVertical: 15,
-    },
-    icon: {
-        marginRight: 10,
-    },
-    refText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: theme.textPrimary,
-    },
-    rowText:{color: theme.textSecondary,},
-    amountRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingVertical: 10,
-    },
-    input: {
-        borderBottomWidth: 1,
-        borderBottomColor: '#CCC',
-        flex: 1,
-        marginLeft: 10,
-    },
-    redeemButton: {
-        backgroundColor: commonColors.primaryColor,
-        borderRadius: 5,
-    },
-    cancelButton: {
-        borderRadius: 5,
-        marginTop: 20,
-        marginBottom: 15,
-        borderColor: theme.textPrimary,
-    }
 });
 
 const getCheckStyles = (theme: Theme) => {
