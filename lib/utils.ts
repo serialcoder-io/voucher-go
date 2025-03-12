@@ -3,7 +3,7 @@ import {Preferences, ThemeMode, Voucher, WithSelectors} from "@/lib/definitions"
 import {StoreApi, UseBoundStore} from "zustand/index";
 
 
-export const baseUrl = "http://192.168.162.83:8000"
+export const baseUrl = "http://192.168.0.83:8000"
 
 export function testStringRegEx(str: string, regEx: RegExp): boolean {
     return regEx.test(str.trim());

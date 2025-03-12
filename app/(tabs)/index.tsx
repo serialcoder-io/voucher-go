@@ -18,6 +18,7 @@ import InputVoucherRef from "@/components/ui/(tabs)/index/input-voucher-ref";
 import CardRow from "@/components/ui/(tabs)/index/card-row";
 import {isVoucherExpired, isVoucherInvalidStatus} from "@/lib/utils";
 import CustomAlert from "@/components/ui/custom-alert";
+import ScanButton from "@/components/ui/(tabs)/index/scanButton";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -146,12 +147,7 @@ function Home() {
                     </View>
 
                     {/*scan button*/}
-                    <View style={{width: '100%', borderTopWidth: 0.5, borderTopColor: 'grey'}}>
-                        <TouchableOpacity style={checkStyles.scanButton}>
-                            <Icon name="qrcode" size={25} color={theme.textPrimary} type="font-awesome" />
-                            <Text style={{fontSize: 16, color: theme.textPrimary}}>Scan the QR code</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <ScanButton />
                 </View>
 
                 {/* redemption card*/}
@@ -334,11 +330,6 @@ const getCheckStyles = (theme: Theme) => {
             marginBottom: 10,
             borderWidth: 1,
             borderColor: "#CCC",
-        },
-        scanButton: {
-            width:'100%', display: "flex", flexDirection: "row",
-            alignItems: "center", columnGap: 15,
-            paddingVertical: 15, paddingHorizontal: 18
         },
         checkVoucherConainer: {
             width: '100%',
