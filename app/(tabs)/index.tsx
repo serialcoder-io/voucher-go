@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, View, StatusBar, StyleSheet, Alert} from 'react-native';
+import {ScrollView, View, StyleSheet, Alert} from 'react-native';
 import {useTheme} from "@/hooks/useTheme";
 import {Theme} from "@/lib/definitions";
 import {useShopStore} from "@/store/shop";
@@ -15,6 +15,7 @@ import CustomAlert from "@/components/ui/custom-alert";
 import ShopCard from "@/components/ui/(tabs)/index/shopCard";
 import RedemptionCard from "@/components/ui/(tabs)/index/redemptionCard";
 import CheckVoucherCard from "@/components/ui/(tabs)/index/CheckVoucherCard";
+import ThemedStatusBar from "@/components/status-bar";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -95,7 +96,7 @@ function Home() {
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
-                <StatusBar barStyle='dark-content' backgroundColor='white' />
+                <ThemedStatusBar theme={theme}/>
                 {showCustomAlert && (
                     <CustomAlert
                         alertVisible={showCustomAlert}

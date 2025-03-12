@@ -1,7 +1,8 @@
-import {StatusBar, View, ScrollView} from "react-native";
+import {View, ScrollView} from "react-native";
 import {useGlobalStyles} from "@/styles/global";
 import {ParentContainerProps} from "@/lib/definitions";
 import {useTheme} from "@/hooks/useTheme";
+import ThemedStatusBar from "@/components/status-bar";
 
 function ParentContainer({children, width='85%'}: ParentContainerProps) {
     const styles = useGlobalStyles();
@@ -10,10 +11,7 @@ function ParentContainer({children, width='85%'}: ParentContainerProps) {
     return (
         <ScrollView contentContainerStyle={{flex: 1}} key={themeMode}>
             <View style={styles.container}>
-                <StatusBar
-                    barStyle={theme.mode === 'dark'? 'light-content': 'dark-content'}
-                    backgroundColor={theme.backgroundSecondary}
-                />
+                <ThemedStatusBar theme={theme}/>
                 <View style={[styles.innerContainer, { width: width }]}>
                     {children}
                 </View>
