@@ -1,10 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, View, StatusBar, StyleSheet, Pressable, Alert} from 'react-native';
-import { Text, Icon} from '@rneui/themed';
+import {ScrollView, View, StatusBar, StyleSheet, Alert} from 'react-native';
 import {useTheme} from "@/hooks/useTheme";
 import {Theme} from "@/lib/definitions";
-import {useGlobalStyles} from "@/styles/global";
-import {commonColors} from "@/constants/Colors";
 import {useShopStore} from "@/store/shop";
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 import {useRouter} from "expo-router";
@@ -13,13 +10,11 @@ import {findVoucherByRef} from "@/lib/services/voucher";
 import {useAuthStore} from "@/store/AuthStore";
 import {queryClient} from "@/lib/queryClient";
 import {useVoucherStore} from "@/store/voucher";
-import InputVoucherRef from "@/components/ui/(tabs)/index/input-voucher-ref";
 import {isVoucherExpired, isVoucherInvalidStatus} from "@/lib/utils";
 import CustomAlert from "@/components/ui/custom-alert";
-import ScanButton from "@/components/ui/(tabs)/index/scanButton";
 import ShopCard from "@/components/ui/(tabs)/index/shopCard";
 import RedemptionCard from "@/components/ui/(tabs)/index/redemptionCard";
-import ToogleInputRefBtn from "@/components/ui/(tabs)/index/toogleInputRefBtn";
+import CheckVoucherCard from "@/components/ui/(tabs)/index/CheckVoucherCard";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -29,7 +24,6 @@ function Home() {
     const shop = useShopStore.use.shop();
     const setShop = useShopStore.use.setShop()
     const accessToken = useAuthStore.use.tokens().access
-    const checkStyles = getCheckStyles(theme);
     const styles = getStyles(theme);
     // If true, enables the query to find the voucher by the reference
     const [searchVoucher, setSearchVoucher] = useState(false);
@@ -114,29 +108,15 @@ function Home() {
                     companyName={shop?.company?.company_name || 'no company'}
                     shopLocation={shop?.location || 'no shop'}
                 />
-                <View style={checkStyles.CheckContainer}>
-                    {/* check-voucher container*/}
-                    <View style={checkStyles.checkVoucherConainer}>
-                        {/* button to show and hide voucher reference field */}
-                        <ToogleInputRefBtn
-                            theme={theme}
-                            showInput={showInput}
-                            setShowInput={setShowInput}
-                        />
-                        {showInput && (
-                            <InputVoucherRef
-                                styles={checkStyles.inputContainer}
-                                reference={reference}
-                                setReference={setReference}
-                                loading={isLoading}
-                                actionOnPress={handleSubmitRef}
-                            />
-                        )}
-                    </View>
-                    {/*scan button*/}
-                    <ScanButton />
-                </View>
-
+                <CheckVoucherCard
+                    theme={theme}
+                    showInput={showInput}
+                    setShowInput={setShowInput}
+                    isLoading={isLoading}
+                    reference={reference}
+                    setReference={setReference}
+                    handleSubmitRef={handleSubmitRef}
+                />
                 {/* redemption card*/}
                 {(
                     voucher.length > 0 &&
@@ -170,53 +150,5 @@ const getStyles = (theme: Theme) => StyleSheet.create({
     },
 });
 
-const getCheckStyles = (theme: Theme) => {
-    return StyleSheet.create({
-        CheckContainer:{
-            backgroundColor: theme.backgroundSecondary,
-            ...useGlobalStyles().center,
-            width: '100%',
-            borderWidth: 0, borderRadius: 10,
-            borderColor: theme.textSecondary,
-            elevation: 6
-        },
-        showInputRefBtn:{
-            width:'100%',
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            columnGap: 10
-        },
-        toggleText: {
-            color: theme.textPrimary,
-            fontSize: 16,
-            marginBottom: 10,
-            width: "100%",
-            backgroundColor: "#ffffff",
-        },
-        inputContainer: {
-            backgroundColor: theme.backgroundSecondary,
-            width: "100%",
-            alignItems: "center",
-        },
-        input: {
-            backgroundColor: theme.backgroundSecondary,
-            padding: 12,
-            color: "#000",
-            borderRadius: 5,
-            width: "100%",
-            marginBottom: 10,
-            borderWidth: 1,
-            borderColor: "#CCC",
-        },
-        checkVoucherConainer: {
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            rowGap: 20,
-            padding: 18,
-        }
-    })
-};
 
 
