@@ -61,17 +61,13 @@ function Home() {
         setTillNo("")
     }
 
-    const findVoucher = useCallback(async () => {
-        if(searchVoucher){
-            return await findVoucherByRef(reference.trim(), accessToken.trim());
-        }
-        return []
-    }, [reference, setReference, searchVoucher]);
-
     const { data, isLoading, isSuccess, error } = useQuery({
         queryKey: ["voucher"],
-        queryFn: findVoucher,
-        enabled: reference.length > 0 && searchVoucher,
+        queryFn: async () => {
+            return searchVoucher ?
+                await findVoucherByRef(reference.trim(), accessToken.trim()) : [];
+        },
+        enabled: reference.trim().length > 0 && searchVoucher,
     });
 
     useEffect(() => {
