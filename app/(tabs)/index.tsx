@@ -20,6 +20,7 @@ import {isVoucherExpired, isVoucherInvalidStatus} from "@/lib/utils";
 import CustomAlert from "@/components/ui/custom-alert";
 import ScanButton from "@/components/ui/(tabs)/index/scanButton";
 import ShopCard from "@/components/ui/(tabs)/index/shopCard";
+import RedemptionCard from "@/components/ui/(tabs)/index/redemptionCard";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -141,7 +142,6 @@ function Home() {
                             />
                         )}
                     </View>
-
                     {/*scan button*/}
                     <ScanButton />
                 </View>
@@ -152,50 +152,14 @@ function Home() {
                     !isVoucherExpired(voucher[0]) &&
                     !isVoucherInvalidStatus(voucher[0])
                 ) && (
-                    <Card containerStyle={styles.card}>
-                        <View style={styles.refRow}>
-                            <Icon name='check-circle' type='feather' color='green' />
-                            <Text style={styles.refText}>Ref: {voucher[0]?.voucher_ref}</Text>
-                        </View>
-                        <Divider />
-                        {/*row: the amount of voucher*/}
-                        <CardRow
-                            iconName="money"
-                            label="Amount"
-                            value={voucher[0]?.amount + " Rs" || 'no amount Rs'}
-                        />
-                        <Divider />
-                        <CardRow
-                            iconName="shop"
-                            label="Shop"
-                            value={(shop?.company?.company_name + "  " + shop?.location) || "no shop"}
-                        />
-                        <Divider />
-                        <View style={styles.optionRow}>
-                            <BorderedInput
-                                placeholder="Enter till no"
-                                keyboardType='number-pad'
-                                value={tillNo}
-                                onChangeText={setTillNo}
-                            />
-                        </View>
-                        <Button
-                            title='Redeem'
-                            buttonStyle={styles.redeemButton}
-                            disabled={!tillNo}
-                            onPress={() => router.push({
-                                pathname: '/redeem-voucher/[till_no]',
-                                params: { till_no: tillNo }
-                            })}
-                        />
-                        <Button
-                            title='Cancel'
-                            type='outline'
-                            buttonStyle={styles.cancelButton}
-                            titleStyle={{color: theme.textPrimary}}
-                            onPress={() => resetState()}
-                        />
-                    </Card>
+                    <RedemptionCard
+                        theme={theme}
+                        voucher={voucher}
+                        shop={(shop?.company?.company_name + "  " + shop?.location) || "no shop"}
+                        tillNo={tillNo}
+                        setTillNo={setTillNo}
+                        resetState={resetState}
+                    />
                 )}
             </View>
         </ScrollView>
