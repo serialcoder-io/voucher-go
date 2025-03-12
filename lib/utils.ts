@@ -115,3 +115,4 @@ export const isVoucherExpired = (voucher: Voucher) => {
 export const isVoucherInvalidStatus = (voucher: Voucher) => {
     return voucher.voucher_status !== "issued";
 };
+
