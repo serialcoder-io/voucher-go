@@ -15,6 +15,8 @@ import {findVoucherByRef} from "@/lib/services/voucher";
 import {useAuthStore} from "@/store/AuthStore";
 import {queryClient} from "@/lib/queryClient";
 import {useVoucherStore} from "@/store/voucher";
+import InputVoucherRef from "@/components/ui/(tabs)/index/input-voucher-ref";
+import CardRow from "@/components/ui/(tabs)/index/card-row";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -26,6 +28,7 @@ function Home() {
     const accessToken = useAuthStore.use.tokens().access
     const checkStyles = getCheckStyles(theme);
     const styles = getStyles(theme);
+    // If true, enables the query to find the voucher by the reference
     const [searchVoucher, setSearchVoucher] = useState(false);
     const {voucher, setVoucher} = useVoucherStore();
     const router = useRouter();
@@ -43,9 +46,13 @@ function Home() {
     }, [shop, setShop])
 
     const handleSubmitRef = () => {
-        console.log("Checking reference:", reference);
         setSearchVoucher(true);
     };
+
+    const resetState = () => {
+        setVoucher([]);
+        setTillNo("")
+    }
 
     const findVoucher = useCallback(async () => {
         if(searchVoucher){
@@ -76,9 +83,6 @@ function Home() {
         }
     }, [isSuccess, data, error, setSearchVoucher, queryClient]);
 
-
-
-
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
@@ -105,19 +109,13 @@ function Home() {
                         </Pressable>
 
                         {showInput && (
-                            <View style={checkStyles.inputContainer}>
-                                <BorderedInput
-                                    placeholder="Voucher Reference"
-                                    value={reference}
-                                    onChangeText={setReference}
-                                />
-                                <PrimaryButton
-                                    disabled={!reference}
-                                    title="Check"
-                                    loading={isLoading}
-                                    actionOnPress={handleSubmitRef}
-                                />
-                            </View>
+                            <InputVoucherRef
+                                styles={checkStyles.inputContainer}
+                                reference={reference}
+                                setReference={setReference}
+                                loading={isLoading}
+                                actionOnPress={handleSubmitRef}
+                            />
                         )}
                     </View>
 
@@ -137,28 +135,19 @@ function Home() {
                             <Icon name='check-circle' type='feather' color='green' />
                             <Text style={styles.refText}>Ref: {voucher[0]?.voucher_ref}</Text>
                         </View>
-                        <View style={{display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-                            <View style={styles.optionRow} >
-                                <Icon
-                                    name="money" type='material' size={23}
-                                    style={styles.icon} color={theme.textSecondary}
-                                />
-                                <Text style={{color: theme.textPrimary, fontSize: 16}}>Amount :</Text>
-                            </View>
-                            <Text style={styles.amountText}>{voucher[0]?.amount || 'no amount'} Rs</Text>
-                        </View>
                         <Divider />
+                        {/*row: the amount of voucher*/}
+                        <CardRow
+                            iconName="money"
+                            label="Amount"
+                            value={voucher[0]?.amount + " Rs" || 'no amount Rs'}
+                        />
                         <Divider />
-                        <View style={{display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-                            <View style={styles.optionRow} >
-                                <Icon
-                                    name="shop" type='material' size={23}
-                                    style={styles.icon} color={theme.textSecondary}
-                                />
-                                <Text style={{color: theme.textPrimary, fontSize: 16}}>Shop :</Text>
-                            </View>
-                            <Text style={styles.amountText}>{(shop?.company?.company_name + "  " + shop?.location) || "no shop"}</Text>
-                        </View>
+                        <CardRow
+                            iconName="shop"
+                            label="Shop"
+                            value={(shop?.company?.company_name + "  " + shop?.location) || "no shop"}
+                        />
                         <Divider />
                         <View style={styles.optionRow}>
                             <BorderedInput
@@ -182,7 +171,7 @@ function Home() {
                             type='outline'
                             buttonStyle={styles.cancelButton}
                             titleStyle={{color: theme.textPrimary}}
-                            onPress={() => setVoucher([])}
+                            onPress={() => resetState()}
                         />
                     </Card>
                 )}
@@ -252,7 +241,7 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         fontWeight: 'bold',
         color: theme.textPrimary,
     },
-    amountText:{color: theme.textSecondary,},
+    rowText:{color: theme.textSecondary,},
     amountRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
