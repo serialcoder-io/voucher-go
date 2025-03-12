@@ -19,6 +19,7 @@ import CardRow from "@/components/ui/(tabs)/index/card-row";
 import {isVoucherExpired, isVoucherInvalidStatus} from "@/lib/utils";
 import CustomAlert from "@/components/ui/custom-alert";
 import ScanButton from "@/components/ui/(tabs)/index/scanButton";
+import ShopCard from "@/components/ui/(tabs)/index/shopCard";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -101,7 +102,6 @@ function Home() {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
                 <StatusBar barStyle='dark-content' backgroundColor='white' />
-
                 {showCustomAlert && (
                     <CustomAlert
                         alertVisible={showCustomAlert}
@@ -110,10 +110,10 @@ function Home() {
                         message="invtalid voucher status"
                     />
                 )}
-                <Card containerStyle={[styles.card, styles.storeCard]}>
-                    <Text style={styles.storeName}>{shop?.company?.company_name || 'no company'}</Text>
-                    <Text style={styles.storeLocation}>Location: {shop?.location || 'no shop'}</Text>
-                </Card>
+                <ShopCard
+                    companyName={shop?.company?.company_name || 'no company'}
+                    shopLocation={shop?.location || 'no shop'}
+                />
                 <View style={checkStyles.CheckContainer}
                 >
                     {/* check-voucher container*/}
@@ -221,25 +221,6 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         width: '100%',
         backgroundColor: theme.backgroundSecondary,
         elevation: 6
-    },
-    storeCard: {
-        borderLeftWidth: 5,
-        borderRightWidth: 0,
-        borderTopWidth: 0,
-        borderBottomWidth: 0,
-        borderLeftColor: commonColors.primaryColor,
-        paddingVertical: 15,
-        width: '100%',
-        backgroundColor: theme.backgroundSecondary,
-        elevation: 6
-    },
-    storeName: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: theme.textPrimary,
-    },
-    storeLocation: {
-        color: theme.textSecondary,
     },
     optionRow: {
         flexDirection: 'row',
