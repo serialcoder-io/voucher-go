@@ -2,7 +2,6 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {ScrollView, View, StatusBar, TouchableOpacity, StyleSheet, Pressable, Alert} from 'react-native';
 import { Text, Icon, Card, Button, Divider } from '@rneui/themed';
 import BorderedInput from "@/components/ui/bordered-input";
-import PrimaryButton from "@/components/ui/primary-button";
 import {useTheme} from "@/hooks/useTheme";
 import {Theme} from "@/lib/definitions";
 import {useGlobalStyles} from "@/styles/global";
@@ -17,6 +16,7 @@ import {queryClient} from "@/lib/queryClient";
 import {useVoucherStore} from "@/store/voucher";
 import InputVoucherRef from "@/components/ui/(tabs)/index/input-voucher-ref";
 import CardRow from "@/components/ui/(tabs)/index/card-row";
+import {isVoucherExpired, isVoucherInvalidStatus} from "@/lib/utils";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -32,6 +32,8 @@ function Home() {
     const [searchVoucher, setSearchVoucher] = useState(false);
     const {voucher, setVoucher} = useVoucherStore();
     const router = useRouter();
+    const [isVoucherStatusValide, setIsVoucherStatusValide] = useState(false);
+    const [VoucherExpired, setVoucherExpired] = useState(false);
 
 
     useEffect(() => {
@@ -69,7 +71,24 @@ function Home() {
 
     useEffect(() => {
         if (isSuccess && data) {
-            setVoucher(Array.isArray(data) ? data : [data]);
+            const updatedVoucher = Array.isArray(data) ? data : [data];
+            setVoucher(updatedVoucher);
+            if (updatedVoucher.length > 0) {
+                const voucher = updatedVoucher[0];
+                if (isVoucherInvalidStatus(voucher)) {
+                    console.log("invalid status:" + isVoucherInvalidStatus(voucher));
+                    Alert.alert(
+                        "Invalid status",
+                        `The status of the voucher is "${voucher.voucher_status}". It must be issued before it can be redeemed.`
+                    );
+                } else if (isVoucherExpired(voucher)) {
+                    console.log("expired:" + isVoucherExpired(voucher));
+                    Alert.alert(
+                        "Expired",
+                        "This voucher is already expired, please contact the distributor to extend the expiration date."
+                    );
+                }
+            }
             const timer = setTimeout(() => {
                 setSearchVoucher(false);
                 setReference("")
@@ -77,6 +96,7 @@ function Home() {
                 queryClient.resetQueries({ queryKey: "voucher", exact: true });
             }, 300);
             return () => clearTimeout(timer);
+
         }
         if (error) {
             Alert.alert("Sorry, something went wrong, please try again later");
@@ -129,7 +149,11 @@ function Home() {
                 </View>
 
                 {/* redemption card*/}
-                {voucher.length > 0 && (
+                {(
+                    voucher.length > 0 &&
+                    !isVoucherExpired(voucher[0]) &&
+                    !isVoucherInvalidStatus(voucher[0])
+                ) && (
                     <Card containerStyle={styles.card}>
                         <View style={styles.refRow}>
                             <Icon name='check-circle' type='feather' color='green' />
