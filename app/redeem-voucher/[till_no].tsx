@@ -21,7 +21,7 @@ function Index() {
     const router = useRouter();
 
     const redeem = ()=>{
-        console.log("redeemed");
+        console.log("redeemed: shop_id => ", shop?.id + "; till_no => ", till_no);
     }
 
     return (
@@ -32,7 +32,7 @@ function Index() {
                 {voucher.length > 0 && (
                     <Card containerStyle={styles.card}>
                         <View>
-                            <Text style={{fontSize: 20, marginBottom: 20}}>Voucher</Text>
+                            <Text style={styles.sectionTitle}>Voucher</Text>
                         </View>
                         <CardRow iconName="tag" label="Ref" value={voucher[0]?.voucher_ref}/>
                         <CardRow iconName="money" label="Amount" value={`${voucher[0]?.amount} Rs`}/>
@@ -43,7 +43,7 @@ function Index() {
                         <Divider />
                         {/*shop*/}
                         <View>
-                            <Text style={{fontSize: 20, marginTop: 17, marginBottom: 20}}>Shop</Text>
+                            <Text style={[styles.sectionTitle, {marginTop: 22}]}>Shop</Text>
                         </View>
                         <CardRow
                             iconName="shop" label="Shop"
@@ -88,7 +88,7 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         paddingVertical: 25,
         width: '100%',
         backgroundColor: theme.backgroundSecondary,
-        elevation: 6
+        elevation: 1
     },
     confirmBtnContainer:{
         display: "flex",
@@ -102,6 +102,11 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         marginTop: 20,
         marginBottom: 15,
         borderColor: theme.textPrimary,
+    },
+    sectionTitle:{
+        fontSize: 20,
+        marginBottom: 20,
+        color: theme.textPrimary
     }
 });
 
