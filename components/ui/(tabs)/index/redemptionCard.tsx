@@ -1,6 +1,6 @@
 import {StyleSheet, View} from "react-native";
 import {Button, Card, Divider, Icon, Text} from "@rneui/themed";
-import CardRow from "@/components/ui/(tabs)/index/card-row";
+import CardRow from "@/components/ui/(tabs)/card-row";
 import BorderedInput from "@/components/ui/bordered-input";
 import React from "react";
 import {Theme, Voucher} from "@/lib/definitions";
