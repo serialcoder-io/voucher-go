@@ -31,7 +31,7 @@ function Home() {
     const {voucher, setVoucher} = useVoucherStore();
     const router = useRouter();
     const [showCustomAlert, setShowCustomAlert] = useState(false);
-
+    const voucherNotFoundAlertMsg = "No voucher found with this reference. Please verify the reference or contact the distributor for assistance"
 
     useEffect(() => {
         const findShop = async()=>{
@@ -70,15 +70,8 @@ function Home() {
         if (isSuccess && data) {
             const updatedVoucher = Array.isArray(data) ? data : [data];
             setVoucher(updatedVoucher);
-            if (updatedVoucher.length > 0) {
-                const voucher = updatedVoucher[0];
-                if (isVoucherInvalidStatus(voucher)) {
-                    setShowCustomAlert(true);
-                } else if (isVoucherExpired(voucher)) {
-                    setShowCustomAlert(true);
-                }
-            }else{
-                setShowCustomAlert(true);
+            if (updatedVoucher.length === 0) {
+                setShowCustomAlert(true)
             }
             const timer = setTimeout(() => {
                 setSearchVoucher(false);
@@ -101,8 +94,8 @@ function Home() {
                     <CustomAlert
                         alertVisible={showCustomAlert}
                         closeAlert={closeAlert}
-                        title="invalid status"
-                        message="invtalid voucher status"
+                        title="Not exist"
+                        message={voucherNotFoundAlertMsg}
                     />
                 )}
                 <ShopCard
@@ -119,11 +112,7 @@ function Home() {
                     handleSubmitRef={handleSubmitRef}
                 />
                 {/* redemption card*/}
-                {(
-                    voucher.length > 0 &&
-                    !isVoucherExpired(voucher[0]) &&
-                    !isVoucherInvalidStatus(voucher[0])
-                ) && (
+                {voucher.length > 0 && (
                     <RedemptionCard
                         theme={theme}
                         voucher={voucher}

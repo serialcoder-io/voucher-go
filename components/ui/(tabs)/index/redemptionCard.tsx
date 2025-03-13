@@ -6,6 +6,8 @@ import React from "react";
 import {Theme, Voucher} from "@/lib/definitions";
 import {useRouter} from "expo-router";
 import {commonColors} from "@/constants/Colors";
+import {isVoucherExpired, isVoucherInvalidStatus} from "@/lib/utils";
+import VoucherCardError from "@/components/ui/(tabs)/index/voucher-cardError";
 
 type RedemptionCardProps = {
     theme: Theme;
@@ -26,6 +28,38 @@ function RedemptionCard({
 }: RedemptionCardProps) {
     const router = useRouter();
     const styles = getStyles(theme);
+    const voucherInvalidStatus = isVoucherInvalidStatus(voucher[0])
+    const voucherExpired = isVoucherExpired(voucher[0])
+    const voucherStatus = voucher[0].voucher_status
+
+    if(voucherExpired){
+        return (
+            <VoucherCardError
+                theme={theme}
+                reference={voucher[0]?.voucher_ref}
+                resetState={()=>resetState()}
+                iconName="event-busy"
+                title="Expired"
+                message="The voucher with given reference is no longer valid as it has expired."
+            />
+        )
+    }
+
+    if(voucherInvalidStatus){
+        return (
+            <VoucherCardError
+                theme={theme}
+                reference={voucher[0]?.voucher_ref}
+                resetState={()=>resetState()}
+                iconName="cancel"
+                title="Invalid status"
+                message={
+                    `The voucher is currently "${voucherStatus}". It must be in the "issued" status before it can be redeemed.`
+                }
+            />
+        )
+    }
+
     return (
         <Card containerStyle={styles.card}>
             <View style={styles.refRow}>
@@ -115,5 +149,11 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         marginTop: 20,
         marginBottom: 15,
         borderColor: theme.textPrimary,
-    }
+    },
+    closeButtonContainer:{
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-end",
+    },
 });
