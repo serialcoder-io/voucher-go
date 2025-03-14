@@ -149,7 +149,7 @@ const styles = (theme: Theme) => StyleSheet.create({
         borderRadius: 10,
         width: '100%',
         backgroundColor: theme.backgroundSecondary,
-        elevation: 6
+        elevation: 3
     },
     optionRow: {
         flexDirection: 'row',
