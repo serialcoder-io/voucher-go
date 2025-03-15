@@ -2,12 +2,14 @@ import {StyleSheet, View} from "react-native";
 import {Button, Card, Divider, Icon, Text} from "@rneui/themed";
 import CardRow from "@/components/ui/(tabs)/card-row";
 import BorderedInput from "@/components/ui/bordered-input";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Theme, Voucher} from "@/lib/definitions";
 import {useRouter} from "expo-router";
 import {commonColors} from "@/constants/Colors";
 import {isVoucherExpired, isVoucherInvalidStatus} from "@/lib/utils";
 import VoucherCardError from "@/components/ui/(tabs)/index/voucher-cardError";
+import Loader from "@/components/ui/loader";
+import {isLoading} from "expo-font";
 
 type RedemptionCardProps = {
     theme: Theme;
@@ -17,6 +19,7 @@ type RedemptionCardProps = {
     setTillNo: (val: string) => void;
     resetState: () => void;
     showConfirmationModal: () => void;
+    isLoading: boolean;
 }
 
 function RedemptionCard({
@@ -27,6 +30,7 @@ function RedemptionCard({
     setTillNo,
     resetState,
     showConfirmationModal,
+    isLoading,
 }: RedemptionCardProps) {
     const router = useRouter();
     const styles = getStyles(theme);
@@ -36,6 +40,22 @@ function RedemptionCard({
     const voucherAlreadyRedeemedMsg = "The voucher with the given reference has already been used and cannot be redeemed again.";
     const voucherCancelledMsg = "The voucher has been cancelled by the supplier and is no longer available.";
     const voucherIsProvisionalMsg = `The voucher is "${voucherStatus}". It must be "issued" before it can be redeemed. please contact supplier`
+
+    const [voucherData, setVoucherData] = useState<Voucher | null>(null);
+
+    useEffect(() => {
+        if (!isLoading && voucher.length > 0) {
+            setVoucherData(voucher[0]);
+        }
+    }, [voucher, isLoading]);
+
+    if(isLoading){
+        return <Loader />
+    }
+
+    if (!voucherData) {
+        return null;
+    }
 
     if(voucherExpired){
         return (
@@ -68,6 +88,7 @@ function RedemptionCard({
             />
         )
     }
+
 
     return (
         <Card containerStyle={styles.card}>

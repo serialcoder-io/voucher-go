@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, View, StyleSheet, Alert} from 'react-native';
+import {ScrollView, View, StyleSheet, Alert, Text, Pressable} from 'react-native';
 import {useTheme} from "@/hooks/useTheme";
 import {Theme, Voucher} from "@/lib/definitions";
 import {useShopStore} from "@/store/shop";
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
-import {useRouter} from "expo-router";
+//import {useRouter} from "expo-router";
 import {useQuery} from "@tanstack/react-query";
 import {findVoucherByRef} from "@/lib/services/voucher";
 import {useAuthStore} from "@/store/AuthStore";
@@ -14,6 +14,8 @@ import RedemptionCard from "@/components/ui/(tabs)/index/redemptionCard";
 import CheckVoucherCard from "@/components/ui/(tabs)/index/CheckVoucherCard";
 import ThemedStatusBar from "@/components/status-bar";
 import CustomConfirmationModal from "@/components/ui/customConfirmationModal";
+import {Card, Icon} from "@rneui/themed";
+import Loader from "@/components/ui/loader";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -29,7 +31,8 @@ function Home() {
     const [voucher, setVoucher] = useState<Voucher[] | []>([]);
     const [showRedemptionCard, setShowRedemptionCard] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
-    const router = useRouter();
+    const [notFoundMsg, setNotFoundMsg ] = useState(false);
+    //const router = useRouter();
 
     useEffect(() => {
         const findShop = async()=>{
@@ -43,9 +46,15 @@ function Home() {
     }, [shop, setShop])
 
     const handleSubmitRef = () => {
-        setSearchVoucher(true);
+        // Réinitialisation immédiate avant de commencer la recherche
+        setNotFoundMsg(false);
+        setShowRedemptionCard(false);
+        setVoucher([]);  // vider le tableau de vouchers avant la recherche
+        setTimeout(() => {
+            setSearchVoucher(true);
+            setShowInput(false);
+        }, 300);
     };
-
 
     const resetState = () => {
         setVoucher([]);
@@ -55,7 +64,7 @@ function Home() {
         setTillNo("")
     }
 
-    const { data, isLoading, isSuccess, error } = useQuery({
+    const { data, isLoading, isSuccess, error, isPending, isFetching } = useQuery({
         queryKey: ["voucher"],
         queryFn: async () => {
             return searchVoucher ?
@@ -66,25 +75,25 @@ function Home() {
 
     useEffect(() => {
         if (isSuccess && data) {
-            const updatedVoucher = Array.isArray(data) ? data : [data];
+            setVoucher([]);
+            const updatedVoucher = Array.isArray(data) ? data : [];
             setVoucher(updatedVoucher);
-            if (updatedVoucher.length === 0) {
-                Alert.alert("Voucher Not Found", "No voucher was found for the given reference.");
-            } else {
+            if (updatedVoucher.length > 0) {
+                setNotFoundMsg(false);
                 setShowRedemptionCard(true);
+            } else {
+                setNotFoundMsg(true);
             }
-            const timer = setTimeout(() => {
+            queryClient.resetQueries({ queryKey: "voucher", exact: true }).then(() => {
                 setSearchVoucher(false);
-                setReference("")
-                setShowInput(false);
-                queryClient.resetQueries({ queryKey: "voucher", exact: true });
-            }, 300);
-            return () => clearTimeout(timer);
+                setReference("");
+            });
         }
         if (error) {
             Alert.alert("Sorry, something went wrong, please try again later");
         }
     }, [isSuccess, data, error, searchVoucher]);
+
 
     const closeModal = () => {
         setShowConfirm(false)
@@ -96,7 +105,6 @@ function Home() {
             setShowConfirm(false)
         }, 200)
     }
-
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
@@ -126,7 +134,7 @@ function Home() {
                     handleSubmitRef={handleSubmitRef}
                 />
                 {/* redemption card*/}
-                {(voucher.length > 0 && showRedemptionCard) && (
+                {(isSuccess && voucher.length > 0 && showRedemptionCard) && (
                     <RedemptionCard
                         theme={theme}
                         voucher={voucher}
@@ -135,7 +143,27 @@ function Home() {
                         setTillNo={setTillNo}
                         resetState={resetState}
                         showConfirmationModal={()=>setShowConfirm(true)}
+                        isLoading={isLoading || isFetching || isPending}
                     />
+                )}
+                {isLoading && (
+                    <Loader />
+                )}
+                {(!isLoading && voucher.length === 0 && notFoundMsg && !isPending && !isFetching) && (
+                    <View style={{display: 'flex', alignItems: 'center', width: '100%'}}>
+                        <Card containerStyle={styles.card}>
+                            <View style={{width:'100%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
+                                <Pressable onPress={()=>setNotFoundMsg(false)}>
+                                    <Icon name="close" type='material' color={theme.textPrimary} size={35} />
+                                </Pressable>
+                            </View>
+                            <View style={styles.titleContainer}>
+                                <Icon name="search-off" type='material' color="red" size={35} />
+                                <Text style={{fontSize: 17, color: "red"}}>Not found</Text>
+                                <Text style={{fontSize: 14, color: theme.textSecondary, paddingTop: 10}}>Voucher with given reference doesn't exist</Text>
+                            </View>
+                        </Card>
+                    </View>
                 )}
             </View>
         </ScrollView>
@@ -153,6 +181,20 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
     },
+    card: {
+        borderWidth: 0,
+        borderRadius: 10,
+        marginBottom: 15,
+        paddingVertical: 20,
+        width: '100%',
+        backgroundColor: theme.backgroundSecondary,
+        elevation: 2
+    },
+    titleContainer: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+    }
 });
 
 
