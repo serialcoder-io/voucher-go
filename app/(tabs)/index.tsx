@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, View, StyleSheet, Alert, Text, Pressable} from 'react-native';
+import {ScrollView, View, StyleSheet, Alert} from 'react-native';
 import {useTheme} from "@/hooks/useTheme";
 import {Theme, Voucher} from "@/lib/definitions";
 import {useShopStore} from "@/store/shop";
@@ -14,8 +14,7 @@ import RedemptionCard from "@/components/ui/(tabs)/index/redemptionCard";
 import CheckVoucherCard from "@/components/ui/(tabs)/index/CheckVoucherCard";
 import ThemedStatusBar from "@/components/status-bar";
 import CustomConfirmationModal from "@/components/ui/customConfirmationModal";
-import {Card, Icon} from "@rneui/themed";
-import Loader from "@/components/ui/loader";
+import VoucherNotFoundCard from "@/components/ui/(tabs)/index/voucherNotFoundCard";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -46,10 +45,9 @@ function Home() {
     }, [shop, setShop])
 
     const handleSubmitRef = () => {
-        // Réinitialisation immédiate avant de commencer la recherche
         setNotFoundMsg(false);
         setShowRedemptionCard(false);
-        setVoucher([]);  // vider le tableau de vouchers avant la recherche
+        setVoucher([]);
         setTimeout(() => {
             setSearchVoucher(true);
             setShowInput(false);
@@ -60,6 +58,7 @@ function Home() {
         setVoucher([]);
         setShowRedemptionCard(false)
         setShowConfirm(false);
+        setNotFoundMsg(false)
         setSearchVoucher(false);
         setTillNo("")
     }
@@ -94,11 +93,6 @@ function Home() {
         }
     }, [isSuccess, data, error, searchVoucher]);
 
-
-    const closeModal = () => {
-        setShowConfirm(false)
-    }
-
     const redeemVoucher = ()=>{
         resetState()
         setTimeout(()=>{
@@ -113,7 +107,7 @@ function Home() {
                     <CustomConfirmationModal
                         theme={theme}
                         isVisible={showConfirm}
-                        closeModal={(closeModal)}
+                        closeModal={resetState}
                         title="Confirm"
                         message="Are you certain you wish to redeem this voucher?"
                         redeem={()=>redeemVoucher()}
@@ -146,24 +140,11 @@ function Home() {
                         isLoading={isLoading || isFetching || isPending}
                     />
                 )}
-                {isLoading && (
-                    <Loader />
-                )}
                 {(!isLoading && voucher.length === 0 && notFoundMsg && !isPending && !isFetching) && (
-                    <View style={{display: 'flex', alignItems: 'center', width: '100%'}}>
-                        <Card containerStyle={styles.card}>
-                            <View style={{width:'100%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
-                                <Pressable onPress={()=>setNotFoundMsg(false)}>
-                                    <Icon name="close" type='material' color={theme.textPrimary} size={35} />
-                                </Pressable>
-                            </View>
-                            <View style={styles.titleContainer}>
-                                <Icon name="search-off" type='material' color="red" size={35} />
-                                <Text style={{fontSize: 17, color: "red"}}>Not found</Text>
-                                <Text style={{fontSize: 14, color: theme.textSecondary, paddingTop: 10}}>Voucher with given reference doesn't exist</Text>
-                            </View>
-                        </Card>
-                    </View>
+                    < VoucherNotFoundCard
+                        theme={theme} resetState={resetState}
+                        voucher={voucher} isLoading={isLoading}
+                    />
                 )}
             </View>
         </ScrollView>
@@ -181,20 +162,6 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
     },
-    card: {
-        borderWidth: 0,
-        borderRadius: 10,
-        marginBottom: 15,
-        paddingVertical: 20,
-        width: '100%',
-        backgroundColor: theme.backgroundSecondary,
-        elevation: 2
-    },
-    titleContainer: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-    }
 });
 
 

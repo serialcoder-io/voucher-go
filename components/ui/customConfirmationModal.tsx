@@ -3,6 +3,7 @@ import {Button, Icon} from "@rneui/themed";
 import React from "react";
 import {Theme} from "@/lib/definitions";
 import {commonColors} from "@/constants/Colors";
+import {withDecay} from "react-native-reanimated";
 
 type CustomModalProps = {
     theme: Theme;
@@ -30,7 +31,7 @@ function CustomConfirmationModal({ theme, isVisible, closeModal, title, message,
                       <Text style={{fontSize: 18}}>{title}</Text>
                   </View>
                   <Text style={styles.alertText}>{message}</Text>
-                  <View>
+                  <View style={{width:'100%'}}>
                       <Button
                           title='Redeem'
                           buttonStyle={styles.redeemButton}
@@ -41,7 +42,7 @@ function CustomConfirmationModal({ theme, isVisible, closeModal, title, message,
                           title='Cancel'
                           type='outline'
                           buttonStyle={styles.cancelButton}
-                          titleStyle={{color: theme.textPrimary}}
+                          titleStyle={{color: commonColors.dangercolor}}
                           onPress={() => closeModal()}
                       />
                   </View>
@@ -95,6 +96,6 @@ const getStyles = (theme: Theme)=> StyleSheet.create({
         borderRadius: 5,
         marginTop: 20,
         marginBottom: 15,
-        borderColor: theme.textPrimary,
+        borderColor: commonColors.dangercolor,
     },
 });
