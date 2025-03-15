@@ -29,18 +29,17 @@ function VoucherCardError({
                 </Pressable>
             </View>
             <View>
+                <View style={styles.titleContainer}>
+                    <Icon name={iconName} type='material' color="red" size={35} />
+                    <Text style={{fontSize: 17, color: "red"}}>{title}</Text>
+                </View>
                 <View style={styles.refRow}>
                     <Icon
                         name='tag' type='material' color={theme.textSecondary} size={26}
                         style={{marginRight: 10}}
                     />
-                    <Text style={styles.refText}>Ref:  {reference}</Text>
+                    <Text style={{color: theme.textSecondary}}>Ref:  {reference}</Text>
                 </View>
-                <View style={styles.titleContainer}>
-                    <Icon name={iconName} type='material' color="red" size={35} />
-                    <Text style={{fontSize: 17}}>{title}</Text>
-                </View>
-
             </View>
             <Divider />
             <View style={{paddingTop: 10}}>
@@ -61,7 +60,7 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         paddingVertical: 20,
         width: '100%',
         backgroundColor: theme.backgroundSecondary,
-        elevation: 6
+        elevation: 3
     },
     refRow: {
         flexDirection: 'row',
@@ -85,6 +84,5 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        paddingBottom: 10
     }
 });

@@ -62,7 +62,7 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         width: '100%',
         borderWidth: 0, borderRadius: 10,
         borderColor: theme.textSecondary,
-        elevation: 6
+        elevation: 3
     },
     inputContainer: {
         backgroundColor: theme.backgroundSecondary,

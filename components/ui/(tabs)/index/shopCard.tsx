@@ -30,18 +30,18 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         paddingVertical: 20,
         width: '100%',
         backgroundColor: theme.backgroundSecondary,
-        elevation: 6
+        elevation: 3
     },
     storeCard: {
-        borderLeftWidth: 5,
+        borderLeftWidth: 6,
         borderRightWidth: 0,
         borderTopWidth: 0,
         borderBottomWidth: 0,
-        borderLeftColor: commonColors.primaryColor,
+        borderColor: commonColors.primaryColor,
         paddingVertical: 15,
         width: '100%',
         backgroundColor: theme.backgroundSecondary,
-        elevation: 6
+        elevation: 2
     },
     storeName: {
         fontSize: 20,

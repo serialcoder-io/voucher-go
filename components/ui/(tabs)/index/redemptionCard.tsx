@@ -16,6 +16,7 @@ type RedemptionCardProps = {
     tillNo: string
     setTillNo: (val: string) => void;
     resetState: () => void;
+    showConfirmationModal: () => void;
 }
 
 function RedemptionCard({
@@ -25,12 +26,16 @@ function RedemptionCard({
     tillNo,
     setTillNo,
     resetState,
+    showConfirmationModal,
 }: RedemptionCardProps) {
     const router = useRouter();
     const styles = getStyles(theme);
     const voucherInvalidStatus = isVoucherInvalidStatus(voucher[0])
     const voucherExpired = isVoucherExpired(voucher[0])
     const voucherStatus = voucher[0].voucher_status
+    const voucherAlreadyRedeemedMsg = "The voucher with the given reference has already been used and cannot be redeemed again.";
+    const voucherCancelledMsg = "The voucher has been cancelled by the supplier and is no longer available.";
+    const voucherIsProvisionalMsg = `The voucher is "${voucherStatus}". It must be "issued" before it can be redeemed. please contact supplier`
 
     if(voucherExpired){
         return (
@@ -54,7 +59,11 @@ function RedemptionCard({
                 iconName="cancel"
                 title="Invalid status"
                 message={
-                    `The voucher is currently "${voucherStatus}". It must be in the "issued" status before it can be redeemed.`
+                    voucherStatus === "cancelled"
+                        ? voucherCancelledMsg
+                        : voucherStatus === "redeemed"
+                        ? voucherAlreadyRedeemedMsg
+                        : voucherIsProvisionalMsg
                 }
             />
         )
@@ -92,10 +101,7 @@ function RedemptionCard({
                 title='Redeem'
                 buttonStyle={styles.redeemButton}
                 disabled={!tillNo}
-                onPress={() => router.push({
-                    pathname: '/redeem-voucher/[till_no]',
-                    params: { till_no: tillNo }
-                })}
+                onPress={showConfirmationModal}
             />
             <Button
                 title='Cancel'

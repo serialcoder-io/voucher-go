@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, View, StyleSheet, Alert} from 'react-native';
 import {useTheme} from "@/hooks/useTheme";
-import {Theme} from "@/lib/definitions";
+import {Theme, Voucher} from "@/lib/definitions";
 import {useShopStore} from "@/store/shop";
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 import {useRouter} from "expo-router";
@@ -9,13 +9,11 @@ import {useQuery} from "@tanstack/react-query";
 import {findVoucherByRef} from "@/lib/services/voucher";
 import {useAuthStore} from "@/store/AuthStore";
 import {queryClient} from "@/lib/queryClient";
-import {useVoucherStore} from "@/store/voucher";
-import {isVoucherExpired, isVoucherInvalidStatus} from "@/lib/utils";
-import CustomAlert from "@/components/ui/custom-alert";
 import ShopCard from "@/components/ui/(tabs)/index/shopCard";
 import RedemptionCard from "@/components/ui/(tabs)/index/redemptionCard";
 import CheckVoucherCard from "@/components/ui/(tabs)/index/CheckVoucherCard";
 import ThemedStatusBar from "@/components/status-bar";
+import CustomConfirmationModal from "@/components/ui/customConfirmationModal";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -28,10 +26,10 @@ function Home() {
     const styles = getStyles(theme);
     // If true, enables the query to find the voucher by the reference
     const [searchVoucher, setSearchVoucher] = useState(false);
-    const {voucher, setVoucher} = useVoucherStore();
+    const [voucher, setVoucher] = useState<Voucher[] | []>([]);
+    const [showRedemptionCard, setShowRedemptionCard] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
     const router = useRouter();
-    const [showCustomAlert, setShowCustomAlert] = useState(false);
-    const voucherNotFoundAlertMsg = "No voucher found with this reference. Please verify the reference or contact the distributor for assistance"
 
     useEffect(() => {
         const findShop = async()=>{
@@ -48,12 +46,12 @@ function Home() {
         setSearchVoucher(true);
     };
 
-    const closeAlert = ()=>{
-        setShowCustomAlert(false)
-    }
 
     const resetState = () => {
         setVoucher([]);
+        setShowRedemptionCard(false)
+        setShowConfirm(false);
+        setSearchVoucher(false);
         setTillNo("")
     }
 
@@ -71,7 +69,9 @@ function Home() {
             const updatedVoucher = Array.isArray(data) ? data : [data];
             setVoucher(updatedVoucher);
             if (updatedVoucher.length === 0) {
-                setShowCustomAlert(true)
+                Alert.alert("Voucher Not Found", "No voucher was found for the given reference.");
+            } else {
+                setShowRedemptionCard(true);
             }
             const timer = setTimeout(() => {
                 setSearchVoucher(false);
@@ -84,18 +84,32 @@ function Home() {
         if (error) {
             Alert.alert("Sorry, something went wrong, please try again later");
         }
-    }, [isSuccess, data, error, setSearchVoucher, queryClient]);
+    }, [isSuccess, data, error, searchVoucher]);
+
+    const closeModal = () => {
+        setShowConfirm(false)
+    }
+
+    const redeemVoucher = ()=>{
+        resetState()
+        setTimeout(()=>{
+            setShowConfirm(false)
+        }, 200)
+    }
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
                 <ThemedStatusBar theme={theme}/>
-                {showCustomAlert && (
-                    <CustomAlert
-                        alertVisible={showCustomAlert}
-                        closeAlert={closeAlert}
-                        title="Not exist"
-                        message={voucherNotFoundAlertMsg}
+                {showConfirm && (
+                    <CustomConfirmationModal
+                        theme={theme}
+                        isVisible={showConfirm}
+                        closeModal={(closeModal)}
+                        title="Confirm"
+                        message="Are you certain you wish to redeem this voucher?"
+                        redeem={()=>redeemVoucher()}
+                        loading={false}
                     />
                 )}
                 <ShopCard
@@ -112,7 +126,7 @@ function Home() {
                     handleSubmitRef={handleSubmitRef}
                 />
                 {/* redemption card*/}
-                {voucher.length > 0 && (
+                {(voucher.length > 0 && showRedemptionCard) && (
                     <RedemptionCard
                         theme={theme}
                         voucher={voucher}
@@ -120,6 +134,7 @@ function Home() {
                         tillNo={tillNo}
                         setTillNo={setTillNo}
                         resetState={resetState}
+                        showConfirmationModal={()=>setShowConfirm(true)}
                     />
                 )}
             </View>
