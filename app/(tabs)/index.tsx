@@ -4,7 +4,7 @@ import {useTheme} from "@/hooks/useTheme";
 import {Theme, Voucher} from "@/lib/definitions";
 import {useShopStore} from "@/store/shop";
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
-//import {useRouter} from "expo-router";
+import {useRouter} from "expo-router";
 import {useQuery} from "@tanstack/react-query";
 import {findVoucherByRef} from "@/lib/services/voucher";
 import {useAuthStore} from "@/store/AuthStore";
@@ -15,6 +15,7 @@ import CheckVoucherCard from "@/components/ui/(tabs)/index/CheckVoucherCard";
 import ThemedStatusBar from "@/components/status-bar";
 import CustomConfirmationModal from "@/components/ui/customConfirmationModal";
 import VoucherNotFoundCard from "@/components/ui/(tabs)/index/voucherNotFoundCard";
+import {useVoucherStore} from "@/store/voucher";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -27,11 +28,12 @@ function Home() {
     const styles = getStyles(theme);
     // If true, enables the query to find the voucher by the reference
     const [searchVoucher, setSearchVoucher] = useState(false);
-    const [voucher, setVoucher] = useState<Voucher[] | []>([]);
+    //const [voucher, setVoucher] = useState<Voucher[] | []>([]);
+    const {voucher, setVoucher} = useVoucherStore();
     const [showRedemptionCard, setShowRedemptionCard] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [notFoundMsg, setNotFoundMsg ] = useState(false);
-    //const router = useRouter();
+    const router = useRouter();
 
     useEffect(() => {
         const findShop = async()=>{
@@ -62,6 +64,10 @@ function Home() {
         setSearchVoucher(false);
         setTillNo("")
     }
+
+    useEffect(() => {
+        resetState()
+    }, [router]);
 
     const { data, isLoading, isSuccess, error, isPending, isFetching } = useQuery({
         queryKey: ["voucher"],
@@ -94,10 +100,13 @@ function Home() {
     }, [isSuccess, data, error, searchVoucher]);
 
     const redeemVoucher = ()=>{
-        resetState()
         setTimeout(()=>{
             setShowConfirm(false)
         }, 200)
+        router.push({
+            pathname: '/redeem-voucher/[till_no]',
+            params: { till_no: tillNo },
+        });
     }
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

@@ -49,7 +49,7 @@ type VoucherRedemptionFailed = {
 export type RedemptionResponse = VoucherRedemptionSuccess | VoucherRedemptionFailed;
 export type RedemptionParams = {
     voucherId: number,
-    shopId: number,
+    shopId: number | string,
     tillNo: number | string,
     accessToken: string,
 }

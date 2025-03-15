@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ScrollView, View, StatusBar, StyleSheet, Alert} from 'react-native';
 import { Text, Icon, Card, Button, Divider } from '@rneui/themed';
 import PrimaryButton from "@/components/ui/primary-button";
@@ -13,6 +13,7 @@ import CardRow from "@/components/ui/(tabs)/card-row";
 import {useMutation} from "@tanstack/react-query";
 import {redeemVoucher, RedemptionParams, RedemptionResponse} from "@/lib/services/voucher";
 import {useAuthStore} from "@/store/AuthStore";
+import Loader from "@/components/ui/loader";
 
 function Index() {
     const { till_no } = useLocalSearchParams();
@@ -21,7 +22,7 @@ function Index() {
     const accessToken = useAuthStore.use.tokens().access;
 
     const styles = getStyles(theme);
-    const {voucher} = useVoucherStore();
+    const {voucher, setVoucher} = useVoucherStore();
     const router = useRouter();
 
     const mutation = useMutation<RedemptionResponse, Error, RedemptionParams>({
@@ -37,10 +38,10 @@ function Index() {
                 const result = await mutation.mutateAsync({ voucherId, shopId, tillNo, accessToken});
                 switch (result.http_status) {
                     case 201:
-                        Alert.alert("Redeemed", "The voucher has been redeemed successfully.");
+                        mutation.reset()
                         break;
                     case 400:
-                        Alert.alert("Invalid credentials", result.details);
+                        Alert.alert("Warning", result.details);
                         break;
                     case 404:
                         Alert.alert("Sorry", result.details);
@@ -56,15 +57,26 @@ function Index() {
         }
     }
 
+    useEffect(() => {
+        handleRedeem()
+    }, []);
+
+    if(mutation.isPending){
+        return <Loader />
+    }
+
+    if(mutation.isError){
+        return (
+            <View><Text>Sorry Something went wrong, please try again later</Text></View>
+        )
+    }
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
                 <StatusBar barStyle='dark-content' backgroundColor='white' />
-                {/* redemption card*/}
-                {voucher.length > 0 && (
                     <Card containerStyle={styles.card}>
                         <View>
-                            <Text style={styles.sectionTitle}>Voucher</Text>
+                            <Text style={styles.sectionTitle}>Voucher redeemed successfully</Text>
                         </View>
                         <CardRow iconName="tag" label="Ref" value={voucher[0]?.voucher_ref}/>
                         <CardRow iconName="money" label="Amount" value={`${voucher[0]?.amount} Rs`}/>
@@ -84,21 +96,15 @@ function Index() {
                         <CardRow iconName="point-of-sale" label="Checkout N°" value={`${till_no}`}/>
                         <View style={styles.confirmBtnContainer}>
                             <PrimaryButton
-                                title="Confirm"
-                                loading={mutation.isPending}
-                                actionOnPress={() =>handleRedeem()}
+                                title="Done"
+                                actionOnPress={() => {
+                                    setVoucher([]);  // Réinitialiser le voucher
+                                    router.back();   // Retourner à la page précédente
+                                }}
                                 width='100%'
                             />
                         </View>
-                        <Button
-                            title='Cancel'
-                            type='outline'
-                            buttonStyle={styles.cancelButton}
-                            titleStyle={{color: theme.textPrimary}}
-                            onPress={() => router.back()}
-                        />
                     </Card>
-                )}
             </View>
         </ScrollView>
     );
