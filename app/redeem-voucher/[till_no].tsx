@@ -13,6 +13,7 @@ import {ALERT_TYPE} from "react-native-alert-notification";
 import {formatDate, showDialog, showToast} from "@/lib/utils";
 import SuccessCard from "@/components/ui/redeem-voucher/successCard";
 
+
 function Index() {
     const { till_no } = useLocalSearchParams();
     const {theme} = useTheme();
@@ -32,7 +33,7 @@ function Index() {
         router.back();
     }
 
-    const handleRedeem = async()=>{
+    const handleRedeem = async(): Promise<void>=>{
         const shopId = shop?.id ? shop?.id : "";
         const tillNo = Array.isArray(till_no) ? parseInt(till_no[0]) : parseInt(till_no) || "";
         const voucherId = voucher[0].id
