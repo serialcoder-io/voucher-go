@@ -68,7 +68,7 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         paddingVertical: 25,
         width: '100%',
         backgroundColor: theme.backgroundSecondary,
-        elevation: 1
+        elevation: 2
     },
     confirmBtnContainer:{
         display: "flex",

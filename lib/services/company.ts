@@ -30,6 +30,15 @@ export async function fetchAllCompanies(): Promise<Company[] | []> {
     }
 }
 
+/**
+ * Fetches all shops for a given company based on the company ID.
+ * This function makes an API request to retrieve all shops associated with the specified company.
+ *
+ * @param {number} companyId - The ID of the company for which to fetch all shops.
+ * @return {Promise<Shop[]>} - Returns a promise that resolves to an array of Shop objects if shops exist, or an empty array if none are found.
+ *
+ * @throws {Error} - Throws an error if the request fails or if an unknown error occurs.
+ */
 export async function fetchShops(companyId: number): Promise<Shop[] | []> {
     try {
         const response = await fetch(`${baseUrl}/vms/api/shops/?company=${companyId}`, {

@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Preferences, Theme, ThemeMode, Voucher, WithSelectors} from "@/lib/definitions";
 import {StoreApi, UseBoundStore} from "zustand/index";
+import {Toast, ALERT_TYPE, Dialog} from 'react-native-alert-notification';
 
 
-export const baseUrl = "http://192.168.42.83:8000"
+export const baseUrl = "http://192.168.237.83:8000"
 
 export function testStringRegEx(str: string, regEx: RegExp): boolean {
     return regEx.test(str.trim());
@@ -116,23 +117,34 @@ export const isVoucherInvalidStatus = (voucher: Voucher) => {
     return voucher.voucher_status !== "issued";
 };
 
+
+/**
+ * format the date passed in parameter and return (DD month(long) YYYY at hh:mm).
+ * exp 16 March 2025 at 12:30 AM
+ * @param inputDate
+ */
 export const formatDate = (inputDate: string) => {
-    const date = new Date(inputDate); // UTC
+    const date = new Date(inputDate);
     const localDate = date.toLocaleString('en-GB', {
-        timeZone: 'Indian/Mauritius', // Fuseau horaire de Maurice
+        timeZone: 'Indian/Mauritius',
         year: 'numeric',
-        month: 'long', // Mois en texte complet
+        month: 'long',
         day: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-        hour12: true, // Format 12 heures (AM/PM)
+        hour12: true,
     });
     return localDate.replace(',', ' at ');
 };
 
-import {Toast, ALERT_TYPE, Dialog} from 'react-native-alert-notification'; // Assurez-vous que vous avez cette importation
 
-// Fonction générique pour afficher un toast
+/**
+ * display toast message
+ * @param title
+ * @param message
+ * @param type
+ * @param theme
+ */
 export const showToast = (
     title: string,
     message: string,
@@ -148,6 +160,13 @@ export const showToast = (
     });
 };
 
+/**
+ * display react-native-aert-notification modal
+ * @param title
+ * @param message
+ * @param type
+ * @param onHide
+ */
 export const showDialog = (
     title: string,
     message: string,
