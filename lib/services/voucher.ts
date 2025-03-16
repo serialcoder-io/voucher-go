@@ -44,6 +44,7 @@ type VoucherRedemptionSuccess = {
 type VoucherRedemptionFailed = {
     http_status: number;
     details: string;
+    voucher_info: null
 };
 
 export type RedemptionResponse = VoucherRedemptionSuccess | VoucherRedemptionFailed;
@@ -66,16 +67,25 @@ export async function redeemVoucher({voucherId, shopId, tillNo, accessToken}: Re
             body: JSON.stringify({shop_id: shopId, till_no: tillNo,}),
         });
         const results = await response.json();
-        return {
-            http_status: response.status,
-            ...results,
-        };
+        if (response.status === 201 && results.voucher_info) {
+            return {
+                http_status: response.status,
+                details: results.details,
+                voucher_info: results.voucher_info,
+            };
+        } else {
+            return {
+                http_status: response.status,
+                details: results.details || "Failed to redeem voucher",
+                voucher_info: null
+            };
+        }
     } catch (e: unknown) {
         if (e instanceof Error) {
             console.error('Error fetching voucher:', e.message);
         }
         console.log(e)
         // Retourne un tableau vide en cas d'erreur
-        return {"http_status": 500, "details": "Sorry, something went wrong"};
+        return {"http_status": 500, "details": "Sorry, something went wrong", "voucher_info": null};
     }
 }

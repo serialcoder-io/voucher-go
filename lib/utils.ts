@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Preferences, ThemeMode, Voucher, WithSelectors} from "@/lib/definitions";
+import {Preferences, Theme, ThemeMode, Voucher, WithSelectors} from "@/lib/definitions";
 import {StoreApi, UseBoundStore} from "zustand/index";
 
 
@@ -116,3 +116,50 @@ export const isVoucherInvalidStatus = (voucher: Voucher) => {
     return voucher.voucher_status !== "issued";
 };
 
+export const formatDate = (inputDate: string) => {
+    const date = new Date(inputDate); // UTC
+    const localDate = date.toLocaleString('en-GB', {
+        timeZone: 'Indian/Mauritius', // Fuseau horaire de Maurice
+        year: 'numeric',
+        month: 'long', // Mois en texte complet
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true, // Format 12 heures (AM/PM)
+    });
+    return localDate.replace(',', ' at ');
+};
+
+import {Toast, ALERT_TYPE, Dialog} from 'react-native-alert-notification'; // Assurez-vous que vous avez cette importation
+
+// Fonction générique pour afficher un toast
+export const showToast = (
+    title: string,
+    message: string,
+    type: ALERT_TYPE,
+    theme: Theme
+) => {
+    Toast.show({
+        type: type,
+        title: title,
+        titleStyle: {color: theme.textPrimary},
+        textBody: message,
+        textBodyStyle: {color: theme.textSecondary}
+    });
+};
+
+export const showDialog = (
+    title: string,
+    message: string,
+    type: ALERT_TYPE,
+    onHide: () => void,
+)=>{
+    return (
+        Dialog.show({
+            type: type,
+            title: title,
+            textBody: message,
+            onHide: onHide
+        })
+    )
+}

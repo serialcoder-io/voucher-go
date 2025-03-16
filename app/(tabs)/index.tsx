@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, View, StyleSheet, Alert} from 'react-native';
 import {useTheme} from "@/hooks/useTheme";
-import {Theme, Voucher} from "@/lib/definitions";
+import {Theme} from "@/lib/definitions";
 import {useShopStore} from "@/store/shop";
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 import {useFocusEffect, useRouter} from "expo-router";
