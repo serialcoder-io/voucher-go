@@ -33,7 +33,7 @@ function Settings() {
     const signOut = useAuthStore.use.signOut();
     const logout = async () => {
         signOut()
-        router.push("/auth")
+        router.replace("/auth")
     }
 
     const confirmLogout = () => {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tabs, usePathname } from 'expo-router';
+import { Tabs, usePathname} from 'expo-router';
 import { Text, Platform, BackHandler, Alert } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import CustomTabBarIcon from "@/components/ui/settings/custom-tabBarIcon";
@@ -51,6 +51,7 @@ function RootNavigator() {
 
     return (
         <Tabs screenOptions={{
+
             tabBarStyle: {
                 height: 75,
                 backgroundColor: theme.backgroundSecondary,

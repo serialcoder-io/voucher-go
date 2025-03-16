@@ -4,7 +4,7 @@ import {useTheme} from "@/hooks/useTheme";
 import {Theme, Voucher} from "@/lib/definitions";
 import {useShopStore} from "@/store/shop";
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
-import {useRouter} from "expo-router";
+import {useFocusEffect, useRouter} from "expo-router";
 import {useQuery} from "@tanstack/react-query";
 import {findVoucherByRef} from "@/lib/services/voucher";
 import {useAuthStore} from "@/store/AuthStore";
@@ -65,9 +65,11 @@ function Home() {
         setTillNo("")
     }
 
-    useEffect(() => {
-        resetState()
-    }, [router]);
+    useFocusEffect(
+        React.useCallback(() => {
+            resetState()
+        }, [])
+    );
 
     const { data, isLoading, isSuccess, error, isPending, isFetching } = useQuery({
         queryKey: ["voucher"],
@@ -108,6 +110,7 @@ function Home() {
             params: { till_no: tillNo },
         });
     }
+
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
