@@ -16,6 +16,7 @@ import ThemedStatusBar from "@/components/status-bar";
 import CustomConfirmationModal from "@/components/ui/customConfirmationModal";
 import VoucherNotFoundCard from "@/components/ui/(tabs)/index/voucherNotFoundCard";
 import {useVoucherStore} from "@/store/voucher";
+import {useGlobalRef} from "@/store/reference";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -30,6 +31,7 @@ function Home() {
     const [searchVoucher, setSearchVoucher] = useState(false);
     //const [voucher, setVoucher] = useState<Voucher[] | []>([]);
     const {voucher, setVoucher} = useVoucherStore();
+    const {globalRef, setGlobalRef} = useGlobalRef();
     const [showRedemptionCard, setShowRedemptionCard] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [notFoundMsg, setNotFoundMsg ] = useState(false);
@@ -68,7 +70,14 @@ function Home() {
     useFocusEffect(
         React.useCallback(() => {
             resetState()
-        }, [])
+            if(globalRef !== null){
+               console.log("globalRef in tabs : " + globalRef);
+               setReference(globalRef);
+               setTimeout(() =>{
+                    handleSubmitRef();
+               }, 300)
+            }
+        }, [globalRef])
     );
 
     const { data, isLoading, isSuccess, error, isPending, isFetching } = useQuery({
@@ -94,6 +103,7 @@ function Home() {
             queryClient.resetQueries({ queryKey: "voucher", exact: true }).then(() => {
                 setSearchVoucher(false);
                 setReference("");
+                setGlobalRef("")
             });
         }
         if (error) {

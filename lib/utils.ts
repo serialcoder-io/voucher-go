@@ -4,7 +4,7 @@ import {StoreApi, UseBoundStore} from "zustand/index";
 import {Toast, ALERT_TYPE, Dialog} from 'react-native-alert-notification';
 
 
-export const baseUrl = "http://192.168.237.83:8000"
+export const baseUrl = "https://msul.alwaysdata.net"
 
 export function testStringRegEx(str: string, regEx: RegExp): boolean {
     return regEx.test(str.trim());

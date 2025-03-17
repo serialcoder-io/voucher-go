@@ -22,7 +22,7 @@ function CheckVoucherCard({
   setShowInput,
   isLoading,
   reference,
-  setReference, // Ajouté dans les props ici
+  setReference,
   handleSubmitRef,
 }: CheckVoucherCardProps) {
     const styles = getStyles(theme)
