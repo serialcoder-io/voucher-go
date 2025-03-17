@@ -16,7 +16,7 @@ function ShopCard({companyName, shopLocation}: ShopCardProps) {
     return (
         <Card containerStyle={[styles.card, styles.storeCard]}>
             <Text style={styles.storeName}>{companyName}</Text>
-            <Text style={styles.storeLocation}>Location: {shopLocation}</Text>
+            <Text style={styles.shop}>Shop: {shopLocation}</Text>
         </Card>
     )
 }
@@ -44,11 +44,14 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         elevation: 2
     },
     storeName: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
         color: theme.textPrimary,
+        paddingVertical: 5
     },
-    storeLocation: {
+    shop: {
         color: theme.textSecondary,
+        paddingVertical: 5,
+        fontSize: 15
     },
 });

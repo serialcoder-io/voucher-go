@@ -21,13 +21,12 @@ export default function QRScanner() {
         setIsScanningDisabled(true);
 
         setTimeout(() => {
-            console.log("scannedData : " + data);
             setGlobalRef(data);
             setIsScanningDisabled(false);
             setCameraActive(false);
         }, 2000);
     };
-// Utilise un useEffect pour gérer la redirection une fois que l'état est mis à jour
+
     useEffect(() => {
         if (globalRef) {
             router.back();

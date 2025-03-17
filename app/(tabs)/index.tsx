@@ -69,16 +69,19 @@ function Home() {
 
     useFocusEffect(
         React.useCallback(() => {
-            resetState()
-            if(globalRef !== null){
-               console.log("globalRef in tabs : " + globalRef);
-               setReference(globalRef);
-               setTimeout(() =>{
-                    handleSubmitRef();
-               }, 300)
-            }
-        }, [globalRef])
+            resetState();
+        }, [])
     );
+
+    useEffect(() => {
+        if (globalRef !== null) {
+            setReference(globalRef);
+            setTimeout(() => {
+                handleSubmitRef();
+            }, 300);
+        }
+    }, [globalRef]);
+
 
     const { data, isLoading, isSuccess, error, isPending, isFetching } = useQuery({
         queryKey: ["voucher"],
@@ -154,7 +157,7 @@ function Home() {
                     <RedemptionCard
                         theme={theme}
                         voucher={voucher}
-                        shop={(shop?.company?.company_name + "  " + shop?.location) || "no shop"}
+                        shop={(shop?.location) || "no shop"}
                         tillNo={tillNo}
                         setTillNo={setTillNo}
                         resetState={resetState}
