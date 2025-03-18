@@ -4,6 +4,7 @@ import { immer } from 'zustand/middleware/immer';
 import {Jwt, User} from "@/lib/definitions";
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 import {createSelectors} from "@/lib/utils";
+import {queryClient} from "@/lib/queryClient";
 
 
 export type TokenName = 'access' | 'refresh';
@@ -50,6 +51,7 @@ export const useAuthStore = createSelectors(
                         state.isAuthenticated = false;
                     });
                     await asyncStorage.removeItem('last_login');
+                    queryClient.clear();
                 } catch (error) {
                     console.error("Error signing out:", error);
                 }

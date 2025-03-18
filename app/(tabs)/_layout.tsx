@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Tabs, usePathname} from 'expo-router';
-import { Text, Platform, BackHandler, Alert } from 'react-native';
+import { Text, Platform, BackHandler, Alert, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import CustomTabBarIcon from "@/components/ui/(tabs)/custom-tabBarIcon";
 import HeaderRightAvatar from "@/components/ui/_layout/headerRight-avatar";
@@ -11,6 +11,7 @@ import {useEffect} from "react";
 import {queryClient} from "@/lib/queryClient";
 import {QueryClientProvider} from "@tanstack/react-query";
 import {commonColors} from "@/constants/Colors";
+import Header from "@/components/ui/(tabs)/transactions/header";
 
 function TabBarLabel({ focused, theme, text }: { focused: boolean, theme: Theme, text: string }) {
     return (
@@ -96,10 +97,13 @@ function RootNavigator() {
                     headerStyle: { backgroundColor: theme.backgroundSecondary },
                     headerRight: () => <HeaderRightAvatar />,
                     tabBarIcon: ({ focused }) => (
-                        <CustomTabBarIcon iconName={focused ? "receipt" : "receipt-outline"} color={theme.textPrimary} focused={focused} />
+                        <CustomTabBarIcon iconName={focused ? "gift" : "gift-outline"} color={theme.textPrimary} focused={focused} />
                     ),
                     tabBarLabel: ({ focused }) => (
                         <TabBarLabel focused={focused} theme={theme} text="Redemptions" />
+                    ),
+                    header: () => (
+                        <Header />
                     ),
                 }}
             />

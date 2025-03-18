@@ -84,7 +84,7 @@ function Home() {
     }, [globalRef]);
 
 
-    const { data, isLoading, isSuccess, error, isPending, isFetching } = useQuery({
+    const { data, isLoading, isSuccess, error, isPending, isFetching, isFetched } = useQuery({
         queryKey: ["voucher"],
         queryFn: async () => {
             return searchVoucher ?
@@ -169,7 +169,7 @@ function Home() {
                         isLoading={isLoading || isFetching || isPending}
                     />
                 )}
-                {(!isLoading && voucher.length === 0 && notFoundMsg && !isPending && !isFetching) && (
+                {(isFetched && !isLoading && voucher.length === 0 && notFoundMsg && !isPending && !isFetching) && (
                     < VoucherNotFoundCard
                         theme={theme} resetState={resetState}
                         voucher={voucher} isLoading={isLoading}

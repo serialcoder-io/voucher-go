@@ -8,9 +8,10 @@ import {useShopStore} from "@/store/shop";
 import ThemedStatusBar from "@/components/status-bar";
 import {useAuthStore} from "@/store/AuthStore";
 import ParentContainer from "@/components/parent-container";
-import Loader from "@/components/ui/loader";
+import VoucherSkelton from "@/components/ui/(tabs)/transactions/voucher-skelton";
 import {Text} from "@rneui/themed";
 import {useFocusEffect} from "expo-router";
+
 
 function Transactions(){
     const {theme} = useTheme();
@@ -43,9 +44,9 @@ function Transactions(){
 
     const renderSkeleton = () => (
         <View style={styles.skeletonContainer}>
-            <View style={styles.skeletonItem} />
-            <View style={styles.skeletonItem} />
-            <View style={styles.skeletonItem} />
+            {Array.from({ length: 7 }).map((_, index) => (
+                <VoucherSkelton key={index} />
+            ))}
         </View>
     );
 
@@ -57,7 +58,7 @@ function Transactions(){
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
                 <ThemedStatusBar theme={theme}/>
-                {true ? (
+                {isLoading ? (
                     renderSkeleton()
                 ) : (
                     data?.map((voucher, index) => (

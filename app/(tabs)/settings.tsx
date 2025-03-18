@@ -5,7 +5,7 @@ import CustomPressable from "@/components/ui/custom-pressable";
 import ThemeOptions from "@/components/ui/settings/theme-options";
 import {useTheme} from "@/hooks/useTheme";
 import {Theme, ThemeMode} from '@/lib/definitions'
-import SectionTitle from "@/components/ui/section-title";
+import SectionTitle from "@/components/ui/settings/section-title";
 import LanguageOption from "@/components/ui/settings/lang-option";
 import {setPreference} from "@/lib/utils";
 import {useRouter} from "expo-router";
