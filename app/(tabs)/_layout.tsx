@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Tabs, usePathname} from 'expo-router';
 import { Text, Platform, BackHandler, Alert } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import CustomTabBarIcon from "@/components/ui/settings/custom-tabBarIcon";
+import CustomTabBarIcon from "@/components/ui/(tabs)/custom-tabBarIcon";
 import HeaderRightAvatar from "@/components/ui/_layout/headerRight-avatar";
 import { ThemeProvider } from "@/store/theme";
 import { useTheme } from "@/hooks/useTheme";
@@ -10,10 +10,11 @@ import { Theme } from '@/lib/definitions';
 import {useEffect} from "react";
 import {queryClient} from "@/lib/queryClient";
 import {QueryClientProvider} from "@tanstack/react-query";
+import {commonColors} from "@/constants/Colors";
 
 function TabBarLabel({ focused, theme, text }: { focused: boolean, theme: Theme, text: string }) {
     return (
-        <Text style={{ marginTop: focused ? 5 : 0, color: theme.textPrimary, fontSize: 13 }}>
+        <Text style={{ marginTop: focused ? 5 : 0, color: focused ? commonColors.primaryColor : theme.textPrimary, fontSize: 13 }}>
             {text}
         </Text>
     );
@@ -72,13 +73,13 @@ function RootNavigator() {
                 name="index"
                 options={{
                     headerShown: true,
-                    title: 'Redemption',
-                    headerTintColor: theme.textPrimary,
+                    title: 'Home',
+                    headerTintColor: "white",
                     headerTitleStyle: { fontSize: 22, paddingLeft: 18, fontWeight: 'bold' },
-                    headerStyle: { backgroundColor: theme.backgroundSecondary },
+                    headerStyle: { backgroundColor: commonColors.primaryColor },
                     headerRight: () => <HeaderRightAvatar />,
                     tabBarIcon: ({ focused }) => (
-                        <CustomTabBarIcon iconName="home-outline" color={theme.textPrimary} focused={focused} />
+                        <CustomTabBarIcon iconName={focused ? "home" : "home-outline"} color={theme.textPrimary} focused={focused} />
                     ),
                     tabBarLabel: ({ focused }) => (
                         <TabBarLabel focused={focused} theme={theme} text="Home" />
@@ -89,16 +90,16 @@ function RootNavigator() {
                 name="transactions"
                 options={{
                     headerShown: true,
-                    title: 'Transactions',
+                    title: 'Redemptions',
                     headerTintColor: theme.textPrimary,
                     headerTitleStyle: { fontSize: 22, paddingLeft: 18, fontWeight: 'bold' },
                     headerStyle: { backgroundColor: theme.backgroundSecondary },
                     headerRight: () => <HeaderRightAvatar />,
                     tabBarIcon: ({ focused }) => (
-                        <CustomTabBarIcon iconName="receipt-outline" color={theme.textPrimary} focused={focused} />
+                        <CustomTabBarIcon iconName={focused ? "receipt" : "receipt-outline"} color={theme.textPrimary} focused={focused} />
                     ),
                     tabBarLabel: ({ focused }) => (
-                        <TabBarLabel focused={focused} theme={theme} text="Transactions" />
+                        <TabBarLabel focused={focused} theme={theme} text="Redemptions" />
                     ),
                 }}
             />
@@ -111,7 +112,7 @@ function RootNavigator() {
                     headerTitleStyle: { fontSize: 25, paddingLeft: 18, fontWeight: 'bold' },
                     headerStyle: { backgroundColor: theme.backgroundSecondary },
                     tabBarIcon: ({ focused }) => (
-                        <CustomTabBarIcon iconName={Platform.OS === 'ios' ? 'cog' : 'settings-outline'} color={theme.textPrimary} focused={focused} />
+                        <CustomTabBarIcon iconName={Platform.OS === 'ios' ? 'cog' : focused ? "settings" : "settings-outline"} color={theme.textPrimary} focused={focused} />
                     ),
                     tabBarLabel: ({ focused }) => (
                         <TabBarLabel focused={focused} theme={theme} text="Settings" />

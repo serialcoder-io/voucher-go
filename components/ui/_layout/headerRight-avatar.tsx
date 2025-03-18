@@ -5,11 +5,13 @@ import {commonColors} from "@/constants/Colors";
 import {useAuthStore} from "@/store/AuthStore";
 import {useRouter} from "expo-router";
 import {useEffect, useState} from "react";
+import {useTheme} from "@/hooks/useTheme";
 
 function HeaderRightAvatar(){
     const user = useAuthStore.use.user();  // Récupération du user du store
     const [initials, setInitials] = useState("");  // Stocke les initiales pour l'avatar
     const router = useRouter();
+    const {theme} = useTheme();
 
     useEffect(() => {
         // Met à jour les initiales chaque fois que `user` change
@@ -27,7 +29,8 @@ function HeaderRightAvatar(){
                 size={40}
                 rounded
                 title={initials}  // Utilisation des initiales mises à jour
-                containerStyle={{ backgroundColor: commonColors.primaryColor }}
+                titleStyle={{color: commonColors.primaryColor, fontWeight: "bold"}}
+                containerStyle={{ backgroundColor: theme.background }}
             />
         </Pressable>
     );

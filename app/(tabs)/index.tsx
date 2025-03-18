@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, View, StyleSheet, Alert} from 'react-native';
+import {ScrollView, View, StyleSheet, Alert, StatusBar} from 'react-native';
 import {useTheme} from "@/hooks/useTheme";
 import {Theme} from "@/lib/definitions";
 import {useShopStore} from "@/store/shop";
@@ -17,6 +17,7 @@ import CustomConfirmationModal from "@/components/ui/customConfirmationModal";
 import VoucherNotFoundCard from "@/components/ui/(tabs)/index/voucherNotFoundCard";
 import {useVoucherStore} from "@/store/voucher";
 import {useGlobalRef} from "@/store/reference";
+import {commonColors} from "@/constants/Colors";
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -127,7 +128,10 @@ function Home() {
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
-                <ThemedStatusBar theme={theme}/>
+                <StatusBar
+                    barStyle={'light-content'}
+                    backgroundColor={commonColors.primaryColor}
+                />
                 {showConfirm && (
                     <CustomConfirmationModal
                         theme={theme}

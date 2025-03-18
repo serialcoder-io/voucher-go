@@ -1,7 +1,7 @@
 import {Theme} from '@/lib/definitions'
 export const commonColors = {
     tabIconSelected: "#ffffff",
-    primaryColor: '#00509E',
+    primaryColor: '#d3154c',
     dangercolor: '#f50303',
     dangerBg: '#f17b7b',
 }
