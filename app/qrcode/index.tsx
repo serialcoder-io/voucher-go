@@ -6,7 +6,6 @@ import { useRouter } from "expo-router";
 import { Icon } from "@rneui/themed";
 import {useGlobalRef} from "@/store/reference";
 
-
 export default function QRScanner() {
     const [enableTorch, setEnableTorch] = useState(false);
     const [permission, requestPermission] = useCameraPermissions();
@@ -41,7 +40,7 @@ export default function QRScanner() {
                 <Text style={{ color: "white" }}>We need your permission to access the camera</Text>
                 <TouchableOpacity
                     style={styles.permissionButton}
-                    onPress={() => requestPermission()} // Demander la permission lorsque l'utilisateur appuie
+                    onPress={() => requestPermission()}
                 >
                     <Text style={{ color: "white" }}>Grant Permission</Text>
                 </TouchableOpacity>

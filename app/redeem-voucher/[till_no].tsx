@@ -92,7 +92,7 @@ function Index() {
                     redemption_date={
                         formatDate(mutation.data?.voucher_info.redemption.redeemed_on!) || "not voucher_infos"
                     }
-                    shop={(shop?.company?.company_name + "  " + shop?.location)}
+                    shop={(shop?.location!)}
                     till_no={`${till_no}`}
                     redirect={redirect}
                 />
