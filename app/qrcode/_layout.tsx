@@ -5,7 +5,7 @@ import {ThemeProvider} from '@/store/theme';
 function RootNavigator() {
     return (
         <Stack screenOptions={{headerShown: false}} >
-            <Stack.Screen name="index" options={{headerShown: false}} />
+            <Stack.Screen name="index" options={{headerShown: true, headerTitle: "Scanner"}} />
         </Stack>
     );
 }

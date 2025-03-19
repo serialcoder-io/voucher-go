@@ -1,6 +1,5 @@
 import {Pressable, StyleSheet, View} from "react-native";
-import {Icon, Text} from "@rneui/themed"
-import {Ionicons} from "@expo/vector-icons";
+import {Icon} from "@rneui/themed"
 import * as React from "react";
 import {Theme} from "@/lib/definitions";
 import {useTheme} from "@/hooks/useTheme";
@@ -9,26 +8,30 @@ import HeaderTitle from "@/components/ui/(tabs)/transactions/HeaderTitle";
 import SearchBar from "@/components/ui/(tabs)/transactions/searchbar";
 import {useState} from "react";
 
+
 function Header() {
     const [reference, setReference] = useState("");
     const {theme} = useTheme();
+
     const styles = getStyles(theme);
     return (
-        <View style={styles.container}>
-            <HeaderTitle />
-            <View style={{width: "100%", display: "flex", flexDirection: "row", alignItems: "center"}}>
-                <SearchBar
-                    value={reference}
-                    onChangeText={(value) => setReference(value)}
-                />
-                <Pressable onPress={()=>console.log("Press")}>
-                    <Icon
-                        name="filter-list" type='material' size={30}
-                        style={{marginRight: 10}} color="white"
+        <>
+            <View style={styles.container}>
+                <HeaderTitle />
+                <View style={{width: "100%", display: "flex", flexDirection: "row", alignItems: "center"}}>
+                    <SearchBar
+                        value={reference}
+                        onChangeText={(value) => setReference(value)}
                     />
-                </Pressable>
+                    <Pressable onPress={()=>console.log("Press")}>
+                        <Icon
+                            name="cancel" type='material' size={35}
+                            style={{marginRight: 10}} color="white"
+                        />
+                    </Pressable>
+                </View>
             </View>
-        </View>
+        </>
     )
 }
 
