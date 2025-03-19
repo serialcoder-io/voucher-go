@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { View, Animated, StyleSheet } from "react-native";
+import {Theme} from "@/lib/definitions";
+import {useTheme} from "@/hooks/useTheme";
 
 const VoucherSkelton = () => {
     const opacity = useRef(new Animated.Value(0.3)).current;
-
+    const {theme} = useTheme();
+    const styles = getStyles(theme);
     useEffect(() => {
         Animated.loop(
             Animated.sequence([
@@ -29,9 +32,9 @@ const VoucherSkelton = () => {
     );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (theme: Theme) => StyleSheet.create({
     container: {
-        backgroundColor: "#E0DDDD",
+        backgroundColor: theme.mode == "light" ? "#d9d9d9" : theme.backgroundSecondary,
         paddingHorizontal: 15,
         marginVertical: 8,
         borderRadius: 10,
@@ -42,7 +45,7 @@ const styles = StyleSheet.create({
     },
     skeleton: {
         height: 15,
-        backgroundColor: "#FFF",
+        backgroundColor: theme.mode == "light" ? "#FFF" : "rgba(132,133,140,0.62)",
         borderRadius: 5,
     },
 });

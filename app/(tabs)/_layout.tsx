@@ -12,6 +12,7 @@ import {queryClient} from "@/lib/queryClient";
 import {QueryClientProvider} from "@tanstack/react-query";
 import {commonColors} from "@/constants/Colors";
 import Header from "@/components/ui/(tabs)/transactions/header";
+import SearchBar from "@/components/ui/(tabs)/transactions/searchbar";
 
 function TabBarLabel({ focused, theme, text }: { focused: boolean, theme: Theme, text: string }) {
     return (

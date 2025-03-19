@@ -58,7 +58,7 @@ function Transactions(){
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
                 <ThemedStatusBar theme={theme}/>
-                {isLoading ? (
+                {true ? (
                     renderSkeleton()
                 ) : (
                     data?.map((voucher, index) => (
@@ -84,12 +84,5 @@ const getStyles = (theme: Theme) => StyleSheet.create({
     },
     skeletonContainer: {
         width: '100%',
-    },
-    skeletonItem: {
-        width: '100%',
-        height: 45,
-        backgroundColor: '#e0e0e0',
-        marginBottom: 10,
-        borderRadius: 8,
     },
 });
