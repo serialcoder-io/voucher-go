@@ -32,9 +32,10 @@ export const useGlobalStyles = () => {
 			marginVertical: 0,
 		},
 		title: {
-			color: commonColors.primaryColor,
+			color: theme.textPrimary,
 			marginBottom: 8,
 			textAlign: 'center',
+			paddingVertical: 5
 		},
 		subtitle: {
 			fontSize: 15,

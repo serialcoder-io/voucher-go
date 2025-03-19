@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {StyleSheet, Image, StatusBar, Alert } from 'react-native';
+import {StyleSheet, Alert } from 'react-native';
 import {Text} from '@rneui/themed';
 import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
@@ -8,6 +8,7 @@ import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
 import {Link} from "expo-router";
 import {commonColors} from "@/constants/Colors";
+import {useTheme} from "@/hooks/useTheme";
 //import { useRouter } from "expo-router";
 
 const SignupScreen = () => {
@@ -16,6 +17,7 @@ const SignupScreen = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [secureTextEntry, setSecureTextEntry] = useState(true);
+    const {theme} = useTheme()
 
     const validateEmail = (email: string) => {
         const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -50,9 +52,9 @@ const SignupScreen = () => {
     return (
         <ParentContainer width='90%'>
             {/* Logo */}
-            <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
+            {/*<Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />*/}
 
-            <Text h3 style={useGlobalStyles().title}>Create accont</Text>
+            <Text h3 style={useGlobalStyles().title}>Sign up</Text>
 
             {/* Username */}
             <CustomInputText
@@ -95,7 +97,7 @@ const SignupScreen = () => {
                 width='95%'
             />
 
-            <Link href='/' style={{...useGlobalStyles().textSecondary, marginTop: 10, fontSize: 15}}>
+            <Link href='/auth' style={{...useGlobalStyles().textSecondary, marginTop: 10, fontSize: 15}}>
                 Already a member ? <Text style={{color: commonColors.primaryColor, fontWeight: 'bold'}}>Login</Text>
             </Link>
         </ParentContainer>

@@ -2,6 +2,7 @@ import {Input} from "@rneui/themed";
 import React from "react";
 import { useGlobalStyles } from "@/styles/global";
 import {CustomInputTextProps} from "@/lib/definitions";
+import {useTheme} from "@/hooks/useTheme";
 
 function CustomInputText({
     value,
@@ -10,10 +11,11 @@ function CustomInputText({
     placeholder,
 }: CustomInputTextProps) {
     const styles = useGlobalStyles();
+    const {theme} = useTheme();
     return (
         <Input
             placeholder={placeholder}
-            leftIcon={{ type: 'feather', name: iconName, color: '#4c8bf5' }}
+            leftIcon={{ type: 'feather', name: iconName, color: theme.textSecondary }}
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.textInput}
             value={value}
