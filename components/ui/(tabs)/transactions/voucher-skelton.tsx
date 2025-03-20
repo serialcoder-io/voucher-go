@@ -32,6 +32,8 @@ const VoucherSkelton = () => {
     );
 };
 
+export default VoucherSkelton;
+
 const getStyles = (theme: Theme) => StyleSheet.create({
     container: {
         backgroundColor: theme.mode == "light" ? "#d9d9d9" : theme.backgroundSecondary,
@@ -50,4 +52,13 @@ const getStyles = (theme: Theme) => StyleSheet.create({
     },
 });
 
-export default VoucherSkelton;
+
+
+
+export const renderSkeleton = (numOfSkeltons: number) => (
+    <View style={{width: "100%"}}>
+        {Array.from({ length: numOfSkeltons }).map((_, index) => (
+            <VoucherSkelton key={index} />
+        ))}
+    </View>
+);

@@ -1,26 +1,37 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {useTheme} from "@/hooks/useTheme";
 import {Theme} from "@/lib/definitions";
 
-const TransactionCard = ({ amount = '500 Rs', date = 'Today', refNumber = 'VR-0000019-27/30' }) => {
+type TransactionCardProps = {
+    amount: number | string;
+    date: string;
+    refNumber: string
+}
+
+const TransactionCard = ({
+    amount,
+    date,
+    refNumber
+}: TransactionCardProps) => {
     const {theme} = useTheme();
     const styles = getStyles(theme)
+    const currDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    const redemptionDate = new Date(date.replace(/(\+\d{2}:\d{2})/, '')).toISOString().split('T')[0]; // YYYY-MM-DD
+    const dateTodisplay = currDate === redemptionDate ? "Today" : redemptionDate;
+
     return (
-        <View style={styles.card}>
-            {/* Ligne du montant et de la date */}
+        <TouchableOpacity style={styles.card} onPress={()=>console.log(refNumber)}>
             <View style={styles.topRow}>
                 <View style={styles.amountContainer}>
                     <MaterialIcons name="payments" size={20} color="#4CAF50" />
-                    <Text style={styles.amount}>{amount}</Text>
+                    <Text style={styles.amount}>{amount} Rs</Text>
                 </View>
-                <Text style={styles.date}>{date}</Text>
+                <Text style={styles.date}>{dateTodisplay}</Text>
             </View>
-
-            {/* Référence du paiement */}
             <Text style={styles.refNumber}>{refNumber}</Text>
-        </View>
+        </TouchableOpacity>
     );
 };
 

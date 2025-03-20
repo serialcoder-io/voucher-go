@@ -9,7 +9,6 @@ import {commonColors} from "@/constants/Colors";
 import {isVoucherExpired, isVoucherInvalidStatus} from "@/lib/utils";
 import VoucherCardError from "@/components/ui/(tabs)/index/voucher-cardError";
 import Loader from "@/components/ui/loader";
-import {isLoading} from "expo-font";
 
 type RedemptionCardProps = {
     theme: Theme;
