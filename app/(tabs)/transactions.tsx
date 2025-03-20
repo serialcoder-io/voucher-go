@@ -1,6 +1,6 @@
 import {ScrollView, StyleSheet, View, Modal, Pressable,} from "react-native";
 import React, {useState, useEffect, useCallback} from "react";
-import {Theme} from "@/lib/definitions";
+import {Theme, Voucher} from "@/lib/definitions";
 import {useTheme} from "@/hooks/useTheme";
 import {useQuery} from "@tanstack/react-query";
 import {getVouchersRedeemedAtShop} from "@/lib/services/redemptions";
@@ -11,6 +11,7 @@ import ParentContainer from "@/components/parent-container";
 import VoucherSkelton from "@/components/ui/(tabs)/transactions/voucher-skelton";
 import {Text} from "@rneui/themed";
 import {useFocusEffect} from "expo-router";
+import TransactionCard from "@/components/ui/(tabs)/transactions/transaction-card";
 
 
 function Transactions(){
@@ -18,6 +19,7 @@ function Transactions(){
     const {shop} = useShopStore()
     const accessToken = useAuthStore.use.tokens().access
     const styles = getStyles(theme);
+    const [vouchers, setVouchers] = useState<Voucher[] | []>([]);
 
     const { data, isLoading, isSuccess, error, isFetched, isPending, isFetching, refetch } = useQuery({
         queryKey: ["redemtions", shop?.id],
@@ -59,7 +61,16 @@ function Transactions(){
             <View style={styles.container}>
                 <ThemedStatusBar theme={theme}/>
                 {true ? (
-                    renderSkeleton()
+                    //renderSkeleton()
+                    <>
+                        <TransactionCard />
+                        <TransactionCard />
+                        <TransactionCard />
+                        <TransactionCard />
+                        <TransactionCard />
+                        <TransactionCard />
+                        <TransactionCard />
+                    </>
                 ) : (
                     data?.map((voucher, index) => (
                         <Text key={index}>{voucher.voucher_ref}</Text>
