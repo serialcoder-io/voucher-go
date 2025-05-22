@@ -1,11 +1,19 @@
-import {ScrollView, StyleSheet, View, Modal, Pressable, FlatList, ActivityIndicator,} from "react-native";
+import {
+    ScrollView,
+    StyleSheet,
+    View,
+    Modal,
+    Pressable,
+    FlatList,
+    ActivityIndicator,
+    RefreshControl
+} from "react-native";
 import React, {useState, useEffect, useCallback} from "react";
 import {Theme, Voucher} from "@/lib/definitions";
 import {useTheme} from "@/hooks/useTheme";
 import {useQuery} from "@tanstack/react-query";
 import {getVouchersRedeemedAtShop} from "@/lib/services/redemptions";
 import {useShopStore} from "@/store/shop";
-import ThemedStatusBar from "@/components/status-bar";
 import {useAuthStore} from "@/store/AuthStore";
 import ParentContainer from "@/components/parent-container";
 import {renderSkeleton} from "@/components/ui/(tabs)/transactions/voucher-skelton";
@@ -13,7 +21,7 @@ import {Text} from "@rneui/themed";
 //import {useFocusEffect} from "expo-router";
 import TransactionCard from "@/components/ui/(tabs)/transactions/transaction-card";
 import {commonColors} from "@/constants/Colors";
-
+import {queryClient} from "@/lib/queryClient";
 
 
 function Transactions(){
@@ -25,6 +33,8 @@ function Transactions(){
     const [nextUrl, setNextUrl] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [isBottom, setIsBottom] = useState(false);
+    const [refreshing, setRefreshing] = React.useState(false);
+
     const initialData =  {
         next: null,
         previous: null,
@@ -32,10 +42,10 @@ function Transactions(){
     }
 
     const { data, isLoading, isSuccess, error, isFetched, isFetching } = useQuery({
-        queryKey: ["redemtions", currentPage],
+        queryKey: ["redemptions", currentPage],
         queryFn: async () => {
             return shop ?
-                await getVouchersRedeemedAtShop(accessToken.trim(), currentPage) : initialData;
+                await getVouchersRedeemedAtShop(accessToken.trim(), currentPage, shop.id) : initialData;
         },
         initialData: initialData,
     });
@@ -66,6 +76,29 @@ function Transactions(){
             setIsBottom(false);
         }
     };
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        setVouchers([]); // Vide la liste affichée
+
+        // Supprime le cache de toutes les pages (utile pour éviter les doublons en pagination)
+        queryClient.removeQueries({ queryKey: ["redemptions"], exact: false });
+
+        // Forcer un refetch immédiat de la première page
+        queryClient
+            .fetchQuery({
+                queryKey: ["redemptions", 1],
+                queryFn: () => getVouchersRedeemedAtShop(accessToken.trim(), 1, shop!.id),
+            })
+            .then((freshData) => {
+                setVouchers(freshData.vouchers || []);
+                setCurrentPage(1); // On s'assure d'être sur la page 1
+                setNextUrl(freshData.next || null);
+            })
+            .finally(() => {
+                setRefreshing(false);
+            });
+    }, []);
 
 
     if(error){
@@ -108,7 +141,7 @@ function Transactions(){
     };
 
     return (
-        <View style={{paddingHorizontal: 12, backgroundColor: theme.background}}>
+        <View style={{paddingHorizontal: 12, backgroundColor: theme.background, flex: 1, paddingTop: 10}}>
             <FlatList
                 data={vouchers}
                 renderItem={({ item }) => (
@@ -122,6 +155,14 @@ function Transactions(){
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
                 ListFooterComponent={renderFooterLoader}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing && isFetching}
+                        onRefresh={onRefresh}
+                        colors={['grey']}
+                        progressBackgroundColor={'black'}
+                    />
+                }
             />
         </View>
     )
@@ -141,6 +182,7 @@ const getStyles = (theme: Theme) => StyleSheet.create({
     },
     loaderContainer: {
         paddingVertical: 20,
+        marginVertical: 12,
         justifyContent: 'center',
         alignItems: 'center',
     },

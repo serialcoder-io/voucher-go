@@ -3,6 +3,7 @@ import { immer } from 'zustand/middleware/immer';
 import {createSelectors} from "@/lib/utils";
 
 
+// the reference of a voucher,
 interface GlobalRefState {
     globalRef: string | null
     setGlobalRef: (newRef: string) => void

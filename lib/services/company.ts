@@ -8,7 +8,7 @@ export type CompanyResponse = {
 
 export async function fetchAllCompanies(): Promise<Company[] | []> {
     try {
-        const response = await fetch(`${baseUrl}/vms/api/companies/`, {
+        const response = await fetch(`${baseUrl}/vms/api/all_companies/`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -41,7 +41,7 @@ export async function fetchAllCompanies(): Promise<Company[] | []> {
  */
 export async function fetchShops(companyId: number): Promise<Shop[] | []> {
     try {
-        const response = await fetch(`${baseUrl}/vms/api/shops/?company=${companyId}`, {
+        const response = await fetch(`${baseUrl}/vms/api/all_shops/?company=${companyId}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

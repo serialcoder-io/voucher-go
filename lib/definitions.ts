@@ -107,6 +107,8 @@ export type LoginFormProps = {
 export type Company = {
     id: number
     company_name: string
+    prefix: string
+    logo: string
 }
 export type Shop = {
     id: number,

@@ -33,9 +33,10 @@ export type VouchersResponse = {
     vouchers: Voucher[] | [],
 }
 
-export async function getVouchersRedeemedAtShop(accessToken: string, page: number = 1): Promise<VouchersResponse> {
+export async function getVouchersRedeemedAtShop(accessToken: string, page: number = 1, shop_id: number): Promise<VouchersResponse> {
+    const queryParams = `?voucher_status=redeemed&redemption__shop=${shop_id}&page=${page}`
     try {
-        const response = await fetch(`${baseUrl}/vms/api/vouchers/?page=${page}`, {
+        const response = await fetch(`${baseUrl}/vms/api/vouchers/${queryParams}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

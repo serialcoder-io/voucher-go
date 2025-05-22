@@ -106,12 +106,13 @@ function Settings() {
                 </Card>
 
                 {/* language options*/}
+                {/*
                 <SectionTitle title='Langues' iconName='translate' />
                 <Card containerStyle={currentStyles.card}>
                     <LanguageOption label='French' value='fr' />
                     <Divider />
                     <LanguageOption label='English' value='en' />
-                </Card>
+                </Card>*/}
 
                 {/* Logout*/}
                 <SectionTitle title='Log Out' iconName='logout' />
