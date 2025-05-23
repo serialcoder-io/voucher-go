@@ -6,11 +6,12 @@ import ThemeOptions from "@/components/ui/settings/theme-options";
 import {useTheme} from "@/hooks/useTheme";
 import {Theme, ThemeMode} from '@/lib/definitions'
 import SectionTitle from "@/components/ui/settings/section-title";
-import LanguageOption from "@/components/ui/settings/lang-option";
+//import LanguageOption from "@/components/ui/settings/lang-option";
 import {setPreference} from "@/lib/utils";
 import {useRouter} from "expo-router";
 import {useAuthStore} from "@/store/AuthStore";
 import {commonColors} from "@/constants/Colors";
+import {confirmLogout} from "@/lib/utils";
 
 
 function Settings() {
@@ -18,11 +19,14 @@ function Settings() {
     const { themeMode, setThemeMode, theme } = useTheme();
     const currentStyles = styles(theme);
     const router = useRouter();
+
+    // switch theme
     const changeThemeMode = async(newThemeMode: ThemeMode) => {
         setThemeMode(newThemeMode)
         await setPreference('themeMode', newThemeMode)
     }
 
+    // show drowpdown profile(accountsettings/personal informations)
     type AllowedUrls = "/account" | "/account/profile"
     const navigate = (url: AllowedUrls) => {
         if(showProfileSettingss) {
@@ -30,27 +34,12 @@ function Settings() {
         }
         router.push(url);
     }
+
     const signOut = useAuthStore.use.signOut();
     const logout = async () => {
         signOut()
         router.replace("/auth")
     }
-
-    const confirmLogout = () => {
-        Alert.alert('Log Out', 'Do you really want to log out ?', [
-            {
-                text: 'Cancel',
-                onPress: () => null,
-                style: 'cancel',
-            },
-            {
-                text: 'YES',
-                onPress: () => {
-                    logout();
-                },
-            },
-        ]);
-    };
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -89,7 +78,8 @@ function Settings() {
                     <Divider />
                     <CustomPressable
                         text='Pin' iconName='lock'
-                        iconType='feather' onPress={()=>router.push('../pin/lockScreen')} />
+                        iconType='feather' onPress={()=>router.push('../pin/lockScreen')}
+                    />
                     <Divider />
                     <CustomPressable text='About shop' iconName='info' iconType='feather' />
                 </Card>
@@ -122,11 +112,10 @@ function Settings() {
                         containerStyle={{width:'100%', paddingVertical: 10}}
                         buttonStyle={{borderWidth: 0, borderRadius: 10, backgroundColor: commonColors.dangercolor}}
                         loadingProps={{size: 60, color: 'white'}}
-                        onPress={()=>confirmLogout()}
+                        onPress={()=>confirmLogout(logout)}
                     >
                         Log Out
                     </Button>
-
             </View>
         </ScrollView>
     );

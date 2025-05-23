@@ -111,9 +111,9 @@ function RootNavigator() {
                 options={{
                     headerShown: true,
                     title: 'Settings',
-                    headerTintColor: theme.textPrimary,
+                    headerTintColor: "white",
                     headerTitleStyle: { fontSize: 25, paddingLeft: 18, fontWeight: 'bold' },
-                    headerStyle: { backgroundColor: theme.backgroundSecondary },
+                    headerStyle: { backgroundColor: commonColors.primaryColor },
                     tabBarIcon: ({ focused }) => (
                         <CustomTabBarIcon iconName={Platform.OS === 'ios' ? 'cog' : focused ? "settings" : "settings-outline"} color={theme.textPrimary} focused={focused} />
                     ),

@@ -1,10 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Preferences, Theme, ThemeMode, Voucher, WithSelectors} from "@/lib/definitions";
-import {StoreApi, UseBoundStore} from "zustand/index";
+import {StoreApi, UseBoundStore} from "zustand";
 import {Toast, ALERT_TYPE, Dialog} from 'react-native-alert-notification';
+import {Alert} from "react-native";
+//import {useAuthStore} from "@/store/AuthStore";
 
 
-export const baseUrl = "http://192.168.77.83:8000"
+export const baseUrl = "http://192.168.110.83:8000"
 
 export function testStringRegEx(str: string, regEx: RegExp): boolean {
     return regEx.test(str.trim());
@@ -73,6 +75,7 @@ export async function getPreference(): Promise<Preferences | null> {
     }
 }
 
+// from zustand
 export const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
     _store: S,
 ) => {
@@ -182,3 +185,19 @@ export const showDialog = (
         })
     )
 }
+
+
+
+export const confirmLogout = (logout: () => void) => {
+    Alert.alert('Log Out', 'Do you really want to log out ?', [
+        {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+        },
+        {
+            text: 'YES',
+            onPress: logout, // Pas besoin de fonction fléchée ici
+        },
+    ]);
+};

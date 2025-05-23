@@ -8,7 +8,7 @@ import HeaderTitle from "@/components/ui/(tabs)/transactions/HeaderTitle";
 import SearchBar from "@/components/ui/(tabs)/transactions/searchbar";
 import {useState} from "react";
 
-
+// headet fof transation screen(redemptions)
 function Header() {
     const [reference, setReference] = useState("");
     const {theme} = useTheme();
