@@ -12,7 +12,7 @@ export interface LoginParams {
 }
 
 /**
- * Obtains tokens pair (JWT)
+ * Gets a tokens pair (JWT)
  * @param credentials - Login parameters containing username and password
  * @returns - JWT tokens or error message
  */
@@ -46,3 +46,5 @@ export async function login(credentials: LoginParams): Promise<loginResponse> {
         }
     }
 }
+
+

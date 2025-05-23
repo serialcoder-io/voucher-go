@@ -4,7 +4,7 @@ import {StoreApi, UseBoundStore} from "zustand/index";
 import {Toast, ALERT_TYPE, Dialog} from 'react-native-alert-notification';
 
 
-export const baseUrl = "http://192.168.116.83:8000"
+export const baseUrl = "http://192.168.77.83:8000"
 
 export function testStringRegEx(str: string, regEx: RegExp): boolean {
     return regEx.test(str.trim());
@@ -61,7 +61,7 @@ export async function setPreference(key: string, newValue: string) {
 
 /**
  * Retrieves the stored preferences.
- * @returns A promise that resolves to the preferences object or null if not found.
+ * @returns A promise that resolves to the preference object or null if not found.
  */
 export async function getPreference(): Promise<Preferences | null> {
     try {
@@ -139,7 +139,7 @@ export const formatDate = (inputDate: string) => {
 
 
 /**
- * display toast message
+ * display a toast message
  * @param title
  * @param message
  * @param type
