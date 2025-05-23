@@ -6,7 +6,7 @@ import {Alert} from "react-native";
 //import {useAuthStore} from "@/store/AuthStore";
 
 
-export const baseUrl = "http://192.168.110.83:8000"
+export const baseUrl = "http://192.168.163.83:8000"
 
 export function testStringRegEx(str: string, regEx: RegExp): boolean {
     return regEx.test(str.trim());
@@ -197,7 +197,7 @@ export const confirmLogout = (logout: () => void) => {
         },
         {
             text: 'YES',
-            onPress: logout, // Pas besoin de fonction fléchée ici
+            onPress: logout,
         },
     ]);
 };

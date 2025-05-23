@@ -26,8 +26,6 @@ function RootNavigator() {
 
     useEffect(() => {
         const backAction = () => {
-
-                // Affiche une alerte quand on est sur la page d'index
                 Alert.alert('Exit', 'Do you really want to exit?', [
                     {
                         text: 'Cancel',

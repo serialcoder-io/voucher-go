@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import {StyleSheet, Alert } from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {Text} from '@rneui/themed';
 import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
@@ -8,7 +7,13 @@ import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
 import {Link} from "expo-router";
 import {commonColors} from "@/constants/Colors";
-import {useTheme} from "@/hooks/useTheme";
+import {validateEmail, validatePassword} from "@/app/auth/util";
+import {signup, SignupParams, signupResponse} from "@/lib/services/auth";
+import {useMutation} from "@tanstack/react-query";
+import {useShopStore} from "@/store/shop";
+import {Alert} from "react-native";
+import {showDialog} from "@/lib/utils";
+import {ALERT_TYPE, Dialog} from "react-native-alert-notification";
 //import { useRouter } from "expo-router";
 
 const SignupScreen = () => {
@@ -17,36 +22,50 @@ const SignupScreen = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [secureTextEntry, setSecureTextEntry] = useState(true);
-    const {theme} = useTheme()
-
-    const validateEmail = (email: string) => {
-        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return regex.test(email.trim());
-    };
+    const shop = useShopStore.use.shop();
     const allFields = [username, email, password, confirmPassword];
-    const allFieldsFilled = allFields.every((field) => {
-        return field.length > 0
-    })
-    const handleSignup = () => {
-        if (!validateEmail(email)) {
-            Alert.alert("Erreur", "Veuillez entrer une adresse e-mail valide.");
-            return;
-        }
-        if (password.length < 6) {
-            Alert.alert("Erreur", "Le mot de passe doit contenir au moins 6 caractères.");
-            return;
-        }
-        if (password !== confirmPassword) {
-            Alert.alert("Erreur", "Les mots de passe ne correspondent pas.");
-            return;
-        }
 
-        console.log('Utilisateur inscrit avec succès');
-        setEmail('')
-        setUsername('')
-        setPassword('')
-        setConfirmPassword('')
-        // router.push('/auth');
+    const mutation = useMutation<signupResponse, Error, SignupParams>({
+        mutationFn: signup,
+    });
+
+    const handleSignup = async () => {
+        const isEmailValid = validateEmail(email, mutation.reset);
+        const isPasswordValid = validatePassword(password, confirmPassword, mutation.reset);
+
+        if (!isEmailValid || !isPasswordValid) {
+            return;
+        }
+        const company = shop?.company?.id
+        if (company !== undefined) {
+            try {
+                const result = await mutation.mutateAsync({username, email, password, company})
+                switch (result.status_code){
+                    case 201:
+                        const message = "Your account has been created successfully. you can now login"
+                        showDialog('Registered', message, ALERT_TYPE.SUCCESS, ()=> mutation.reset())
+                        break;
+                    default:
+                        showDialog("Sorry", result.details, ALERT_TYPE.DANGER, () =>mutation.reset())
+                }
+                setEmail('')
+                setUsername('')
+                setPassword('')
+                setConfirmPassword('')
+            } catch (error) {
+                const msg = "Sorry, something went wrong, please try again later, " +
+                    "If the problem persists, please contact support for assistance.";
+                showDialog("Error", msg, ALERT_TYPE.DANGER, () =>mutation.reset())
+            }
+        } else {
+            const msg = "No shop registered in this app. " +
+                "Please log in and register your shop in the settings, " +
+                "or try resetting the app by clearing its data from your phone settings," +
+                " or contact support for assistance."
+            const title = "Company not exist"
+            showDialog(title, msg, ALERT_TYPE.DANGER, () =>mutation.reset())
+            return;
+        }
     };
 
     return (
@@ -90,9 +109,9 @@ const SignupScreen = () => {
             />
 
             <PrimaryButton
-                disabled={!allFieldsFilled}
+                disabled={!allFieldsFilled(allFields)}
                 title="Register"
-                loading={false}
+                loading={mutation.isPending}
                 actionOnPress={handleSignup}
                 width='95%'
             />
@@ -104,16 +123,11 @@ const SignupScreen = () => {
     );
 };
 
+const allFieldsFilled = (fields: string[]) => {
+    return fields.every((field) => {
+        return field.length > 0;
+    });
+};
+
+
 export default SignupScreen;
-
-
-const styles = StyleSheet.create({
-    logo: {
-        width: 100,
-        height: 100,
-        marginBottom: 20,
-        resizeMode: 'contain',
-    },
-});
-
-

@@ -1,9 +1,6 @@
 import {
-    ScrollView,
     StyleSheet,
     View,
-    Modal,
-    Pressable,
     FlatList,
     ActivityIndicator,
     RefreshControl
@@ -63,18 +60,8 @@ function Transactions(){
         setIsBottom(false);
     }, [data, currentPage]);
 
-    const handleScroll = (event: any) => {
-        const contentHeight = event.nativeEvent.contentSize.height; // Total height of the content
-        const contentOffsetY = event.nativeEvent.contentOffset.y; // Current scroll position
-        const layoutHeight = event.nativeEvent.layoutMeasurement.height; // Visible height of the ScrollView
-        if (contentHeight - contentOffsetY <= layoutHeight + 20) {
-            setIsBottom(true);
-            if(nextUrl !== null){
-                setCurrentPage((page)=>page+1)
-            }
-        } else {
-            setIsBottom(false);
-        }
+    const handleOnScroll = (event: any) => {
+        handleScroll({event, nextUrl, setIsBottom, setCurrentPage});
     };
 
     const onRefresh = useCallback(() => {
@@ -99,7 +86,6 @@ function Transactions(){
                 setRefreshing(false);
             });
     }, []);
-
 
     if(error){
         return (
@@ -152,7 +138,7 @@ function Transactions(){
                     />
                 )}
                 keyExtractor={(item) => item.id.toString()}
-                onScroll={handleScroll}
+                onScroll={handleOnScroll}
                 scrollEventThrottle={16}
                 ListFooterComponent={renderFooterLoader}
                 refreshControl={
@@ -187,3 +173,31 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         alignItems: 'center',
     },
 });
+
+
+type HandleScrollParams = {
+    event: any;
+    nextUrl: string | null;
+    setIsBottom: (value: boolean) => void;
+    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+};
+
+export function handleScroll({
+    event,
+    nextUrl,
+    setIsBottom,
+    setCurrentPage,
+}: HandleScrollParams) {
+    const contentHeight = event.nativeEvent.contentSize.height;
+    const contentOffsetY = event.nativeEvent.contentOffset.y;
+    const layoutHeight = event.nativeEvent.layoutMeasurement.height;
+
+    if (contentHeight - contentOffsetY <= layoutHeight + 20) {
+        setIsBottom(true);
+        if (nextUrl !== null) {
+            setCurrentPage((page) => page + 1);
+        }
+    } else {
+        setIsBottom(false);
+    }
+}

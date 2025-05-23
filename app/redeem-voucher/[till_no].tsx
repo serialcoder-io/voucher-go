@@ -51,7 +51,7 @@ function Index() {
                         showDialog('Error', mutation?.data?.details!, ALERT_TYPE.DANGER, redirect)
                         break;
                     default:
-                        const defaultMsg = "Sorry something went wrong."
+                        const defaultMsg = "Sorry something went wrong. please try again later."
                         const errorMsg = result.details ? result.details : defaultMsg
                         showDialog('Error', errorMsg, ALERT_TYPE.DANGER, redirect)
                 }
@@ -74,7 +74,7 @@ function Index() {
     }
 
     if(mutation.isError){
-        const errorMsg = "Sorry Something went wrong, please"
+        const errorMsg = "Sorry Something went wrong, try again later."
         return showDialog('Error', errorMsg, ALERT_TYPE.DANGER, redirect)
     }
 
@@ -88,7 +88,7 @@ function Index() {
                 <StatusBar barStyle='dark-content' backgroundColor='white' />
                 <SuccessCard
                     voucher_ref={voucher[0]?.voucher_ref}
-                    amount={`${voucher[0]?.amount} Rs`}
+                    amount={`${voucher[0]?.amount}`}
                     redemption_date={
                         formatDate(mutation.data?.voucher_info.redemption.redeemed_on!) || "not voucher_infos"
                     }

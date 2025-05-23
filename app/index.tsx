@@ -21,9 +21,11 @@ function PinLoginScreen() {
     const setIsAuthenticated = useAuthStore.use.setIsAuthenticated();
     const setShop = useShopStore.use.setShop();
     const router = useRouter()
-
     const styles = currentstyles(theme);
     const globalStyles = useGlobalStyles();
+
+
+
     const handleChangePin = async(pin: string) => {
         setPin(pin);
         const accesCode = await SecureStore.getItemAsync("accessCode")
@@ -104,7 +106,7 @@ function PinLoginScreen() {
 
             </View>
             {/* Forgot Pin */}
-            <Link href="/auth" style={styles.forgotPin}>
+            <Link href="/auth/reset-password" style={styles.forgotPin}>
                 j’ai oublié mon code pin
             </Link>
         </View>

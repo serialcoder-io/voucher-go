@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/store/theme';
 import { useTheme } from "@/hooks/useTheme";
 import {queryClient} from "@/lib/queryClient";
 import {QueryClientProvider} from '@tanstack/react-query'
+import {AlertNotificationRoot} from "react-native-alert-notification";
 
 
 function RootNavigator() {
@@ -61,11 +62,14 @@ function RootNavigator() {
 }
 
 export default function RootLayout() {
+    const {theme} = useTheme()
     return (
         <QueryClientProvider client={queryClient}>
             <ThemeProvider>
                 <SafeAreaProvider>
-                    <RootNavigator />
+                    <AlertNotificationRoot theme={theme.mode}>
+                        <RootNavigator />
+                    </AlertNotificationRoot>
                 </SafeAreaProvider>
             </ThemeProvider>
         </QueryClientProvider>

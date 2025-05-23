@@ -10,6 +10,8 @@ import { useQuery } from "@tanstack/react-query";
 import fetchUserData from "@/lib/services/user";
 import { queryClient } from "@/lib/queryClient";
 import Loader from "@/components/ui/loader";
+import {ALERT_TYPE, Dialog} from "react-native-alert-notification";
+import {showDialog} from "@/lib/utils";
 
 const LoginScreen = () => {
     const [username, setUsername] = useState<string>("");
@@ -38,6 +40,8 @@ const LoginScreen = () => {
     const handleSubmit = async () => {
         try {
             const result = await mutation.mutateAsync({ username, password });
+            let dialogTitle = ""
+            let dialogMsg = ""
             switch (result.http_status_code) {
                 case 200:
                     setUsername("");
@@ -48,10 +52,14 @@ const LoginScreen = () => {
                     setIsAuthenticated(true);
                     break;
                 case 401:
-                    Alert.alert("Invalid credentials", "invalid username and/or password");
+                    dialogTitle = "Invalid credentials"
+                    dialogMsg = "invalid username and/or password"
+                    showDialog(dialogTitle, dialogMsg, ALERT_TYPE.DANGER, () =>mutation.reset())
                     break;
                 default:
-                    Alert.alert("Sorry, something went wrong, please try again later");
+                    dialogTitle = "Sorry"
+                    dialogMsg = "Something went wrong, please try again later"
+                    showDialog(dialogTitle, dialogMsg, ALERT_TYPE.DANGER, () =>mutation.reset())
             }
         } catch (error) {
             Alert.alert("Sorry, something went wrong, please try again later");
@@ -64,8 +72,9 @@ const LoginScreen = () => {
             setUserInitialized(true);
             setTimeout(() => {
                 setChecked(false);
-                queryClient.resetQueries({ queryKey: "userData", exact: true });
-                router.push("/(tabs)");
+                queryClient.resetQueries({queryKey: "userData", exact: true}).then(
+                    () =>router.push("/(tabs)")
+                );
             }, 300);
         }
         if (error) {
