@@ -1,18 +1,30 @@
+// react/react-native
 import React, {useState} from 'react';
-import {Text} from '@rneui/themed';
+import {ALERT_TYPE} from "react-native-alert-notification";
+
+// comopnents
 import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
-import {useGlobalStyles} from "@/styles/global";
 import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
+import {Text} from '@rneui/themed';
+
+// lib
+import {showDialog} from "@/lib/utils";
+
+// hooks
+import {useGlobalStyles} from "@/styles/global";
+import {useShopStore} from "@/store/shop";
+import {useMutation} from "@tanstack/react-query";
+
 import {Link} from "expo-router";
 import {commonColors} from "@/constants/Colors";
 import {validateEmail, validatePassword} from "@/app/auth/auth.validations";
 import {signup, SignupParams, signupResponse} from "@/lib/services/auth";
-import {useMutation} from "@tanstack/react-query";
-import {useShopStore} from "@/store/shop";
-import {showDialog} from "@/lib/utils";
-import {ALERT_TYPE} from "react-native-alert-notification";
+
+
+
+
 
 
 const SignupScreen = () => {

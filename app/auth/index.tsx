@@ -62,7 +62,8 @@ const LoginScreen = () => {
                     showDialog(dialogTitle, dialogMsg, ALERT_TYPE.DANGER, () =>mutation.reset())
             }
         } catch (error) {
-            Alert.alert("Sorry, something went wrong, please try again later");
+            const errMsg = "Sorry, something went wrong, please try again later";
+            showDialog("Sorry", errMsg, ALERT_TYPE.DANGER, () =>mutation.reset())
         }
     };
 

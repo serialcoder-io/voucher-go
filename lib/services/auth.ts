@@ -59,6 +59,7 @@ export type signupResponse = {
     details: string;
     status_code: number;
 };
+
 export async function signup(params: SignupParams): Promise<signupResponse> {
     try {
         const response = await fetch(`${baseUrl}/vms/auth/users/`, {
@@ -73,7 +74,7 @@ export async function signup(params: SignupParams): Promise<signupResponse> {
         if(response.status == 400){
             const data = await response.json();
             if(data.email){
-               message = data.email[0]
+                message = data.email[0]
             }else if(data.username){
                 message = data.username[0]
             }
@@ -93,3 +94,28 @@ export async function signup(params: SignupParams): Promise<signupResponse> {
     }
 }
 
+/**
+ * send a request to the endpoint and return the http status code
+ * if the status code is 204 it means and email was sent
+ * @param email 
+ * @returns 
+ */
+export async function resetPassword(email: string): Promise<number>{
+    try {
+        const response = await fetch(`${baseUrl}/vms/auth/users/reset_password/`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({"email": email}),
+        });
+        return response.status;
+    } catch (e: unknown) {
+        if (e instanceof Error) {
+            throw e;
+        } else {
+            throw new Error('Sorry, something went wrong: ' + JSON.stringify(e));
+        }
+    }
+}
