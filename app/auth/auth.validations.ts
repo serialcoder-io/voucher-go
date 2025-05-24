@@ -1,5 +1,3 @@
-
-import {Alert} from "react-native";
 import {showDialog} from "@/lib/utils";
 import {ALERT_TYPE} from "react-native-alert-notification";
 

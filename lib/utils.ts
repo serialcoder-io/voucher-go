@@ -1,16 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Preferences, Theme, ThemeMode, Voucher, WithSelectors} from "@/lib/definitions";
+import {Preferences, Theme, ThemeMode, WithSelectors} from "@/lib/definitions";
 import {StoreApi, UseBoundStore} from "zustand";
 import {Toast, ALERT_TYPE, Dialog} from 'react-native-alert-notification';
-import {Alert} from "react-native";
-//import {useAuthStore} from "@/store/AuthStore";
-
-
-export const baseUrl = "http://192.168.163.83:8000"
-
-export function testStringRegEx(str: string, regEx: RegExp): boolean {
-    return regEx.test(str.trim());
-}
 
 const defaultPreferences = {
     lang: 'en',
@@ -84,41 +75,8 @@ export const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
     for (let k of Object.keys(store.getState())) {
         ;(store.use as any)[k] = () => store((s) => s[k as keyof typeof s])
     }
-
     return store
 }
-
-/**
- * this fucntion check if the voucher is not expired, and return true, false otherwise
- * @param voucher
- */
-export const isVoucherExpired = (voucher: Voucher) => {
-    // Check if the voucher status is "expired"
-    if (voucher.voucher_status === "expired") {
-        return true; // If the status is "expired", the voucher is expired
-    }
-
-    const expiration_date = voucher.expiry_date ? new Date(voucher.expiry_date) : null;
-    const extention_date = voucher.extention_date ? new Date(voucher.extention_date) : null;
-    const currentDate = new Date();
-
-    // If an expiration date is present, compare it with the current date
-    if (expiration_date && currentDate > expiration_date) {
-        // If the expiration date is passed, check for the extension
-        return !(extention_date && currentDate <= extention_date);
-    }
-    return false; // The voucher is not expired if none of the above conditions are met
-};
-
-
-/**
- * this function check if the status of the voucher.
- * if it's issued, return true, false otherwise
- * @param voucher
- */
-export const isVoucherInvalidStatus = (voucher: Voucher) => {
-    return voucher.voucher_status !== "issued";
-};
 
 
 /**
@@ -159,7 +117,7 @@ export const showToast = (
         title: title,
         titleStyle: {color: theme.textPrimary},
         textBody: message,
-        textBodyStyle: {color: theme.textSecondary}
+        textBodyStyle: {color: theme.textSecondary},
     });
 };
 
@@ -185,19 +143,3 @@ export const showDialog = (
         })
     )
 }
-
-
-
-export const confirmLogout = (logout: () => void) => {
-    Alert.alert('Log Out', 'Do you really want to log out ?', [
-        {
-            text: 'Cancel',
-            onPress: () => null,
-            style: 'cancel',
-        },
-        {
-            text: 'YES',
-            onPress: logout,
-        },
-    ]);
-};

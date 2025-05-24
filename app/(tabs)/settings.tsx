@@ -11,7 +11,7 @@ import {setPreference} from "@/lib/utils";
 import {useRouter} from "expo-router";
 import {useAuthStore} from "@/store/AuthStore";
 import {commonColors} from "@/constants/Colors";
-import {confirmLogout} from "@/lib/utils";
+import {confirmLogout} from "@/app/auth/auth.utils";
 
 
 function Settings() {

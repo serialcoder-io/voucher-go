@@ -6,7 +6,7 @@ import React, {useEffect, useState} from "react";
 import {Theme, Voucher} from "@/lib/definitions";
 import {useRouter} from "expo-router";
 import {commonColors} from "@/constants/Colors";
-import {isVoucherExpired, isVoucherInvalidStatus} from "@/lib/utils";
+import {isVoucherExpired, isVoucherInvalidStatus} from "@/app/voucher/voucher.validations"
 import VoucherCardError from "@/components/ui/(tabs)/index/voucher-cardError";
 import Loader from "@/components/ui/loader";
 

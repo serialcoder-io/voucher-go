@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Text} from '@rneui/themed';
 import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
@@ -7,14 +7,13 @@ import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
 import {Link} from "expo-router";
 import {commonColors} from "@/constants/Colors";
-import {validateEmail, validatePassword} from "@/app/auth/util";
+import {validateEmail, validatePassword} from "@/app/auth/auth.validations";
 import {signup, SignupParams, signupResponse} from "@/lib/services/auth";
 import {useMutation} from "@tanstack/react-query";
 import {useShopStore} from "@/store/shop";
-import {Alert} from "react-native";
 import {showDialog} from "@/lib/utils";
-import {ALERT_TYPE, Dialog} from "react-native-alert-notification";
-//import { useRouter } from "expo-router";
+import {ALERT_TYPE} from "react-native-alert-notification";
+
 
 const SignupScreen = () => {
     const [username, setUsername] = useState('');

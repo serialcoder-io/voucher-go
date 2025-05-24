@@ -1,5 +1,5 @@
 import {Voucher} from "@/lib/definitions";
-import {baseUrl} from "@/lib/utils";
+import {baseUrl} from "@/constants/base-url";
 
 export async function findVoucherByRef(voucherRef: string, accessToken: string): Promise<Voucher[] | []> {
     try {

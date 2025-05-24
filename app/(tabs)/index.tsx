@@ -1,23 +1,33 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, View, StyleSheet, Alert, StatusBar} from 'react-native';
+import {commonColors} from "@/constants/Colors";
 import {useTheme} from "@/hooks/useTheme";
-import {Theme} from "@/lib/definitions";
-import {useShopStore} from "@/store/shop";
+
+// react native
+import {ScrollView, View, StyleSheet, Alert, StatusBar} from 'react-native';
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
+
+// lib
+import {Theme} from "@/lib/definitions";
+import {queryClient} from "@/lib/queryClient";
+
+
 import {useFocusEffect, useRouter} from "expo-router";
 import {useQuery} from "@tanstack/react-query";
 import {findVoucherByRef} from "@/lib/services/voucher";
+
+// store
 import {useAuthStore} from "@/store/AuthStore";
-import {queryClient} from "@/lib/queryClient";
+import {useShopStore} from "@/store/shop";
+import {useVoucherStore} from "@/store/voucher";
+import {useGlobalRef} from "@/store/reference";
+
+//components
 import ShopCard from "@/components/ui/(tabs)/index/shopCard";
 import RedemptionCard from "@/components/ui/(tabs)/index/redemptionCard";
 import CheckVoucherCard from "@/components/ui/(tabs)/index/CheckVoucherCard";
-import ThemedStatusBar from "@/components/status-bar";
 import CustomConfirmationModal from "@/components/ui/customConfirmationModal";
 import VoucherNotFoundCard from "@/components/ui/(tabs)/index/voucherNotFoundCard";
-import {useVoucherStore} from "@/store/voucher";
-import {useGlobalRef} from "@/store/reference";
-import {commonColors} from "@/constants/Colors";
+
 
 function Home() {
     const [reference, setReference] = useState('');
@@ -30,13 +40,26 @@ function Home() {
     const styles = getStyles(theme);
     // If true, enables the query to find the voucher by the reference
     const [searchVoucher, setSearchVoucher] = useState(false);
-    //const [voucher, setVoucher] = useState<Voucher[] | []>([]);
     const {voucher, setVoucher} = useVoucherStore();
     const {globalRef, setGlobalRef} = useGlobalRef();
     const [showRedemptionCard, setShowRedemptionCard] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [notFoundMsg, setNotFoundMsg ] = useState(false);
     const router = useRouter();
+
+    const { data, isLoading, isSuccess, error, isPending, isFetching, isFetched } = useQuery({
+        queryKey: ["voucher"],
+        queryFn: async () => {
+            return searchVoucher ?
+                await findVoucherByRef(reference.trim(), accessToken.trim()) : [];
+        },
+        enabled: reference.trim().length > 0 && searchVoucher,
+    });
+
+    const resetVoucherQuery = () => {
+        queryClient.resetQueries({ queryKey: ['voucher'] });
+    };
+
 
     useEffect(() => {
         const findShop = async()=>{
@@ -66,6 +89,7 @@ function Home() {
         setNotFoundMsg(false)
         setSearchVoucher(false);
         setTillNo("")
+        resetVoucherQuery()
     }
 
     useFocusEffect(
@@ -83,15 +107,6 @@ function Home() {
         }
     }, [globalRef]);
 
-
-    const { data, isLoading, isSuccess, error, isPending, isFetching, isFetched } = useQuery({
-        queryKey: ["voucher"],
-        queryFn: async () => {
-            return searchVoucher ?
-                await findVoucherByRef(reference.trim(), accessToken.trim()) : [];
-        },
-        enabled: reference.trim().length > 0 && searchVoucher,
-    });
 
     useEffect(() => {
         if (isSuccess && data) {
@@ -120,7 +135,7 @@ function Home() {
             setShowConfirm(false)
         }, 200)
         router.push({
-            pathname: '/redeem-voucher/[till_no]',
+            pathname: '/voucher/[till_no]' as const,
             params: { till_no: tillNo },
         });
     }

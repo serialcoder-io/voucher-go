@@ -1,5 +1,5 @@
 import {Company, Shop} from "@/lib/definitions";
-import {baseUrl} from "@/lib/utils";
+import {baseUrl} from "@/constants/base-url";
 
 export type CompanyResponse = {
     data: Company[] | null;

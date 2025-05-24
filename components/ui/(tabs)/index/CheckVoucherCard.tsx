@@ -30,7 +30,7 @@ function CheckVoucherCard({
         <View style={styles.CheckContainer}>
             {/* check-voucher container */}
             <View style={styles.checkVoucherConainer}>
-                {/* button to show and hide voucher reference field */}
+                {/* button to show and hide the voucher reference field */}
                 <ToogleInputRefBtn
                     theme={theme}
                     showInput={showInput}

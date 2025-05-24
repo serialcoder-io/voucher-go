@@ -9,7 +9,7 @@ function ScanButton() {
     const router = useRouter();
     return (
         <View style={{width: '100%', borderTopWidth: 0.5, borderTopColor: 'grey'}}>
-            <TouchableOpacity style={styles.scanButton} onPress={()=>router.push('/qrcode')}>
+            <TouchableOpacity style={styles.scanButton} onPress={()=>router.push('/voucher/scan')}>
                 <Icon name="qrcode" size={25} color={theme.textPrimary} type="font-awesome" />
                 <Text style={{fontSize: 16, color: theme.textPrimary}}>Scan the QR code</Text>
             </TouchableOpacity>

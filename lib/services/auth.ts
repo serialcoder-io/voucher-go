@@ -1,5 +1,5 @@
 import {Jwt} from "@/lib/definitions";
-import {baseUrl} from "@/lib/utils";
+import {baseUrl} from "@/constants/base-url";
 
 export type loginResponse = {
     results: Jwt | string;

@@ -7,7 +7,7 @@ import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
 import {Theme} from "@/lib/definitions";
 import {useTheme} from "@/hooks/useTheme";
-import {testStringRegEx} from '@/lib/utils'
+import {testStringRegEx} from '@/lib/validations'
 
 const RsetPasswordScreen = () => {
     const [email, setEmail] = useState("");

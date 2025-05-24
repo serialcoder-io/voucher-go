@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import fetchUserData from "@/lib/services/user";
 import { queryClient } from "@/lib/queryClient";
 import Loader from "@/components/ui/loader";
-import {ALERT_TYPE, Dialog} from "react-native-alert-notification";
+import {ALERT_TYPE} from "react-native-alert-notification";
 import {showDialog} from "@/lib/utils";
 
 const LoginScreen = () => {
