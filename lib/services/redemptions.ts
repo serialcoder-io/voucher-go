@@ -1,5 +1,5 @@
 import {Voucher} from "@/lib/definitions";
-import {baseUrl} from "@/constants/base-url";
+import {baseUrl} from "@/lib/services/base-url";
 
 
 export type VouchersResponse = {
