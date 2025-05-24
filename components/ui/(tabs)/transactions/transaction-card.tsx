@@ -17,9 +17,8 @@ const TransactionCard = ({
 }: TransactionCardProps) => {
     const {theme} = useTheme();
     const styles = getStyles(theme)
-    const currDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-    const redemptionDate = new Date(date.replace(/(\+\d{2}:\d{2})/, '')).toISOString().split('T')[0]; // YYYY-MM-DD
-    const dateTodisplay = currDate === redemptionDate ? "Today" : redemptionDate;
+    const redemptionDate = new Date(date.replace(/(\+\d{2}:\d{2})/, '')).toISOString().split('T')[0];
+    const dateTodisplay = formatRedemptionDate(redemptionDate);
 
     return (
         <TouchableOpacity style={styles.card} onPress={()=>console.log(refNumber)}>
@@ -75,3 +74,32 @@ const getStyles = (theme: Theme)=> StyleSheet.create({
 });
 
 export default TransactionCard;
+
+
+/**
+ * Retourne un affichage lisible de la date : "Today", "Yesterday", ou "YYYY-MM-DD"
+ * @param redemptionDate - La date de rédemption en format ISO string
+ * @returns string
+ */
+export function formatRedemptionDate(redemptionDate: string): string {
+    const toYMD = (d: Date): string => d.toISOString().split('T')[0];
+
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+
+    const redemption = new Date(redemptionDate);
+
+    const redemptionYMD = toYMD(redemption);
+    const todayYMD = toYMD(today);
+    const yesterdayYMD = toYMD(yesterday);
+
+    if (redemptionYMD === todayYMD) {
+        return "Today";
+    } else if (redemptionYMD === yesterdayYMD) {
+        return "Yesterday";
+    } else {
+        return redemptionYMD;
+    }
+}
+

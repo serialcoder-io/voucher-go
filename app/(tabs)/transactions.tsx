@@ -1,9 +1,8 @@
 import {
     StyleSheet,
     View,
-    FlatList,
-    ActivityIndicator,
-    RefreshControl
+    RefreshControl,
+    SectionList
 } from "react-native";
 import React, {useState, useEffect, useCallback} from "react";
 import {Theme, Voucher} from "@/lib/definitions";
@@ -15,10 +14,10 @@ import {useAuthStore} from "@/store/AuthStore";
 import ParentContainer from "@/components/parent-container";
 import {renderSkeleton} from "@/components/ui/(tabs)/transactions/voucher-skelton";
 import {Text} from "@rneui/themed";
-//import {useFocusEffect} from "expo-router";
 import TransactionCard from "@/components/ui/(tabs)/transactions/transaction-card";
 import {commonColors} from "@/constants/Colors";
 import {queryClient} from "@/lib/queryClient";
+import {formatRedemptionDate} from "@/components/ui/(tabs)/transactions/transaction-card";
 
 
 function Transactions(){
@@ -53,7 +52,17 @@ function Transactions(){
                 const newVouchers = data.vouchers || [];
                 const existingVoucherIds = prevVouchers.map(voucher => voucher.id);
                 const filteredNewVouchers = newVouchers.filter(voucher => !existingVoucherIds.includes(voucher.id));
-                return [...prevVouchers, ...filteredNewVouchers];
+                // Fusionner les anciens + nouveaux
+                const combinedVouchers = [...prevVouchers, ...filteredNewVouchers];
+
+                // Trier par redemption.redeem_at (du plus récent au plus ancien par exemple)
+                combinedVouchers.sort((a, b) => {
+                    const dateA = new Date(a.redemption?.redeemed_on || 0).getTime();
+                    const dateB = new Date(b.redemption?.redeemed_on || 0).getTime();
+                    return dateB - dateA;
+                });
+
+                return combinedVouchers;
             });
             setNextUrl(data.next || null);
         }
@@ -128,16 +137,19 @@ function Transactions(){
 
     return (
         <View style={{paddingHorizontal: 12, backgroundColor: theme.background, flex: 1, paddingTop: 10}}>
-            <FlatList
-                data={vouchers}
+            <SectionList
+                sections={groupVouchersByDate(vouchers)}
+                keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                     <TransactionCard
                         amount={item.amount}
-                        date={item?.redemption?.redeemed_on! || item.date_time_created}
+                        date={item?.redemption!.redeemed_on}
                         refNumber={item.voucher_ref}
                     />
                 )}
-                keyExtractor={(item) => item.id.toString()}
+                renderSectionHeader={({ section: { title } }) => (
+                    <Text style={styles.sectionTitle}>{title}</Text>
+                )}
                 onScroll={handleOnScroll}
                 scrollEventThrottle={16}
                 ListFooterComponent={renderFooterLoader}
@@ -172,6 +184,13 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    sectionTitle:{
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginTop: 20,
+        marginBottom: 10,
+        color: theme.textPrimary,
+    }
 });
 
 
@@ -200,4 +219,24 @@ export function handleScroll({
     } else {
         setIsBottom(false);
     }
+}
+
+
+function groupVouchersByDate(vouchers: Voucher[]) {
+    const grouped: { [key: string]: Voucher[] } = {};
+
+    vouchers.forEach(voucher => {
+        const rawDate = voucher.redemption!.redeemed_on;
+        const groupTitle = formatRedemptionDate(rawDate);
+
+        if (!grouped[groupTitle]) {
+            grouped[groupTitle] = [];
+        }
+        grouped[groupTitle].push(voucher);
+    });
+
+    return Object.keys(grouped).map(date => ({
+        title: date,
+        data: grouped[date],
+    }));
 }

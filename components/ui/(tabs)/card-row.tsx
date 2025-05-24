@@ -17,10 +17,10 @@ function CardRow({iconName, label, value,}: CardRowProps){
         <View style={{display: 'flex', flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
             <View style={styles.optionRow} >
                 <Icon
-                    name={iconName} type='material' size={23}
-                    style={{marginRight: 10}} color={theme.textSecondary}
+                    name={iconName} type='material' size={20}
+                    style={{marginRight: 4}} color={theme.textSecondary}
                 />
-                <Text style={{color: theme.textPrimary, fontSize: 16}}>{label} :</Text>
+                <Text style={{color: theme.textPrimary, fontSize: 14}}>{label} :</Text>
             </View>
             <Text style={styles.rowText}>{value}</Text>
         </View>
@@ -43,5 +43,5 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         columnGap: 15,
         paddingVertical: 15,
     },
-    rowText:{color: theme.textSecondary,},
+    rowText:{color: theme.textSecondary, fontSize: 14},
 });

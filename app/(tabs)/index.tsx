@@ -207,6 +207,3 @@ const getStyles = (theme: Theme) => StyleSheet.create({
         alignItems: 'center',
     },
 });
-
-
-
