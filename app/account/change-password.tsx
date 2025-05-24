@@ -3,7 +3,7 @@ import {useAuthStore} from "@/store/AuthStore";
 //import {useEffect} from "react";
 //import {useRouter} from "expo-router";
 
-function Profile(){
+function ChangePassword(){
     const user = useAuthStore()    // Accède à l'utilisateur depuis Zustand
 
     //const router = useRouter();
@@ -16,4 +16,4 @@ function Profile(){
     )
 }
 
-export default Profile;
+export default ChangePassword;

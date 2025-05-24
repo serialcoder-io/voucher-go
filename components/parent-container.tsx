@@ -6,7 +6,7 @@ import ThemedStatusBar from "@/components/status-bar";
 
 function ParentContainer({children, width='85%'}: ParentContainerProps) {
     const styles = useGlobalStyles();
-    const {themeMode ,theme} = useTheme();
+    const {themeMode, theme} = useTheme();
 
     return (
         <ScrollView contentContainerStyle={{flex: 1}} key={themeMode}>

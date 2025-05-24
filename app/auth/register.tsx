@@ -15,17 +15,12 @@ import {showDialog} from "@/lib/utils";
 // hooks
 import {useGlobalStyles} from "@/styles/global";
 import {useShopStore} from "@/store/shop";
-import {useMutation} from "@tanstack/react-query";
 
 import {Link} from "expo-router";
 import {commonColors} from "@/constants/Colors";
 import {validateEmail, validatePassword} from "@/app/auth/auth.validations";
 import {signup, SignupParams, signupResponse} from "@/lib/services/auth";
-
-
-
-
-
+import {useMutation} from "@tanstack/react-query";
 
 const SignupScreen = () => {
     const [username, setUsername] = useState('');

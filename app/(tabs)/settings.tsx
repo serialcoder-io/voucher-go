@@ -27,7 +27,7 @@ function Settings() {
     }
 
     // show drowpdown profile(accountsettings/personal informations)
-    type AllowedUrls = "/account" | "/account/profile"
+    type AllowedUrls = "/account" | "/account/change-password"
     const navigate = (url: AllowedUrls) => {
         if(showProfileSettingss) {
             setShowProfileSettings(false);
@@ -60,17 +60,17 @@ function Settings() {
                             <View style={currentStyles.profileSettinDropdown}>
                                 <Divider />
                                 <CustomPressable
-                                    text='Account settings'
+                                    text='Profile'
                                     iconName='user'
                                     iconType='feather'
                                     onPress={() => navigate('/account')}
                                 />
                                 <Divider />
                                 <CustomPressable
-                                    text='Personal informations'
-                                    iconName='info'
+                                    text='Change password'
+                                    iconName='key'
                                     iconType='feather'
-                                    onPress={() => navigate('/account/profile')}
+                                    onPress={() => navigate('/account/change-password')}
                                 />
                             </View>
                         )}

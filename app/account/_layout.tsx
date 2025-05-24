@@ -18,7 +18,7 @@ function RootNavigator() {
                 name="index"
                 options={{
                     headerShown: true,
-                    title: 'Account',
+                    title: 'Profile',
                     headerStyle: {
                         backgroundColor: theme.backgroundSecondary,
                     },
@@ -26,10 +26,10 @@ function RootNavigator() {
                 }}
             />
             <Stack.Screen
-                name="profile"
+                name="change-password"
                 options={{
                     headerShown: true,
-                    headerTitle: "Profile",
+                    headerTitle: "Change password",
                     headerStyle: {
                         backgroundColor: theme.backgroundSecondary,
                     },
