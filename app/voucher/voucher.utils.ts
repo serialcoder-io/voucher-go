@@ -17,13 +17,13 @@ interface HandleRedeemParams {
 }
 
 export const handleRedeem = async ({
-   mutation,
-   shopId,
-   tillNo,
-   voucherId,
-   accessToken,
-   redirect,
-   theme,
+    mutation,
+    shopId,
+    tillNo,
+    voucherId,
+    accessToken,
+    redirect,
+    theme,
 }: HandleRedeemParams): Promise<void> => {
     if (shopId && tillNo) {
         try {

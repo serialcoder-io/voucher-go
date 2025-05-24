@@ -11,7 +11,8 @@ import fetchUserData from "@/lib/services/user";
 import { queryClient } from "@/lib/queryClient";
 import Loader from "@/components/ui/loader";
 import {ALERT_TYPE} from "react-native-alert-notification";
-import {showDialog} from "@/lib/utils";
+import {showDialog, showToast} from "@/lib/utils";
+import {useTheme} from "@/hooks/useTheme";
 
 const LoginScreen = () => {
     const [username, setUsername] = useState<string>("");
@@ -22,6 +23,7 @@ const LoginScreen = () => {
     const {setToken, initializeUser, isAuthenticated, setIsAuthenticated} = useAuthStore();
     const accessToken = useAuthStore.use.tokens().access;
     const [userInitialized, setUserInitialized] = useState(false);
+    const {theme} = useTheme();
 
     const fetchSignedInUserData = useCallback(async () => {
         return await fetchUserData(accessToken);
@@ -54,12 +56,12 @@ const LoginScreen = () => {
                 case 401:
                     dialogTitle = "Invalid credentials"
                     dialogMsg = "invalid username and/or password"
-                    showDialog(dialogTitle, dialogMsg, ALERT_TYPE.DANGER, () =>mutation.reset())
+                    showToast(dialogTitle, dialogMsg, ALERT_TYPE.DANGER, theme)
                     break;
                 default:
                     dialogTitle = "Sorry"
                     dialogMsg = "Something went wrong, please try again later"
-                    showDialog(dialogTitle, dialogMsg, ALERT_TYPE.DANGER, () =>mutation.reset())
+                    showToast(dialogTitle, dialogMsg, ALERT_TYPE.DANGER, theme)
             }
         } catch (error) {
             const errMsg = "Sorry, something went wrong, please try again later";
