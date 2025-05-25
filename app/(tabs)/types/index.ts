@@ -1,4 +1,6 @@
 import React from "react";
+import {StyleProp, ViewStyle} from "react-native";
+import {ThemeMode} from "@/lib/definitions";
 
 export type HandleScrollParams = {
     event: any;
@@ -6,3 +8,18 @@ export type HandleScrollParams = {
     setIsBottom: (value: boolean) => void;
     setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 };
+
+export type ThemeOptionsSectionProps = {
+    styles?: StyleProp<ViewStyle>;
+    themeMode: ThemeMode;
+    changeThemeMode: (mode: ThemeMode) => void;
+};
+
+export type LogoutSectionProps = {
+    confirmLogout: () => void;
+};
+
+export type DropdownWrapperProps = {
+    showProfileSettingss: boolean,
+    setShowProfileSettings: (showProfileSettingss: boolean) => void,
+}

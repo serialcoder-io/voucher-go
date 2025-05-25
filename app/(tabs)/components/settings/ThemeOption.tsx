@@ -5,7 +5,7 @@ import {useGlobalStyles} from "@/styles/global";
 import {ThemeOptionsProps} from "@/lib/definitions";
 import {useTheme} from "@/hooks/useTheme";
 
-function ThemeOptions({
+function ThemeOption({
   label,
   value,
   icon,
@@ -25,7 +25,7 @@ function ThemeOptions({
     )
 }
 
-export default ThemeOptions;
+export default ThemeOption;
 
 
 const styles = StyleSheet.create({
