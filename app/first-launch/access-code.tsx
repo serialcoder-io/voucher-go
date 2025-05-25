@@ -7,7 +7,7 @@ import {Link, useFocusEffect, useRouter} from "expo-router";
 import {useTheme} from "@/hooks/useTheme";
 import * as SecureStore from 'expo-secure-store';
 import {Icon} from "@rneui/themed";
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 
 const allDigitsSame = (accessCode: string) => {
     return accessCode.split('').every(digit => digit === accessCode[0]);

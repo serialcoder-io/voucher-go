@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Preferences, Theme, ThemeMode, WithSelectors} from "@/lib/definitions";
+import {Preferences, Theme, ThemeMode, WithSelectors} from "@/types";
 import {StoreApi, UseBoundStore} from "zustand";
 import {Toast, ALERT_TYPE, Dialog} from 'react-native-alert-notification';
 

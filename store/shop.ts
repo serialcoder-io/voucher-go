@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import {Shop} from "@/lib/definitions";
-import {createSelectors} from "@/lib/utils";
+import {Shop} from "@/types";
+import {createSelectors} from "@/utils";
 
 
 interface ShopState {

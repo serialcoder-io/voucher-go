@@ -1,15 +1,17 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, Image, StyleSheet, Alert} from 'react-native';
-import {Theme} from "@/lib/definitions";
+import {View, Text, Image } from 'react-native';
 import {Input} from "@rneui/themed";
 import {useTheme} from "@/hooks/useTheme";
-import {useGlobalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles";
 import {Link, useRouter} from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 import {useAuthStore} from "@/store/AuthStore";
 import * as SecureStore from "expo-secure-store";
 import {useShopStore} from "@/store/shop";
+import {getHomeScreenStyles} from "@/styles";
+import {showToast} from "@/utils";
+import {ALERT_TYPE} from "react-native-alert-notification";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -21,10 +23,8 @@ function PinLoginScreen() {
     const setIsAuthenticated = useAuthStore.use.setIsAuthenticated();
     const setShop = useShopStore.use.setShop();
     const router = useRouter()
-    const styles = currentstyles(theme);
+    const styles = getHomeScreenStyles(theme);
     const globalStyles = useGlobalStyles();
-
-
 
     const handleChangePin = async(pin: string) => {
         setPin(pin);
@@ -33,7 +33,9 @@ function PinLoginScreen() {
             if (pin === accesCode) {
                 router.push("/auth");
             }else{
-                Alert.alert("Access denied", "The access code is incorrect");
+                const title = "Access denied";
+                const message = "The access code is incorrect";
+                showToast(title, message, ALERT_TYPE.DANGER, theme)
             }
         }
     }
@@ -112,49 +114,5 @@ function PinLoginScreen() {
         </View>
     );
 }
-
-
-const currentstyles = (theme: Theme) => StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: theme.background,
-        padding: 16,
-    },
-    logo: {
-        width: 100,
-        height: 100,
-        marginBottom: 40,
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: theme.textPrimary,
-        marginBottom: 8,
-    },
-    subtitle: {
-        fontSize: 16,
-        color: theme.textSecondary,
-        marginBottom: 20,
-    },
-    pinContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '80%',
-        marginBottom: 20,
-    },
-    textInput:{
-        fontSize: 25,
-        color: theme.textPrimary,
-        letterSpacing: 8,
-        paddingLeft: 60
-    },
-    forgotPin: {
-        fontSize: 14,
-        color: theme.textPrimary,
-        marginTop: 10,
-    },
-});
 
 export default PinLoginScreen;

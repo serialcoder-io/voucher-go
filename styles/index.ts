@@ -1,6 +1,7 @@
 import {StyleSheet, ViewStyle} from 'react-native';
 import {commonColors} from '@/constants/Colors'
 import {useTheme} from "@/hooks/useTheme";
+import {Theme} from "@/types";
 
 export const useGlobalStyles = () => {
 	const { theme } = useTheme();
@@ -69,3 +70,46 @@ export const useGlobalStyles = () => {
 		}
 	});
 };
+
+export const getHomeScreenStyles = (theme: Theme) => StyleSheet.create({
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: theme.background,
+		padding: 16,
+	},
+	logo: {
+		width: 100,
+		height: 100,
+		marginBottom: 40,
+	},
+	title: {
+		fontSize: 24,
+		fontWeight: 'bold',
+		color: theme.textPrimary,
+		marginBottom: 8,
+	},
+	subtitle: {
+		fontSize: 16,
+		color: theme.textSecondary,
+		marginBottom: 20,
+	},
+	pinContainer: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		width: '80%',
+		marginBottom: 20,
+	},
+	textInput:{
+		fontSize: 25,
+		color: theme.textPrimary,
+		letterSpacing: 8,
+		paddingLeft: 60
+	},
+	forgotPin: {
+		fontSize: 14,
+		color: theme.textPrimary,
+		marginTop: 10,
+	},
+});

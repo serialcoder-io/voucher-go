@@ -1,7 +1,7 @@
 import {Modal, View, Text, StyleSheet, Pressable} from "react-native";
 import {Button, Icon} from "@rneui/themed";
 import React from "react";
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 import {commonColors} from "@/constants/Colors";
 import {withDecay} from "react-native-reanimated";
 

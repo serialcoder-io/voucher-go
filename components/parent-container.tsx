@@ -1,6 +1,6 @@
 import {View, ScrollView} from "react-native";
-import {useGlobalStyles} from "@/styles/global";
-import {ParentContainerProps} from "@/lib/definitions";
+import {useGlobalStyles} from "@/styles";
+import {ParentContainerProps} from "@/types";
 import {useTheme} from "@/hooks/useTheme";
 import ThemedStatusBar from "@/components/status-bar";
 

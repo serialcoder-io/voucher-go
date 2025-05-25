@@ -1,4 +1,4 @@
-import {showDialog} from "@/lib/utils";
+import {showDialog} from "@/utils";
 import {ALERT_TYPE} from "react-native-alert-notification";
 
 const isEmailValid = (email: string) => {

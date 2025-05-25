@@ -2,7 +2,7 @@ import {Icon, Text} from "@rneui/themed";
 import {StyleSheet, TouchableOpacity} from "react-native";
 import React, {useState} from "react";
 import {useTheme} from "@/hooks/useTheme";
-import {useGlobalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles";
 
 
 function LanguageOption({ label, value }: {label: string, value: string}) {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Theme } from "@/lib/definitions";
+import { Theme } from "@/types";
 import { useTheme } from "@/hooks/useTheme";
 import { StyleSheet, TextInput, View } from "react-native";
 import { Ionicons } from '@expo/vector-icons';  // Assure-toi que cette bibliothèque est installée

@@ -1,7 +1,7 @@
 import {Pressable, StyleSheet, View} from "react-native";
 import {Card, Divider, Icon, Text} from "@rneui/themed";
 import React from "react";
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 
 type VoucherCardErrorProps = {
     theme: Theme;

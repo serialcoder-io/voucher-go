@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
-import { StyleSheet, View, TouchableOpacity, Text} from "react-native";
+import { View, TouchableOpacity, Text} from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Icon } from "@rneui/themed";
 import {useGlobalRef} from "@/store/reference";
+import {styles} from "@/styles/voucher/scan.styles";
+import RequestPermissionsView from "@/components/ui/voucher/RequestPermissionsView";
 
 export default function QRScanner() {
     const [enableTorch, setEnableTorch] = useState(false);
@@ -35,17 +37,7 @@ export default function QRScanner() {
     if (!permission) return <View />;
 
     if (permission.status !== "granted") {
-        return (
-            <View style={styles.permissionContainer}>
-                <Text style={{ color: "white" }}>We need your permission to access the camera</Text>
-                <TouchableOpacity
-                    style={styles.permissionButton}
-                    onPress={() => requestPermission()}
-                >
-                    <Text style={{ color: "white" }}>Grant Permission</Text>
-                </TouchableOpacity>
-            </View>
-        );
+        return <RequestPermissionsView />
     }
 
     return (
@@ -64,7 +56,7 @@ export default function QRScanner() {
                     </View>
 
                     <View style={styles.buttonsContainer}>
-                        {/* Bouton Flash */}
+                        {/* flash button */}
                         <TouchableOpacity
                             style={styles.button}
                             onPress={() => setEnableTorch(!enableTorch)}
@@ -72,7 +64,7 @@ export default function QRScanner() {
                             <Icon name={enableTorch ? "flashlight-off" : "flashlight-on"} size={30} color="white" />
                         </TouchableOpacity>
 
-                        {/* Bouton Fermer */}
+                        {/* close button */}
                         <TouchableOpacity style={styles.button} onPress={() => router.back()}>
                             <Ionicons name="close" size={30} color="white" />
                         </TouchableOpacity>
@@ -82,46 +74,3 @@ export default function QRScanner() {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: { flex: 1 },
-    camera: { flex: 1 },
-    frame: {
-        width: "85%",
-        height: "55%",
-        borderWidth: 3,
-        borderColor: "white",
-        borderRadius: 15,
-        borderStyle: "solid",
-    },
-    frameContainer: {
-        flex: 1,
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    buttonsContainer: {
-        bottom: 30,
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: "space-around",
-    },
-    button: {
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        padding: 15,
-        borderRadius: 50,
-    },
-    permissionContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "black",
-    },
-    permissionButton: {
-        backgroundColor: "#007bff",
-        padding: 15,
-        borderRadius: 10,
-    },
-});

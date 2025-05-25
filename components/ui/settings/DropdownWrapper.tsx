@@ -2,11 +2,14 @@ import {Divider} from "@rneui/themed";
 import CustomPressable from "@/components/ui/custom-pressable";
 import {View} from "react-native";
 import React from "react";
-import {getStyles} from "@/app/(tabs)/styles/settings.styles";
-import {DropdownWrapperProps} from "@/app/(tabs)/types";
+import {getStyles} from "@/styles/(tabs)/settings.styles";
+import {DropdownWrapperProps} from "@/types/(tabs).types";
+import {useRouter} from "expo-router";
+import {useTheme} from "@/hooks/useTheme";
 
 function DropdownWrapper({showProfileSettingss, setShowProfileSettings}: DropdownWrapperProps) {
-
+    const router = useRouter();
+    const {theme} = useTheme();
     const styles = getStyles(theme);
     type AllowedUrls = "/account" | "/account/change-password"
 

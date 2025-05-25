@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import * as SecureStore from 'expo-secure-store';
 import { immer } from 'zustand/middleware/immer';
-import {Jwt, User} from "@/lib/definitions";
+import {Jwt, User} from "@/types";
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
-import {createSelectors} from "@/lib/utils";
+import {createSelectors} from "@/utils";
 import {queryClient} from "@/lib/queryClient";
 
 

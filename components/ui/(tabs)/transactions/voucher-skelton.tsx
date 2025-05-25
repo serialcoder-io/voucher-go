@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { View, Animated, StyleSheet } from "react-native";
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 import {useTheme} from "@/hooks/useTheme";
 
 const VoucherSkelton = () => {

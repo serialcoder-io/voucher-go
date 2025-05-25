@@ -1,6 +1,6 @@
 import { Button } from "@rneui/themed";
 import React from "react";
-import {PrimaryButtonProps} from "@/lib/definitions";
+import {PrimaryButtonProps} from "@/types";
 import {StyleSheet} from "react-native";
 import {commonColors} from "@/constants/Colors";
 

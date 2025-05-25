@@ -1,4 +1,4 @@
-import {Jwt} from "@/lib/definitions";
+import {Jwt} from "@/types";
 import {baseUrl} from "@/lib/services/base-url";
 
 export type loginResponse = {

@@ -4,7 +4,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
 import {Button, Icon} from "@rneui/themed";
 import {useTheme} from "@/hooks/useTheme";
-import {Company, Shop, Theme} from "@/lib/definitions";
+import {Company, Shop, Theme} from "@/types";
 import PrimaryButton from "@/components/ui/primary-button";
 import {useRouter} from "expo-router";
 import RenderItem from "@/components/ui/shop/render-item";

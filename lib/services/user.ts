@@ -1,4 +1,4 @@
-import {User} from "@/lib/definitions";
+import {User} from "@/types";
 import {baseUrl} from "@/lib/services/base-url";
 
 

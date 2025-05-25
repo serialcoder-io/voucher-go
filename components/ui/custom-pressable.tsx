@@ -1,9 +1,9 @@
 import {StyleSheet, TouchableOpacity} from "react-native";
 import {Icon, Text} from "@rneui/themed";
 import React from "react";
-import {PressableProps} from "@/lib/definitions";
+import {PressableProps} from "@/types";
 import {useTheme} from "@/hooks/useTheme";
-import {useGlobalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles";
 
 function CustomPressable({
     text,

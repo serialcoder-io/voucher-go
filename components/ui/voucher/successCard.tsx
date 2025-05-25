@@ -3,7 +3,7 @@ import {Card, Divider, Icon, Text} from "@rneui/themed";
 import CardRow from "@/components/ui/(tabs)/card-row";
 import PrimaryButton from "@/components/ui/primary-button";
 import React from "react";
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 import {useTheme} from "@/hooks/useTheme";
 
 type SuccessCardProps = {

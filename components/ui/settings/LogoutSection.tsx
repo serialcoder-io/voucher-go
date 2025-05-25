@@ -1,8 +1,8 @@
-import SectionTitle from "@/app/(tabs)/components/settings/SectionTitle";
+import SectionTitle from "@/components/ui/settings/SectionTitle";
 import {Button} from "@rneui/themed";
 import {commonColors} from "@/constants/Colors";
 import React from "react";
-import {LogoutSectionProps} from "@/app/(tabs)/types";
+import {LogoutSectionProps} from "@/types/(tabs).types";
 
 function LogoutSection({ confirmLogout }: LogoutSectionProps) {
     return (

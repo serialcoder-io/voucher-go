@@ -1,4 +1,4 @@
-import {Company, Shop} from "@/lib/definitions";
+import {Company, Shop} from "@/types";
 import {baseUrl} from "@/lib/services/base-url";
 
 export type CompanyResponse = {

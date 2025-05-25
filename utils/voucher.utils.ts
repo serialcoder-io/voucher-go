@@ -1,8 +1,8 @@
 import { UseMutationResult } from '@tanstack/react-query';
-import { showDialog, showToast } from "@/lib/utils";
+import { showDialog, showToast } from "@/utils/index";
 import { ALERT_TYPE } from "react-native-alert-notification";
 import { RedemptionParams, RedemptionResponse } from "@/lib/services/voucher";
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 
 type RedirectFunction = () => void;
 

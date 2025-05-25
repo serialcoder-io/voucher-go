@@ -16,12 +16,12 @@ import {useShopStore} from "@/store/shop";
 import {useAuthStore} from "@/store/AuthStore"
 
 
-import {Voucher} from "@/lib/definitions";
+import {Voucher} from "@/types";
 import {getVouchersRedeemedAtShop} from "@/lib/services/redemptions";
 import {commonColors} from "@/constants/Colors";
 import {queryClient} from "@/lib/queryClient";
-import {handleScroll, groupVouchersByDate} from "@/app/(tabs)/utils/transactions.utils"
-import {getStyles} from "@/app/(tabs)/styles/transactions.styles";
+import {handleScroll, groupVouchersByDate} from "@/utils/transactions.utils"
+import {getStyles} from "@/styles/(tabs)/transactions.styles";
 
 
 function Transactions(){

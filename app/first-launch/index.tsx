@@ -4,7 +4,7 @@ import {View, Text, StyleSheet, Image} from "react-native";
 import {useRouter} from "expo-router";
 import PrimaryButton from "@/components/ui/primary-button";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 import {useTheme} from "@/hooks/useTheme";
 
 export default function WelcomeScreen() {

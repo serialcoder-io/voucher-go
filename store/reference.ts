@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import {createSelectors} from "@/lib/utils";
+import {createSelectors} from "@/utils";
 
 
 // the reference of a voucher,

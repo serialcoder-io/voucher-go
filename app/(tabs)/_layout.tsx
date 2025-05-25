@@ -6,7 +6,7 @@ import CustomTabBarIcon from "@/components/ui/(tabs)/custom-tabBarIcon";
 import HeaderRightAvatar from "@/components/ui/_layout/headerRight-avatar";
 import { ThemeProvider } from "@/store/theme";
 import { useTheme } from "@/hooks/useTheme";
-import { Theme } from '@/lib/definitions';
+import { Theme } from '@/types';
 import {queryClient} from "@/lib/queryClient";
 import {QueryClientProvider} from "@tanstack/react-query";
 import {commonColors} from "@/constants/Colors";

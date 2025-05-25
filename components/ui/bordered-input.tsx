@@ -1,8 +1,8 @@
 import {StyleSheet, TextInput} from "react-native";
 import React from "react";
-import {CustomInputTextProps} from "@/lib/definitions";
+import {CustomInputTextProps} from "@/types";
 import {useTheme} from "@/hooks/useTheme";
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 
 function BorderedInput({
    value,

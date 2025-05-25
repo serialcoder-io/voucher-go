@@ -1,7 +1,7 @@
 import {Input} from "@rneui/themed";
 import React from "react";
-import { useGlobalStyles } from "@/styles/global";
-import {CustomInputTextProps} from "@/lib/definitions";
+import { useGlobalStyles } from "@/styles";
+import {CustomInputTextProps} from "@/types";
 import {useTheme} from "@/hooks/useTheme";
 
 function CustomInputText({

@@ -1,4 +1,4 @@
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 import {StyleSheet} from "react-native";
 import {commonColors} from "@/constants/Colors";
 

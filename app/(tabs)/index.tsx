@@ -7,7 +7,7 @@ import {ScrollView, View, StyleSheet, Alert, StatusBar} from 'react-native';
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 
 // lib
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 import {queryClient} from "@/lib/queryClient";
 
 

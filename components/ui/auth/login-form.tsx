@@ -1,7 +1,7 @@
 import React from "react";
 import {View, Image, TouchableOpacity, StyleSheet} from "react-native";
 import {Text, CheckBox} from "@rneui/themed";
-import {useGlobalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles";
 import {Link, useRouter} from "expo-router";
 import PrimaryButton from "@/components/ui/primary-button";
 import InputPassword from "@/components/ui/input-password";
@@ -9,7 +9,7 @@ import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
 import {useTheme} from "@/hooks/useTheme";
 import {commonColors} from "@/constants/Colors";
-import {LoginFormProps, Theme} from "@/lib/definitions";
+import {LoginFormProps, Theme} from "@/types";
 
 const LoginForm = ({
    username,

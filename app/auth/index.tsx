@@ -4,14 +4,14 @@ import { useRouter } from "expo-router";
 import { login, LoginParams, loginResponse } from "@/lib/services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/AuthStore";
-import { Jwt } from "@/lib/definitions";
+import { Jwt } from "@/types";
 import LoginForm from "@/components/ui/auth/login-form";
 import { useQuery } from "@tanstack/react-query";
 import fetchUserData from "@/lib/services/user";
 import { queryClient } from "@/lib/queryClient";
 import Loader from "@/components/ui/loader";
 import {ALERT_TYPE} from "react-native-alert-notification";
-import {showDialog, showToast} from "@/lib/utils";
+import {showDialog, showToast} from "@/utils";
 import {useTheme} from "@/hooks/useTheme";
 
 const LoginScreen = () => {

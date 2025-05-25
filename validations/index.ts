@@ -8,3 +8,9 @@
 export function testStringRegEx(str: string, regEx: RegExp): boolean {
     return regEx.test(str.trim());
 }
+
+export const allRequiredFieldsFilled = (fields: string[]) => {
+    return fields.every((field) => {
+        return field.length > 0;
+    });
+};

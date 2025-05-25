@@ -1,4 +1,4 @@
-import {Voucher} from "@/lib/definitions";
+import {Voucher} from "@/types";
 import {baseUrl} from "@/lib/services/base-url";
 
 export async function findVoucherByRef(voucherRef: string, accessToken: string): Promise<Voucher[] | []> {

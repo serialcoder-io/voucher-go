@@ -2,7 +2,7 @@ import {StyleSheet, View} from "react-native";
 import {Text} from "@rneui/themed"
 import {Ionicons} from "@expo/vector-icons";
 import * as React from "react";
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 import {useTheme} from "@/hooks/useTheme";
 import {commonColors} from "@/constants/Colors";
 

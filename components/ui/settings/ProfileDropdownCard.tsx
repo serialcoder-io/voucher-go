@@ -4,8 +4,8 @@ import {Card, Divider} from "@rneui/themed";
 import React, {useState} from "react";
 import {useRouter} from "expo-router";
 import {useTheme} from "@/hooks/useTheme";
-import {getStyles} from "@/app/(tabs)/styles/settings.styles";
-import DropDownWrapper from "@/app/(tabs)/components/settings/DropDownWrapper";
+import {getStyles} from "@/styles/(tabs)/settings.styles";
+import DropdownWrapper from "@/components/ui/settings/DropdownWrapper";
 
 function ProfileDropdownCard(){
     const router = useRouter();
@@ -23,7 +23,7 @@ function ProfileDropdownCard(){
                     onPress={() => setShowProfileSettings(!showProfileSettingss)}
                 />
                 {showProfileSettingss && (
-                   <DropDownWrapper
+                   <DropdownWrapper
                        showProfileSettingss={showProfileSettingss}
                        setShowProfileSettings={setShowProfileSettings}
                    />

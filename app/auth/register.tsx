@@ -8,17 +8,16 @@ import InputPassword from "@/components/ui/input-password";
 import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
 import {Text} from '@rneui/themed';
-
-// lib
-import {showDialog} from "@/lib/utils";
+import {showDialog} from "@/utils";
+import {allRequiredFieldsFilled} from "@/validations";
 
 // hooks
-import {useGlobalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles";
 import {useShopStore} from "@/store/shop";
 
 import {Link} from "expo-router";
 import {commonColors} from "@/constants/Colors";
-import {validateEmail, validatePassword} from "@/app/auth/auth.validations";
+import {validateEmail, validatePassword} from "@/validations/auth.validations";
 import {signup, SignupParams, signupResponse} from "@/lib/services/auth";
 import {useMutation} from "@tanstack/react-query";
 
@@ -76,20 +75,14 @@ const SignupScreen = () => {
 
     return (
         <ParentContainer width='90%'>
-            {/* Logo */}
-            {/*<Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />*/}
-
             <Text h3 style={useGlobalStyles().title}>Sign up</Text>
 
-            {/* Username */}
             <CustomInputText
                 value={username}
                 onChangeText={setUsername}
                 iconName="user"
                 placeholder="Username"
             />
-
-            {/* Email */}
 
             <CustomInputText
                 value={email}
@@ -115,7 +108,7 @@ const SignupScreen = () => {
             />
 
             <PrimaryButton
-                disabled={!allFieldsFilled(allFields)}
+                disabled={!allRequiredFieldsFilled(allFields)}
                 title="Register"
                 loading={mutation.isPending}
                 actionOnPress={handleSignup}
@@ -128,12 +121,5 @@ const SignupScreen = () => {
         </ParentContainer>
     );
 };
-
-const allFieldsFilled = (fields: string[]) => {
-    return fields.every((field) => {
-        return field.length > 0;
-    });
-};
-
 
 export default SignupScreen;

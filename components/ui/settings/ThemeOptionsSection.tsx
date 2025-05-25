@@ -1,17 +1,17 @@
 import React from "react";
 
 // components
-import SectionTitle from "@/app/(tabs)/components/settings/SectionTitle";
-import ThemeOption from "@/app/(tabs)/components/settings/ThemeOption";
+import SectionTitle from "@/components/ui/settings/SectionTitle";
+import ThemeOption from "@/components/ui/settings/ThemeOption";
 import {Card, Divider} from "@rneui/themed";
 import {View} from "react-native";
 
 // types
-import {ThemeOptionsSectionProps} from "@/app/(tabs)/types";
-import {ThemeMode} from '@/lib/definitions'
+import {ThemeOptionsSectionProps} from "@/types/(tabs).types";
+import {ThemeMode} from '@/types'
 
 import {useTheme} from "@/hooks/useTheme";
-import {setPreference} from "@/lib/utils";
+import {setPreference} from "@/utils";
 
 
 function ThemeOptionsSection({ styles }: ThemeOptionsSectionProps) {

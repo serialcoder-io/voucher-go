@@ -1,4 +1,4 @@
-import {Voucher} from "@/lib/definitions";
+import {Voucher} from "@/types";
 
 /**
  * this fucntion check if the voucher is not expired, and return true, false otherwise

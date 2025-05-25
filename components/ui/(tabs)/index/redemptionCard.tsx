@@ -3,10 +3,10 @@ import {Button, Card, Divider, Icon, Text} from "@rneui/themed";
 import CardRow from "@/components/ui/(tabs)/card-row";
 import BorderedInput from "@/components/ui/bordered-input";
 import React, {useEffect, useState} from "react";
-import {Theme, Voucher} from "@/lib/definitions";
+import {Theme, Voucher} from "@/types";
 import {useRouter} from "expo-router";
 import {commonColors} from "@/constants/Colors";
-import {isVoucherExpired, isVoucherInvalidStatus} from "@/app/voucher/voucher.validations"
+import {isVoucherExpired, isVoucherInvalidStatus} from "@/validations/voucher.validations"
 import VoucherCardError from "@/components/ui/(tabs)/index/voucher-cardError";
 import Loader from "@/components/ui/loader";
 

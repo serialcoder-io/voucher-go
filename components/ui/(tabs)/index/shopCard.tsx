@@ -1,6 +1,6 @@
 import {Card, Text} from "@rneui/themed";
 import React from "react";
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 import {StyleSheet} from "react-native";
 import {commonColors} from "@/constants/Colors";
 import {useTheme} from "@/hooks/useTheme";

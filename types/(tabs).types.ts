@@ -1,6 +1,5 @@
 import React from "react";
 import {StyleProp, ViewStyle} from "react-native";
-import {ThemeMode} from "@/lib/definitions";
 
 export type HandleScrollParams = {
     event: any;
@@ -11,8 +10,6 @@ export type HandleScrollParams = {
 
 export type ThemeOptionsSectionProps = {
     styles?: StyleProp<ViewStyle>;
-    themeMode: ThemeMode;
-    changeThemeMode: (mode: ThemeMode) => void;
 };
 
 export type LogoutSectionProps = {

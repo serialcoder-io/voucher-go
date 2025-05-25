@@ -1,4 +1,4 @@
-import {Theme} from '@/lib/definitions'
+import {Theme} from '@/types'
 export const commonColors = {
     tabIconSelected: "#ffffff",
     primaryColor: '#d3154c',

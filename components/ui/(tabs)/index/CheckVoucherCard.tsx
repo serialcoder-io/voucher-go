@@ -3,8 +3,8 @@ import ToogleInputRefBtn from "@/components/ui/(tabs)/index/toogleInputRefBtn";
 import InputVoucherRef from "@/components/ui/(tabs)/index/input-voucher-ref";
 import ScanButton from "@/components/ui/(tabs)/index/scanButton";
 import React from "react";
-import {Theme} from "@/lib/definitions";
-import {useGlobalStyles} from "@/styles/global";
+import {Theme} from "@/types";
+import {useGlobalStyles} from "@/styles";
 
 type CheckVoucherCardProps = {
     theme: Theme;

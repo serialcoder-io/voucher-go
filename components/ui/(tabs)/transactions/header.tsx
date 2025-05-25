@@ -1,7 +1,7 @@
 import {Pressable, StyleSheet, View} from "react-native";
 import {Icon} from "@rneui/themed"
 import * as React from "react";
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 import {useTheme} from "@/hooks/useTheme";
 import {commonColors} from "@/constants/Colors";
 import HeaderTitle from "@/components/ui/(tabs)/transactions/HeaderTitle";

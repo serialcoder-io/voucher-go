@@ -11,18 +11,15 @@ import {useAuthStore} from "@/store/AuthStore";
 import {useTheme} from "@/hooks/useTheme";
 import {useLocalSearchParams, useRouter} from "expo-router";
 import useRedeemVoucher from "@/hooks/useRedeemVoucher";
-import {handleRedeem} from "@/app/voucher/voucher.utils";
+
 
 //react-native
-import {ScrollView, StatusBar, StyleSheet, View} from 'react-native';
+import {ScrollView, StatusBar, View} from 'react-native';
 import {ALERT_TYPE} from "react-native-alert-notification";
 
-//lib
-import {Theme} from "@/lib/definitions";
-import {formatDate, showDialog} from "@/lib/utils";
-
-
-
+import {formatDate, showDialog} from "@/utils";
+import {getStyles} from "@/styles/voucher/redemption.styles"
+import {handleRedeem} from "@/utils/voucher.utils";
 
 function Index() {
     const { till_no } = useLocalSearchParams();
@@ -89,17 +86,6 @@ function Index() {
 }
 export default Index;
 
-
-const getStyles = (theme: Theme) => StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: theme.background,
-        padding: 16,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-});
 
 
 

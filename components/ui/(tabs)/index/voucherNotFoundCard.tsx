@@ -1,7 +1,7 @@
 import {Card, Icon} from "@rneui/themed";
 import {Pressable, StyleSheet, Text, View} from "react-native";
 import React, {useEffect, useState} from "react";
-import {Theme, Voucher} from "@/lib/definitions";
+import {Theme, Voucher} from "@/types";
 
 type VoucherNotFoundCardProps = {
     theme: Theme;

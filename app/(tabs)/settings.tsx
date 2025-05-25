@@ -4,13 +4,13 @@ import {useTheme} from "@/hooks/useTheme";
 //import LanguageOption from "@/components/ui/settings/LangOption";
 import {useRouter} from "expo-router";
 import {useAuthStore} from "@/store/AuthStore";
-import {confirmLogout} from "@/app/auth/auth.utils";
-import {getStyles} from "@/app/(tabs)/styles/settings.styles";
+import {confirmLogout} from "@/utils/auth.utils";
+import {getStyles} from "@/styles/(tabs)/settings.styles";
 
 // components
-import ThemeOptionsSection from "@/app/(tabs)/components/settings/ThemeOptionsSection"
-import LogoutSection from "@/app/(tabs)/components/settings/LogoutSection";
-import ProfileDropdownCard from "@/app/(tabs)/components/settings/ProfileDropdownCard";
+import ThemeOptionsSection from "@/components/ui/settings/ThemeOptionsSection"
+import LogoutSection from "@/components/ui/settings/LogoutSection";
+import ProfileDropdownCard from "@/components/ui/settings/ProfileDropdownCard";
 
 
 function Settings() {

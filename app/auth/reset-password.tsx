@@ -9,22 +9,21 @@ import ParentContainer from "@/components/parent-container";
 import CustomInputText from "@/components/ui/custom-inputText";
 import {Text} from "@rneui/themed";
 
-// lib
-import {Theme} from "@/lib/definitions";
-import { validateEmail } from "./auth.validations";
+import {getStyles} from "@/styles/auth/reset-password.styles"
+import { validateEmail } from "@/validations/auth.validations";
 import { resetPassword } from "@/lib/services/auth";
-import {showDialog} from "@/lib/utils";
+import {showDialog} from "@/utils";
 
 //hooks
 import {useTheme} from "@/hooks/useTheme";
-import {useGlobalStyles} from "@/styles/global";
+import {useGlobalStyles} from "@/styles";
 import {useMutation} from "@tanstack/react-query";
 
 
 const RsetPasswordScreen = () => {
     const [email, setEmail] = useState("");
     const {theme} = useTheme();
-    const styles = getstyles(theme)
+    const styles = getStyles(theme)
 
     const mutation = useMutation<number, Error, string>({
         mutationFn: resetPassword,
@@ -76,18 +75,7 @@ const RsetPasswordScreen = () => {
 export default RsetPasswordScreen;
 
 
-const getstyles = (theme: Theme) =>
-    StyleSheet.create({
-        subtitle: {
-            fontSize: 15,
-            color: theme.textSecondary,
-            marginBottom: 20,
-            textAlign: 'center',
-            fontStyle: 'italic',
-        },
-    })
-
-const displayDialogMessage = async (http_status: number, mutationReset: () => void) => {
+const displayDialogMessage = (http_status: number, mutationReset: () => void) => {
     let message = "";
     switch (http_status) {
         case 204:

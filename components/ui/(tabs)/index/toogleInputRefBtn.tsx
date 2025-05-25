@@ -1,8 +1,8 @@
 import {Icon, Text} from "@rneui/themed";
 import {Pressable, StyleSheet} from "react-native";
 import React from "react";
-import {Theme} from "@/lib/definitions";
-import {useGlobalStyles} from "@/styles/global";
+import {Theme} from "@/types";
+import {useGlobalStyles} from "@/styles";
 
 type ToogleInputRefBtnProps = {
     theme: Theme;

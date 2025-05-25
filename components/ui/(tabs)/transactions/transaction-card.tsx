@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {useTheme} from "@/hooks/useTheme";
-import {Theme} from "@/lib/definitions";
+import {Theme} from "@/types";
 
 type TransactionCardProps = {
     amount: number | string;

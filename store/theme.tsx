@@ -1,8 +1,8 @@
 import React, { createContext, useState, useMemo, useEffect } from 'react';
 import { Appearance } from 'react-native';
 import { light, dark } from '@/constants/Colors';
-import {Theme} from '@/lib/definitions'
-import { getPreference } from '@/lib/utils'
+import {Theme} from '@/types'
+import { getPreference } from '@/utils'
 
 type ThemeMode = 'auto' | 'dark' | 'light';
 

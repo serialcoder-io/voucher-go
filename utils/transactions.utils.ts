@@ -1,6 +1,6 @@
 import {formatRedemptionDate} from "@/components/ui/(tabs)/transactions/transaction-card";
-import {HandleScrollParams} from "@/app/(tabs)/types";
-import {Voucher} from "@/lib/definitions";
+import {HandleScrollParams} from "@/types/(tabs).types";
+import {Voucher} from "@/types";
 
 export function handleScroll({
     event,

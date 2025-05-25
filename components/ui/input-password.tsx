@@ -1,7 +1,7 @@
 import {Icon, Input} from "@rneui/themed";
 import React from "react";
-import {useGlobalStyles} from "@/styles/global";
-import {InputPasswordProps} from "@/lib/definitions";
+import {useGlobalStyles} from "@/styles";
+import {InputPasswordProps} from "@/types";
 import {useTheme} from "@/hooks/useTheme";
 
 function InputPassword({
