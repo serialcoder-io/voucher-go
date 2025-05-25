@@ -1,6 +1,6 @@
 import { baseUrl } from "./base-url";
 
-type UserProfileParams = {
+export type UserProfile = {
     first_name: string,
     last_name: string,
     username: string
@@ -13,10 +13,13 @@ type UserProfileParams = {
  * @param access_token
  * @returns the http status code
  */
-export async function updateUserProfile(
-    params: UserProfileParams, 
-    accessToken: string
-): Promise<number>{
+export async function updateUserProfile({
+    params,
+    accessToken,
+}: {
+    params: UserProfile;
+    accessToken: string;
+}): Promise<number> {
     try {
         const response = await fetch(`${baseUrl}/vms/auth/users/me/`, {
             method: 'PUT',

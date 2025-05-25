@@ -2,6 +2,9 @@ import { Stack } from "expo-router";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {ThemeProvider} from '@/store/theme';
 import {useTheme} from "@/hooks/useTheme";
+import {AlertNotificationRoot} from "react-native-alert-notification";
+import { queryClient } from "@/lib/queryClient";
+import {QueryClientProvider} from '@tanstack/react-query'
 
 function RootNavigator() {
     const {theme} = useTheme();
@@ -42,11 +45,16 @@ function RootNavigator() {
 }
 
 export default function RootLayout() {
+    const {theme} = useTheme()
     return (
-        <ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider>
             <SafeAreaProvider>
-                <RootNavigator />
+                <AlertNotificationRoot theme={theme.mode}>
+                    <RootNavigator />
+                </AlertNotificationRoot>
             </SafeAreaProvider>
         </ThemeProvider>
+        </QueryClientProvider>
     );
 }

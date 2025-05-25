@@ -27,7 +27,7 @@ function RootNavigator() {
                 }}
             />
             <Stack.Screen name="scan" options={{headerShown: true, headerTitle: "Scanner"}} />
-          </Stack>
+        </Stack>
     );
 }
 

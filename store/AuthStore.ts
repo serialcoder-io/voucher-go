@@ -13,12 +13,15 @@ interface AuthState {
     tokens: Jwt;
     setToken: (key: TokenName, token: string, keepMoSignedIn: boolean) => void;
     clearToken: () => void;
-    loadStoredTokens: () => void;
     user: User | null;
     initializeUser: (user: User, keepMeSignedIn: boolean) => void;
     signOut: () => void;
     isAuthenticated: boolean;
     setIsAuthenticated: (isAuthenticated: boolean) => void;
+    setEmail: (email: string) => void;
+    setUsername: (username: string) => void;
+    setFistOrLastName: (key: 'first_name' | 'last_name', newValue: string) => void;
+    setUserFields: (fields: Partial<Pick<User, 'email' | 'username' | 'first_name' | 'last_name'>>) => void;
 }
 
 export const useAuthStore = createSelectors(
@@ -43,6 +46,13 @@ export const useAuthStore = createSelectors(
                     }
                 }
             },
+            setUserFields: (fields: Partial<Pick<User, 'email' | 'username' | 'first_name' | 'last_name'>>) => {
+                set((state) => {
+                    if (state.user) {
+                        Object.assign(state.user, fields);
+                    }
+                });
+            },
             signOut: async () => {
                 try {
                     set((state) => {
@@ -54,22 +64,6 @@ export const useAuthStore = createSelectors(
                     queryClient.clear();
                 } catch (error) {
                     console.error("Error signing out:", error);
-                }
-            },
-            loadStoredTokens: async () => {
-                try {
-                    const storedAccess = await SecureStore.getItemAsync('access');
-                    const storedRefresh = await SecureStore.getItemAsync('refresh');
-
-                    if (storedAccess && storedRefresh) {
-                        set((state) => {
-                            state.tokens.access = storedAccess;
-                            state.tokens.refresh = storedRefresh;
-                        });
-                    }
-
-                } catch (error) {
-                    console.error('Error loading stored data:', error);
                 }
             },
             setUsername: async (username: string) => {
@@ -125,15 +119,6 @@ export const useAuthStore = createSelectors(
                     console.error("Error clearing tokens:", error);
                 }
             },
-            cleanStore: async () => {
-                try {
-                    set((state) => {
-                        state.clearToken();
-                    });
-                } catch (error) {
-                    console.error('Error while cleaning tokens and user data:', error);
-                }
-            }
         }))
     )
 )

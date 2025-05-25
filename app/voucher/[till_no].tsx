@@ -4,10 +4,14 @@ import React, {useEffect} from 'react';
 import SuccessCard from "@/components/ui/voucher/successCard";
 import Loader from "@/components/ui/loader";
 
-//store
+// hooks
 import {useShopStore} from "@/store/shop";
 import {useVoucherStore} from "@/store/voucher";
 import {useAuthStore} from "@/store/AuthStore";
+import {useTheme} from "@/hooks/useTheme";
+import {useLocalSearchParams, useRouter} from "expo-router";
+import useRedeemVoucher from "@/hooks/useRedeemVoucher";
+import {handleRedeem} from "@/app/voucher/voucher.utils";
 
 //react-native
 import {ScrollView, StatusBar, StyleSheet, View} from 'react-native';
@@ -17,11 +21,7 @@ import {ALERT_TYPE} from "react-native-alert-notification";
 import {Theme} from "@/lib/definitions";
 import {formatDate, showDialog} from "@/lib/utils";
 
-// hooks
-import {useTheme} from "@/hooks/useTheme";
-import {useLocalSearchParams, useRouter} from "expo-router";
-import useRedeemVoucher from "@/hooks/useRedeemVoucher";
-import {handleRedeem} from "@/app/voucher/voucher.utils";
+
 
 
 function Index() {

@@ -47,7 +47,7 @@ function PinLoginScreen() {
                     return
                 }
                 setShop(JSON.parse(shopJson));
-                // if the time since the last login is less than 29 days and there are jwt stored in secure storage
+                // if the time since the last login is less than 7 days and there are jwt stored in secure storage
                 // set is authenticated to true and redirect the user to the home page
                 const accessToken = await SecureStore.getItemAsync('access')
                 const refreshToken = await SecureStore.getItemAsync('refresh')
@@ -55,7 +55,7 @@ function PinLoginScreen() {
                 const lastLogin = userLastLogin ? new Date(userLastLogin) : new Date()
                 const currentDate = new Date();
                 const differencesInDays = (currentDate.getTime() - lastLogin.getTime()) / (1000 * 3600 * 24)
-                if (differencesInDays < 29) {
+                if (differencesInDays < 7) {
                     if (accessToken && refreshToken) {
                         setToken("access", accessToken, true)
                         setToken("refresh", refreshToken, true)
