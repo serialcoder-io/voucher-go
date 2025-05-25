@@ -6,7 +6,7 @@ import { useRouter } from "expo-router";
 import { Icon } from "@rneui/themed";
 import {useGlobalRef} from "@/store/reference";
 import {styles} from "@/styles/voucher/scan.styles";
-import RequestPermissionsView from "@/components/ui/voucher/RequestPermissionsView";
+
 
 export default function QRScanner() {
     const [enableTorch, setEnableTorch] = useState(false);
@@ -37,7 +37,17 @@ export default function QRScanner() {
     if (!permission) return <View />;
 
     if (permission.status !== "granted") {
-        return <RequestPermissionsView />
+        return (
+            <View style={styles.permissionContainer}>
+                <Text style={{ color: "white" }}>We need your permission to access the camera</Text>
+                <TouchableOpacity
+                    style={styles.permissionButton}
+                    onPress={() => requestPermission()}
+                >
+                    <Text style={{ color: "white" }}>Grant Permission</Text>
+                </TouchableOpacity>
+            </View>
+        );
     }
 
     return (
