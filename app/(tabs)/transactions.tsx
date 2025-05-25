@@ -1,23 +1,27 @@
-import {
-    StyleSheet,
-    View,
-    RefreshControl,
-    SectionList
-} from "react-native";
+import {View, RefreshControl, SectionList} from "react-native";
 import React, {useState, useEffect, useCallback} from "react";
-import {Theme, Voucher} from "@/lib/definitions";
-import {useTheme} from "@/hooks/useTheme";
-import {useQuery} from "@tanstack/react-query";
-import {getVouchersRedeemedAtShop} from "@/lib/services/redemptions";
-import {useShopStore} from "@/store/shop";
-import {useAuthStore} from "@/store/AuthStore";
+
+// components
+import {Text} from "@rneui/themed";
 import ParentContainer from "@/components/parent-container";
 import {renderSkeleton} from "@/components/ui/(tabs)/transactions/voucher-skelton";
-import {Text} from "@rneui/themed";
 import TransactionCard from "@/components/ui/(tabs)/transactions/transaction-card";
+
+// hooks
+import {useTheme} from "@/hooks/useTheme";
+import {useQuery} from "@tanstack/react-query";
+
+// store
+import {useShopStore} from "@/store/shop";
+import {useAuthStore} from "@/store/AuthStore"
+
+
+import {Voucher} from "@/lib/definitions";
+import {getVouchersRedeemedAtShop} from "@/lib/services/redemptions";
 import {commonColors} from "@/constants/Colors";
 import {queryClient} from "@/lib/queryClient";
-import {formatRedemptionDate} from "@/components/ui/(tabs)/transactions/transaction-card";
+import {handleScroll, groupVouchersByDate} from "@/app/(tabs)/utils/transactions.utils"
+import {getStyles} from "@/app/(tabs)/styles/transactions.styles";
 
 
 function Transactions(){
@@ -167,76 +171,3 @@ function Transactions(){
 }
 
 export default Transactions;
-
-
-const getStyles = (theme: Theme) => StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: theme.background,
-        padding: 16,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    loaderContainer: {
-        paddingVertical: 20,
-        marginVertical: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    sectionTitle:{
-        fontWeight: 'bold',
-        fontSize: 18,
-        marginTop: 20,
-        marginBottom: 10,
-        color: theme.textPrimary,
-    }
-});
-
-
-type HandleScrollParams = {
-    event: any;
-    nextUrl: string | null;
-    setIsBottom: (value: boolean) => void;
-    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-};
-
-export function handleScroll({
-    event,
-    nextUrl,
-    setIsBottom,
-    setCurrentPage,
-}: HandleScrollParams) {
-    const contentHeight = event.nativeEvent.contentSize.height;
-    const contentOffsetY = event.nativeEvent.contentOffset.y;
-    const layoutHeight = event.nativeEvent.layoutMeasurement.height;
-
-    if (contentHeight - contentOffsetY <= layoutHeight + 20) {
-        setIsBottom(true);
-        if (nextUrl !== null) {
-            setCurrentPage((page) => page + 1);
-        }
-    } else {
-        setIsBottom(false);
-    }
-}
-
-
-function groupVouchersByDate(vouchers: Voucher[]) {
-    const grouped: { [key: string]: Voucher[] } = {};
-
-    vouchers.forEach(voucher => {
-        const rawDate = voucher.redemption!.redeemed_on;
-        const groupTitle = formatRedemptionDate(rawDate);
-
-        if (!grouped[groupTitle]) {
-            grouped[groupTitle] = [];
-        }
-        grouped[groupTitle].push(voucher);
-    });
-
-    return Object.keys(grouped).map(date => ({
-        title: date,
-        data: grouped[date],
-    }));
-}
