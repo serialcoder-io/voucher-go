@@ -11,7 +11,7 @@ function DropdownWrapper({showProfileSettingss, setShowProfileSettings}: Dropdow
     const router = useRouter();
     const {theme} = useTheme();
     const styles = getStyles(theme);
-    type AllowedUrls = "/account" | "/account/change-password"
+    type AllowedUrls = "/account" | "/account/changePassword"
 
 
     const navigate = (url: AllowedUrls) => {
@@ -35,7 +35,7 @@ function DropdownWrapper({showProfileSettingss, setShowProfileSettings}: Dropdow
                 text='Change password'
                 iconName='key'
                 iconType='feather'
-                onPress={() => navigate('/account/change-password')}
+                onPress={() => navigate('/account/changePassword')}
             />
         </View>
     )

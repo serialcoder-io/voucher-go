@@ -7,7 +7,7 @@ import {useTheme} from "@/hooks/useTheme";
 import {getStyles} from "@/styles/(tabs)/settings.styles";
 import DropdownWrapper from "@/components/ui/settings/DropdownWrapper";
 
-function ProfileDropdownCard(){
+function DropdownCard(){
     const router = useRouter();
     const {theme} = useTheme();
     const styles = getStyles(theme);
@@ -30,14 +30,11 @@ function ProfileDropdownCard(){
                 )}
             </View>
             <Divider />
-            <CustomPressable
-                text='Pin' iconName='lock'
-                iconType='feather' onPress={()=>router.push('../pin/lockScreen')}
-            />
+            <CustomPressable text='Pin' iconName='lock' iconType='feather'/>
             <Divider />
             <CustomPressable text='About shop' iconName='info' iconType='feather' />
         </Card>
     )
 }
 
-export default ProfileDropdownCard;
+export default DropdownCard;

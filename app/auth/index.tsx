@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Alert } from "react-native";
 import { useRouter } from "expo-router";
-import { login, LoginParams, loginResponse } from "@/lib/services/auth";
+import { login } from "@/lib/services/auth";
+import {LoginParams, loginResponse} from "@/types/auth.types"
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/AuthStore";
 import { Jwt } from "@/types";

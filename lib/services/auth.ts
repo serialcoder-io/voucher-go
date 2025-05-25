@@ -1,15 +1,13 @@
 import {Jwt} from "@/types";
 import {baseUrl} from "@/lib/services/base-url";
+import {
+    SignupParams,
+    signupResponse,
+    loginResponse,
+    LoginParams,
+    ChangePasswordParams
+} from "@/types/auth.types";
 
-export type loginResponse = {
-    results: Jwt | string;
-    http_status_code: number;
-};
-
-export interface LoginParams {
-    username: string;
-    password: string;
-}
 
 /**
  * Gets a tokens pair (JWT)
@@ -47,18 +45,6 @@ export async function login(credentials: LoginParams): Promise<loginResponse> {
         }
     }
 }
-
-export type SignupParams = {
-    email: string;
-    username: string;
-    password: string;
-    company: number;
-};
-
-export type signupResponse = {
-    details: string;
-    status_code: number;
-};
 
 export async function signup(params: SignupParams): Promise<signupResponse> {
     try {
@@ -109,6 +95,34 @@ export async function resetPassword(email: string): Promise<number>{
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({"email": email}),
+        });
+        return response.status;
+    } catch (e: unknown) {
+        if (e instanceof Error) {
+            throw e;
+        } else {
+            throw new Error('Sorry, something went wrong: ' + JSON.stringify(e));
+        }
+    }
+}
+
+
+export async function updatePassword({
+     params,
+     accessToken
+}: {
+    params: ChangePasswordParams,
+    accessToken: string
+}): Promise<number>{
+    try {
+        const response = await fetch(`${baseUrl}/vms/auth/change_password/`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+            body: JSON.stringify(params),
         });
         return response.status;
     } catch (e: unknown) {

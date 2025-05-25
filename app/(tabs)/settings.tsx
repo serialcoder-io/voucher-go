@@ -10,7 +10,7 @@ import {getStyles} from "@/styles/(tabs)/settings.styles";
 // components
 import ThemeOptionsSection from "@/components/ui/settings/ThemeOptionsSection"
 import LogoutSection from "@/components/ui/settings/LogoutSection";
-import ProfileDropdownCard from "@/components/ui/settings/ProfileDropdownCard";
+import DropdownCard from "@/components/ui/settings/DropdownCard";
 import {commonColors} from "@/constants/Colors";
 
 
@@ -33,7 +33,7 @@ function Settings() {
                     backgroundColor={commonColors.primaryColor}
                 />
 
-                <ProfileDropdownCard />
+                <DropdownCard />
 
                 <ThemeOptionsSection styles={styles.card} />
 

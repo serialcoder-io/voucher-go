@@ -108,9 +108,9 @@ function PinLoginScreen() {
 
             </View>
             {/* Forgot Pin */}
-            <Link href="/auth/resetPassword" style={styles.forgotPin}>
+            {/*<Link href="/auth/resetPassword" style={styles.forgotPin}>
                 j’ai oublié mon code pin
-            </Link>
+            </Link>*/}
         </View>
     );
 }

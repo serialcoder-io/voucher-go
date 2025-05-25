@@ -18,7 +18,8 @@ import {useShopStore} from "@/store/shop";
 import {Link} from "expo-router";
 import {commonColors} from "@/constants/Colors";
 import {validateEmail, validatePassword} from "@/validations/auth.validations";
-import {signup, SignupParams, signupResponse} from "@/lib/services/auth";
+import {SignupParams, signupResponse} from "@/types/auth.types";
+import { signup } from '@/lib/services/auth';
 import {useMutation} from "@tanstack/react-query";
 
 const SignupScreen = () => {

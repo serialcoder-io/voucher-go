@@ -29,7 +29,7 @@ function RootNavigator() {
                 }}
             />
             <Stack.Screen
-                name="change-password"
+                name="changePassword"
                 options={{
                     headerShown: true,
                     headerTitle: "Change password",

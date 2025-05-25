@@ -13,7 +13,7 @@ import {Image} from "react-native";
 import { View, Text } from "react-native";
 
 import {allRequiredFieldsFilled} from "@/validations";
-import { showToast } from "@/utils";
+import {showDialog, showToast} from "@/utils";
 import { ALERT_TYPE } from "react-native-alert-notification";
 import {styles} from "@/styles/account"
 import {displayToast} from "@/utils/acount.utils";
@@ -47,8 +47,10 @@ function Index() {
             const params = {"username": currentUsername, "email": currentEmail, "first_name": firstName, "last_name": lastName}
             const result = await mutation.mutateAsync({params: params, accessToken: accessToken});
             displayToast(result, theme, updateUserStore);
-        }catch{
-            
+        }catch(error){
+            const msg = "Sorry, something went wrong, please try again later, " +
+                "If the problem persists, please contact support for assistance.";
+            showDialog("Error", msg, ALERT_TYPE.DANGER, () =>mutation.reset())
         }finally{
             mutation.reset()
         }
