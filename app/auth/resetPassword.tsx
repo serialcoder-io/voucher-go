@@ -4,12 +4,12 @@ import {StyleSheet, Alert} from "react-native";
 import {ALERT_TYPE} from "react-native-alert-notification";
 
 // components
-import PrimaryButton from "@/components/ui/primary-button";
-import ParentContainer from "@/components/parent-container";
-import CustomInputText from "@/components/ui/custom-inputText";
+import PrimaryButton from "@/components/ui/primaryButton";
+import ParentContainer from "@/components/parentContainer";
+import CustomInputText from "@/components/ui/customInputText";
 import {Text} from "@rneui/themed";
 
-import {getStyles} from "@/styles/auth/reset-password.styles"
+import {getStyles} from "@/styles/auth/resetPassword.styles"
 import { validateEmail } from "@/validations/auth.validations";
 import { resetPassword } from "@/lib/services/auth";
 import {showDialog} from "@/utils";

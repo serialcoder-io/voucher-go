@@ -1,17 +1,15 @@
-import ParentContainer from "@/components/parent-container";
-import React, {useEffect, useState} from "react";
-import {View, Text, Alert, Pressable, StyleSheet} from "react-native"
-import InputPassword from "@/components/ui/input-password";
-import PrimaryButton from "@/components/ui/primary-button";
-import {Link, useFocusEffect, useRouter} from "expo-router";
+import ParentContainer from "@/components/parentContainer";
+import React, {useState} from "react";
+import {View, Text, Alert, Pressable} from "react-native"
+import InputPassword from "@/components/ui/inputPassword";
+import PrimaryButton from "@/components/ui/primaryButton";
+import {useFocusEffect, useRouter} from "expo-router";
 import {useTheme} from "@/hooks/useTheme";
 import * as SecureStore from 'expo-secure-store';
 import {Icon} from "@rneui/themed";
-import {Theme} from "@/types";
+import {styles} from "@/styles/firstLaunch/accessCode.styles";
+import {validateAccessCode} from "@/validations/accessCode.validations";
 
-const allDigitsSame = (accessCode: string) => {
-    return accessCode.split('').every(digit => digit === accessCode[0]);
-};
 
 function AccessCode(){
     const [secureTextEntry, setSecureTextEntry] = useState(true);
@@ -22,22 +20,14 @@ function AccessCode(){
     const {theme} = useTheme();
 
     const handleSubmit = async() => {
-        if (accessCode.length !== 4 || confirmAccessCode.length !== 4) {
-            Alert.alert("Invalid Access Code", "Access code must be exactly 4 digits long.");
-            return;
-        }
-        if (accessCode !== confirmAccessCode) {
-            Alert.alert("Invalid Access Code", "The access codes do not match.");
-            return;
-        }
-        if (allDigitsSame(accessCode) || allDigitsSame(confirmAccessCode)) {
-            Alert.alert("Invalid Access Code", "Access code cannot have all identical digits.");
-            return;
+        const isAccessCodeValid = validateAccessCode(accessCode, confirmAccessCode, theme)
+        if(!isAccessCodeValid){
+            return
         }
         setAccessCode("");
         setConfirmAccessCode("");
         await SecureStore.setItemAsync("accessCode", accessCode);
-        router.push("/first-launch/shop")
+        router.push("/firstLaunch/shop")
     };
 
     useFocusEffect(()=>{
@@ -87,7 +77,7 @@ function AccessCode(){
             />
             {existAccessCode && (
                 <View style={{width:'100%', padding: 10}}>
-                    <Pressable style={styles.nextButton} onPress={() => router.push("/first-launch/shop")}>
+                    <Pressable style={styles.nextButton} onPress={() => router.push("/firstLaunch/shop")}>
                         <Icon
                             name="trending-flat" type='material' size={45}
                             style={styles.icon} color={theme.textSecondary}
@@ -101,12 +91,3 @@ function AccessCode(){
 
 export default AccessCode;
 
-const styles =  StyleSheet.create({
-    icon: {
-        marginRight: 5,
-    },
-    nextButton: {
-        display: "flex", flexDirection: "row",
-        alignItems: "center", justifyContent: "flex-end",
-    }
-});

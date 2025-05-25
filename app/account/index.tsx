@@ -6,9 +6,9 @@ import { useTheme } from "@/hooks/useTheme";
 import {useUpdateProfile} from "@/hooks/useUpdateProfile";
 
 // components
-import PrimaryButton from "@/components/ui/primary-button";
-import ParentContainer from "@/components/parent-container";
-import CustomInputText from "@/components/ui/custom-inputText";
+import PrimaryButton from "@/components/ui/primaryButton";
+import ParentContainer from "@/components/parentContainer";
+import CustomInputText from "@/components/ui/customInputText";
 import {Image} from "react-native";
 import { View, Text } from "react-native";
 

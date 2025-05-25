@@ -1,7 +1,7 @@
 import {StyleSheet, View} from "react-native";
 import {Card, Divider, Icon, Text} from "@rneui/themed";
-import CardRow from "@/components/ui/(tabs)/card-row";
-import PrimaryButton from "@/components/ui/primary-button";
+import CardRow from "@/components/ui/(tabs)/cardRow";
+import PrimaryButton from "@/components/ui/primaryButton";
 import React from "react";
 import {Theme} from "@/types";
 import {useTheme} from "@/hooks/useTheme";

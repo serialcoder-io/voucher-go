@@ -1,5 +1,5 @@
 import {Divider} from "@rneui/themed";
-import CustomPressable from "@/components/ui/custom-pressable";
+import CustomPressable from "@/components/ui/customPressable";
 import {View} from "react-native";
 import React from "react";
 import {getStyles} from "@/styles/(tabs)/settings.styles";

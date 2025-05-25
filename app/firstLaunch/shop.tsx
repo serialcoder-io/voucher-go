@@ -1,18 +1,19 @@
-import ParentContainer from "@/components/parent-container";
-import {View, Text, StyleSheet, Pressable, Alert} from "react-native";
+import ParentContainer from "@/components/parentContainer";
+import {View, Text, Alert} from "react-native";
 import React, {useCallback, useEffect, useState} from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
 import {Button, Icon} from "@rneui/themed";
 import {useTheme} from "@/hooks/useTheme";
-import {Company, Shop, Theme} from "@/types";
-import PrimaryButton from "@/components/ui/primary-button";
+import {Company, Shop} from "@/types";
+import PrimaryButton from "@/components/ui/primaryButton";
 import {useRouter} from "expo-router";
-import RenderItem from "@/components/ui/shop/render-item";
+import RenderItem from "@/components/ui/shop/renderItem";
 import {fetchAllCompanies, fetchShops} from "@/lib/services/company";
 import {useQuery} from "@tanstack/react-query";
 import {queryClient} from "@/lib/queryClient";
 import {commonColors} from "@/constants/Colors";
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
+import {getStyles} from "@/styles/firstLaunch/shop.styles";
 
 function Label({ title }: { title: string }) {
     const {theme} = useTheme();
@@ -170,47 +171,3 @@ function ShopSetup(){
 
 export default ShopSetup;
 
-const getStyles = (theme: Theme)=> StyleSheet.create({
-    dropdown: {
-        margin: 16, height: 50,
-        marginVertical: 6,
-        width: "100%", elevation: 2,
-        backgroundColor: theme.backgroundSecondary,
-        borderRadius: 12, paddingHorizontal: 12,
-    },
-    dropdownContainer: {
-        width:'100%', display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        paddingVertical: 10
-    },
-    icon: {
-        marginRight: 5,
-    },
-    placeholderStyle: {
-        fontSize: 16,
-        color: theme.textPrimary,
-    },
-    selectedTextStyle: {
-        fontSize: 16,
-        color: theme.textPrimary,
-    },
-    iconStyle: {
-        width: 20,
-        height: 20,
-    },
-    inputSearchStyle: {
-        height: 40,
-        fontSize: 16,
-    },
-    label:{
-        alignSelf: "flex-start",
-        paddingLeft: 10, fontSize: 16,
-        color: theme.textPrimary,
-    },
-    backButton: {
-        display: "flex", flexDirection: "row",
-        alignItems: "center", justifyContent: "flex-start"
-    }
-});

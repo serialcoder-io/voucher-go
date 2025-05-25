@@ -2,7 +2,7 @@ import {View, ScrollView} from "react-native";
 import {useGlobalStyles} from "@/styles";
 import {ParentContainerProps} from "@/types";
 import {useTheme} from "@/hooks/useTheme";
-import ThemedStatusBar from "@/components/status-bar";
+import ThemedStatusBar from "@/components/statusBar";
 
 function ParentContainer({children, width='85%'}: ParentContainerProps) {
     const styles = useGlobalStyles();

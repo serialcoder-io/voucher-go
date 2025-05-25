@@ -5,7 +5,7 @@ import { login, LoginParams, loginResponse } from "@/lib/services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/AuthStore";
 import { Jwt } from "@/types";
-import LoginForm from "@/components/ui/auth/login-form";
+import LoginForm from "@/components/ui/auth/loginForm";
 import { useQuery } from "@tanstack/react-query";
 import fetchUserData from "@/lib/services/user";
 import { queryClient } from "@/lib/queryClient";

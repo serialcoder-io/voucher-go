@@ -1,5 +1,5 @@
 import {View} from "react-native";
-import CustomPressable from "@/components/ui/custom-pressable";
+import CustomPressable from "@/components/ui/customPressable";
 import {Card, Divider} from "@rneui/themed";
 import React, {useState} from "react";
 import {useRouter} from "expo-router";

@@ -3,9 +3,9 @@ import React, {useState, useEffect, useCallback} from "react";
 
 // components
 import {Text} from "@rneui/themed";
-import ParentContainer from "@/components/parent-container";
-import {renderSkeleton} from "@/components/ui/(tabs)/transactions/voucher-skelton";
-import TransactionCard from "@/components/ui/(tabs)/transactions/transaction-card";
+import ParentContainer from "@/components/parentContainer";
+import {renderSkeleton} from "@/components/ui/(tabs)/transactions/voucherSkelton";
+import TransactionCard from "@/components/ui/(tabs)/transactions/transactionCard";
 
 // hooks
 import {useTheme} from "@/hooks/useTheme";

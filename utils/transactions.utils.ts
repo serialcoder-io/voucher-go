@@ -1,4 +1,4 @@
-import {formatRedemptionDate} from "@/components/ui/(tabs)/transactions/transaction-card";
+import {formatRedemptionDate} from "@/components/ui/(tabs)/transactions/transactionCard";
 import {HandleScrollParams} from "@/types/(tabs).types";
 import {Voucher} from "@/types";
 

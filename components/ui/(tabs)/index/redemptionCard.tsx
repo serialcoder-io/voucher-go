@@ -1,13 +1,13 @@
 import {StyleSheet, View} from "react-native";
 import {Button, Card, Divider, Icon, Text} from "@rneui/themed";
-import CardRow from "@/components/ui/(tabs)/card-row";
-import BorderedInput from "@/components/ui/bordered-input";
+import CardRow from "@/components/ui/(tabs)/cardRow";
+import BorderedInput from "@/components/ui/borderedInput";
 import React, {useEffect, useState} from "react";
 import {Theme, Voucher} from "@/types";
 import {useRouter} from "expo-router";
 import {commonColors} from "@/constants/Colors";
 import {isVoucherExpired, isVoucherInvalidStatus} from "@/validations/voucher.validations"
-import VoucherCardError from "@/components/ui/(tabs)/index/voucher-cardError";
+import VoucherCardError from "@/components/ui/(tabs)/index/voucherCardError";
 import Loader from "@/components/ui/loader";
 
 type RedemptionCardProps = {

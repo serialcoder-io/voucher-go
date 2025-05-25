@@ -3,10 +3,10 @@ import {View, Image, TouchableOpacity, StyleSheet} from "react-native";
 import {Text, CheckBox} from "@rneui/themed";
 import {useGlobalStyles} from "@/styles";
 import {Link, useRouter} from "expo-router";
-import PrimaryButton from "@/components/ui/primary-button";
-import InputPassword from "@/components/ui/input-password";
-import ParentContainer from "@/components/parent-container";
-import CustomInputText from "@/components/ui/custom-inputText";
+import PrimaryButton from "@/components/ui/primaryButton";
+import InputPassword from "@/components/ui/inputPassword";
+import ParentContainer from "@/components/parentContainer";
+import CustomInputText from "@/components/ui/customInputText";
 import {useTheme} from "@/hooks/useTheme";
 import {commonColors} from "@/constants/Colors";
 import {LoginFormProps, Theme} from "@/types";
@@ -62,7 +62,7 @@ const LoginForm = ({
                     containerStyle={styles.checkboxContainer}
                     checkedColor="#4c8bf5"
                 />
-                <TouchableOpacity onPress={() => router.push("/auth/reset-password")}>
+                <TouchableOpacity onPress={() => router.push("/auth/resetPassword")}>
                     <Text style={styles.forgotPassword}>Forgot password?</Text>
                 </TouchableOpacity>
             </View>

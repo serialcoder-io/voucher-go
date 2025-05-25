@@ -1,6 +1,6 @@
 import {StyleSheet, View} from "react-native";
 import ToogleInputRefBtn from "@/components/ui/(tabs)/index/toogleInputRefBtn";
-import InputVoucherRef from "@/components/ui/(tabs)/index/input-voucher-ref";
+import InputVoucherRef from "@/components/ui/(tabs)/index/inputVoucherRef";
 import ScanButton from "@/components/ui/(tabs)/index/scanButton";
 import React from "react";
 import {Theme} from "@/types";

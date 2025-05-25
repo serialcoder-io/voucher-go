@@ -1,5 +1,5 @@
-import BorderedInput from "@/components/ui/bordered-input";
-import PrimaryButton from "@/components/ui/primary-button";
+import BorderedInput from "@/components/ui/borderedInput";
+import PrimaryButton from "@/components/ui/primaryButton";
 import {StyleProp, View, ViewStyle} from "react-native";
 import React from "react";
 

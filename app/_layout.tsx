@@ -4,6 +4,7 @@ import {ThemeProvider} from '@/store/theme';
 import {useTheme} from "@/hooks/useTheme";
 import {useEffect} from "react";
 import {Alert, BackHandler} from "react-native";
+import {AlertNotificationRoot} from "react-native-alert-notification";
 
 function RootNavigator() {
     const {theme} = useTheme();
@@ -37,22 +38,24 @@ function RootNavigator() {
     }, [pathname]);
 
     return (
-        <Stack
-            screenOptions={{
-                headerShown: false,
-            }}
-        >
-            <Stack.Screen
-                name="index"
-                options={{
+        <AlertNotificationRoot theme={theme.mode}>
+            <Stack
+                screenOptions={{
                     headerShown: false,
-                    headerStyle: {
-                        backgroundColor: theme.backgroundSecondary,
-                    },
-                    headerTintColor: theme.textPrimary,
                 }}
-            />
-        </Stack>
+            >
+                <Stack.Screen
+                    name="index"
+                    options={{
+                        headerShown: false,
+                        headerStyle: {
+                            backgroundColor: theme.backgroundSecondary,
+                        },
+                        headerTintColor: theme.textPrimary,
+                    }}
+                />
+            </Stack>
+        </AlertNotificationRoot>
     );
 }
 
@@ -63,5 +66,6 @@ export default function RootLayout() {
                 <RootNavigator />
             </SafeAreaProvider>
         </ThemeProvider>
+
     );
 }

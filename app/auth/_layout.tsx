@@ -36,7 +36,7 @@ function RootNavigator() {
                 }}
             />
             <Stack.Screen
-                name="reset-password"
+                name="resetPassword"
                 options={{
                     headerShown: true,
                     headerTitle: "Reset password",

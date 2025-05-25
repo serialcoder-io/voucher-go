@@ -27,7 +27,7 @@ const VoucherSkelton = () => {
     return (
         <View style={styles.container}>
             <Animated.View style={[styles.skeleton, { width: 110, opacity }]} />
-            <Animated.View style={[styles.skeleton, { width: 180, opacity }]} />
+            <Animated.View style={[styles.skeleton, { width: 190, opacity }]} />
         </View>
     );
 };

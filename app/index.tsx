@@ -45,7 +45,7 @@ function PinLoginScreen() {
                 const firstLaunch = await asyncStorage.getItem("first_launch") || "0";
                 const shopJson = await asyncStorage.getItem("shop");
                 if (parseInt(firstLaunch) === 0 || shopJson === null) {
-                    router.push("/first-launch");
+                    router.push("/firstLaunch");
                     return
                 }
                 setShop(JSON.parse(shopJson));
@@ -108,7 +108,7 @@ function PinLoginScreen() {
 
             </View>
             {/* Forgot Pin */}
-            <Link href="/auth/reset-password" style={styles.forgotPin}>
+            <Link href="/auth/resetPassword" style={styles.forgotPin}>
                 j’ai oublié mon code pin
             </Link>
         </View>

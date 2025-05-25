@@ -3,10 +3,10 @@ import React, {useState} from 'react';
 import {ALERT_TYPE} from "react-native-alert-notification";
 
 // comopnents
-import PrimaryButton from "@/components/ui/primary-button";
-import InputPassword from "@/components/ui/input-password";
-import ParentContainer from "@/components/parent-container";
-import CustomInputText from "@/components/ui/custom-inputText";
+import PrimaryButton from "@/components/ui/primaryButton";
+import InputPassword from "@/components/ui/inputPassword";
+import ParentContainer from "@/components/parentContainer";
+import CustomInputText from "@/components/ui/customInputText";
 import {Text} from '@rneui/themed';
 import {showDialog} from "@/utils";
 import {allRequiredFieldsFilled} from "@/validations";
