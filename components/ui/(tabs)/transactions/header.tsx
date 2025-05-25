@@ -10,7 +10,7 @@ import {useState} from "react";
 
 // headet fof transation screen(redemptions)
 function Header() {
-    const [reference, setReference] = useState("");
+    //const [reference, setReference] = useState("");
     const {theme} = useTheme();
 
     const styles = getStyles(theme);
@@ -18,18 +18,18 @@ function Header() {
         <>
             <View style={styles.container}>
                 <HeaderTitle />
-                <View style={{width: "100%", display: "flex", flexDirection: "row", alignItems: "center"}}>
+                {/*<View style={{width: "100%", display: "flex", flexDirection: "row", alignItems: "center"}}>
                     <SearchBar
                         value={reference}
                         onChangeText={(value) => setReference(value)}
                     />
-                    <Pressable onPress={()=>console.log("Press")}>
+                    <Pressable onPress={() => console.log("Press")}>
                         <Icon
                             name="cancel" type='material' size={35}
                             style={{marginRight: 10}} color="white"
                         />
                     </Pressable>
-                </View>
+                </View>*/}
             </View>
         </>
     )

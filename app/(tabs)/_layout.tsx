@@ -88,10 +88,10 @@ function RootNavigator() {
                 name="transactions"
                 options={{
                     headerShown: true,
-                    title: 'Redemptions',
+                    title: 'Vouchers',
                     headerTintColor: theme.textPrimary,
                     headerTitleStyle: { fontSize: 22, paddingLeft: 18, fontWeight: 'bold' },
-                    headerStyle: { backgroundColor: theme.backgroundSecondary },
+                    headerStyle: { backgroundColor: commonColors.primaryColor },
                     headerRight: () => <HeaderRightAvatar />,
                     tabBarIcon: ({ focused }) => (
                         <CustomTabBarIcon iconName={focused ? "gift" : "gift-outline"} color={theme.textPrimary} focused={focused} />

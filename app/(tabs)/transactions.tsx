@@ -1,4 +1,4 @@
-import {View, RefreshControl, SectionList} from "react-native";
+import {View, RefreshControl, SectionList, StatusBar} from "react-native";
 import React, {useState, useEffect, useCallback} from "react";
 
 // components
@@ -141,6 +141,10 @@ function Transactions(){
 
     return (
         <View style={{paddingHorizontal: 12, backgroundColor: theme.background, flex: 1, paddingTop: 10}}>
+            <StatusBar
+                barStyle={'light-content'}
+                backgroundColor={commonColors.primaryColor}
+            />
             <SectionList
                 sections={groupVouchersByDate(vouchers)}
                 keyExtractor={(item) => item.id.toString()}

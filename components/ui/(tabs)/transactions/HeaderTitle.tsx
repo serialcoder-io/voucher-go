@@ -15,7 +15,7 @@ function HeaderTitle() {
                 name="gift"
                 size={30}
                 color="white" />
-            <Text style={styles.title}>Redemptions</Text>
+            <Text style={styles.title}>Vouchers</Text>
         </View>
     )
 }

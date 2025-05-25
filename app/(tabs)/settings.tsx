@@ -11,6 +11,7 @@ import {getStyles} from "@/styles/(tabs)/settings.styles";
 import ThemeOptionsSection from "@/components/ui/settings/ThemeOptionsSection"
 import LogoutSection from "@/components/ui/settings/LogoutSection";
 import ProfileDropdownCard from "@/components/ui/settings/ProfileDropdownCard";
+import {commonColors} from "@/constants/Colors";
 
 
 function Settings() {
@@ -28,8 +29,8 @@ function Settings() {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={styles.container}>
                 <StatusBar
-                    barStyle={theme.mode === 'dark' ? 'light-content' : 'dark-content'}
-                    backgroundColor={theme.backgroundSecondary}
+                    barStyle={'light-content'}
+                    backgroundColor={commonColors.primaryColor}
                 />
 
                 <ProfileDropdownCard />
