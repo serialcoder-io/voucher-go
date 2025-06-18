@@ -34,6 +34,10 @@ function ChangePassword(){
     })
 
     const handleSubmit = async()=>{
+        const controller = new AbortController();
+        const timeout = setTimeout(()=>{
+            controller.abort()
+        }, 30000)
         let dialogtitle = ""
         let dialogMsg = ""
         if(!allRequiredFieldsFilled(requiredFields)){
@@ -45,18 +49,25 @@ function ChangePassword(){
         const isPasswordValid = validatePassword(newPpassword, confirmPassword, mutation.reset);
         if (!isPasswordValid) return;
         try{
-            const params = {"old_password": oldPassword, "new_password": newPpassword};
+            const params = {"old_password": oldPassword, "new_password": newPpassword, signal: controller.signal};
             const result = await mutation.mutateAsync({params: params, accessToken: accessToken});
             displayToast(result, theme);
         }catch(error){
-            const msg = "Sorry, something went wrong, please try again later, " +
-                "If the problem persists, please contact support for assistance.";
-            showDialog("Error", msg, ALERT_TYPE.DANGER, () =>mutation.reset())
+            clearTimeout(timeout);
+            if (error instanceof Error && error.name === "AbortError") {
+                const mssg = "This is taking longer than usual. " +
+                "Check your connection or call assistance if the problem persists."
+                showToast("Timeout", mssg, ALERT_TYPE.DANGER, theme);
+            } else {
+                const errMsg = "Sorry, something went wrong, please try again later";
+                showDialog("Sorry", errMsg, ALERT_TYPE.DANGER, () => mutation.reset());
+            }
         }finally{
             setNewPassword("");
             setConfirmPassword("");
             setOldPassword("");
             mutation.reset()
+            clearTimeout(timeout)
         }
 
     }

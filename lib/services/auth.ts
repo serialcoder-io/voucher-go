@@ -121,6 +121,7 @@ export async function updatePassword({
     params: ChangePasswordParams,
     accessToken: string
 }): Promise<number>{
+    const { old_password, new_password, signal } = params;
     try {
         const response = await fetch(`${baseUrl}/vms/auth/change_password/`, {
             method: 'POST',
@@ -129,7 +130,8 @@ export async function updatePassword({
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
             },
-            body: JSON.stringify(params),
+            body: JSON.stringify({ old_password, new_password}),
+            signal
         });
         return response.status;
     } catch (e: unknown) {
