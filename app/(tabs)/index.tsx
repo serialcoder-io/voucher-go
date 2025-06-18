@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {commonColors} from "@/constants/Colors";
 import {useTheme} from "@/hooks/useTheme";
+import {useFocusEffect, useRouter} from "expo-router";
+import {useQuery} from "@tanstack/react-query";
 
 // react native
 import {ScrollView, View, StyleSheet, Alert, StatusBar} from 'react-native';
@@ -10,9 +12,6 @@ import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncSto
 import {Theme} from "@/types";
 import {queryClient} from "@/lib/queryClient";
 
-
-import {useFocusEffect, useRouter} from "expo-router";
-import {useQuery} from "@tanstack/react-query";
 import {findVoucherByRef} from "@/lib/services/voucher";
 
 // store
@@ -26,9 +25,11 @@ import ShopCard from "@/components/ui/(tabs)/index/shopCard";
 import RedemptionCard from "@/components/ui/(tabs)/index/redemptionCard";
 import CheckVoucherCard from "@/components/ui/(tabs)/index/CheckVoucherCard";
 import CustomConfirmationModal from "@/components/ui/customConfirmationModal";
-import VoucherNotFoundCard from "@/components/ui/(tabs)/index/voucherNotFoundCard";
 import { showToast } from '@/utils';
 import { ALERT_TYPE } from 'react-native-alert-notification';
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
+import { Text } from 'react-native';
+import NoInternetScreen from '@/components/ui/NoInternet';
 
 
 function Home() {
@@ -48,6 +49,8 @@ function Home() {
     const [showConfirm, setShowConfirm] = useState(false);
     const [notFoundMsg, setNotFoundMsg ] = useState(false);
     const router = useRouter();
+    const [isConnected, checkNetwork] = useNetworkStatus();
+
 
     const { data, isLoading, isSuccess, error, isPending, isFetching, isFetched } = useQuery({
         queryKey: ["voucher"],
@@ -152,6 +155,10 @@ function Home() {
             pathname: '/voucher/[till_no]' as const,
             params: { till_no: tillNo },
         });
+    }
+
+    if (isConnected === false) {
+        return <NoInternetScreen onRetry={checkNetwork} />;
     }
 
     return (

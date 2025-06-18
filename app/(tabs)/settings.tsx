@@ -12,17 +12,25 @@ import ThemeOptionsSection from "@/components/ui/settings/ThemeOptionsSection"
 import LogoutSection from "@/components/ui/settings/LogoutSection";
 import DropdownCard from "@/components/ui/settings/DropdownCard";
 import {commonColors} from "@/constants/Colors";
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
+import NoInternetScreen from '@/components/ui/NoInternet';
 
 
 function Settings() {
     const {theme} = useTheme();
     const styles = getStyles(theme);
     const router = useRouter();
+    const [isConnected, checkNetwork] = useNetworkStatus();
+    
 
     const signOut = useAuthStore.use.signOut();
     const logout = async () => {
         signOut()
         router.replace("/auth")
+    }
+
+    if (isConnected === false) {
+        return <NoInternetScreen onRetry={checkNetwork} />;
     }
 
     return (

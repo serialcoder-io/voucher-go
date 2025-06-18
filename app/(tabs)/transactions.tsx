@@ -6,10 +6,12 @@ import {Text} from "@rneui/themed";
 import ParentContainer from "@/components/parentContainer";
 import {renderSkeleton} from "@/components/ui/(tabs)/transactions/voucherSkelton";
 import TransactionCard from "@/components/ui/(tabs)/transactions/transactionCard";
+import NoInternetScreen from '@/components/ui/NoInternet';
 
 // hooks
 import {useTheme} from "@/hooks/useTheme";
 import {useQuery} from "@tanstack/react-query";
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 
 // store
 import {useShopStore} from "@/store/shop";
@@ -24,6 +26,7 @@ import {handleScroll, groupVouchersByDate} from "@/utils/transactions.utils"
 import {getStyles} from "@/styles/(tabs)/transactions.styles";
 
 
+
 function Transactions(){
     const {theme} = useTheme();
     const {shop} = useShopStore()
@@ -34,6 +37,7 @@ function Transactions(){
     const [currentPage, setCurrentPage] = useState(1);
     const [isBottom, setIsBottom] = useState(false);
     const [refreshing, setRefreshing] = React.useState(false);
+    const [isConnected, checkNetwork] = useNetworkStatus();
 
     const initialData =  {
         next: null,
@@ -47,6 +51,7 @@ function Transactions(){
             return shop ?
                 await getVouchersRedeemedAtShop(accessToken.trim(), currentPage, shop.id) : initialData;
         },
+        enabled: !!isConnected,
         initialData: initialData,
     });
 
@@ -100,6 +105,10 @@ function Transactions(){
             });
     }, []);
 
+    if (isConnected === false) {
+        return <NoInternetScreen onRetry={checkNetwork} />;
+    }
+
     if(error){
         return (
             <ParentContainer>
@@ -138,6 +147,7 @@ function Transactions(){
         }
         return null;
     };
+
 
     return (
         <View style={{paddingHorizontal: 12, backgroundColor: theme.background, flex: 1, paddingTop: 10}}>
