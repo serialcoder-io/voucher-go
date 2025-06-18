@@ -15,6 +15,8 @@ import {useAuthStore} from "@/store/AuthStore";
 import {useTheme} from "@/hooks/useTheme";
 import {Icon} from '@rneui/themed';
 import {Theme} from "@/types";
+import { useNetworkStatus } from "@/hooks/useNetworkStatus";
+import NoInternetScreen from "@/components/ui/NoInternet";
 
 //import {useEffect} from "react";
 //import {useRouter} from "expo-router";
@@ -27,6 +29,7 @@ function ChangePassword(){
     const requiredFields = [oldPassword, newPpassword, confirmPassword];
     const accessToken = useAuthStore.use.tokens().access;
     const {theme} = useTheme()
+    const [isConnected, checkNetwork] = useNetworkStatus();
 
     const mutation =
         useMutation<number, Error, {params: ChangePasswordParams, accessToken: string}>({
@@ -70,6 +73,10 @@ function ChangePassword(){
             clearTimeout(timeout)
         }
 
+    }
+
+    if (isConnected === false) {
+        return <NoInternetScreen onRetry={checkNetwork} />;
     }
 
     //const router = useRouter();

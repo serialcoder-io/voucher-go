@@ -14,6 +14,8 @@ import Loader from "@/components/ui/loader";
 import {ALERT_TYPE} from "react-native-alert-notification";
 import {showDialog, showToast} from "@/utils";
 import {useTheme} from "@/hooks/useTheme";
+import { useNetworkStatus } from "@/hooks/useNetworkStatus";
+import NoInternetScreen from "@/components/ui/NoInternet";
 
 const LoginScreen = () => {
     const [username, setUsername] = useState<string>("");
@@ -25,6 +27,7 @@ const LoginScreen = () => {
     const accessToken = useAuthStore.use.tokens().access;
     const [userInitialized, setUserInitialized] = useState(false);
     const {theme} = useTheme();
+    const [isConnected, checkNetwork] = useNetworkStatus();
 
     const fetchSignedInUserData = useCallback(async () => {
         return await fetchUserData(accessToken);
@@ -101,6 +104,11 @@ const LoginScreen = () => {
             Alert.alert("Sorry, something went wrong, please try again later");
         }
     }, [isSuccess, data, isAuthenticated, initializeUser, router]);
+    
+
+    if (isConnected === false) {
+        return <NoInternetScreen onRetry={checkNetwork} />;
+    }
 
     if (isLoading || (isAuthenticated && !userInitialized) || userInitialized) {
         return (

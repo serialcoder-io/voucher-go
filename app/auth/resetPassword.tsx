@@ -20,11 +20,14 @@ import {useGlobalStyles} from "@/styles";
 import {useMutation} from "@tanstack/react-query";
 
 import { ResetPasswordParams } from "@/types/auth.types";
+import { useNetworkStatus } from "@/hooks/useNetworkStatus";
+import NoInternetScreen from "@/components/ui/NoInternet";
 
 const RsetPasswordScreen = () => {
     const [email, setEmail] = useState("");
     const {theme} = useTheme();
     const styles = getStyles(theme)
+    const [isConnected, checkNetwork] = useNetworkStatus();
 
     const mutation = useMutation<number, Error, ResetPasswordParams>({
         mutationFn: resetPassword,
@@ -62,6 +65,10 @@ const RsetPasswordScreen = () => {
         }
         
     };
+
+    if (isConnected === false) {
+        return <NoInternetScreen onRetry={checkNetwork} />;
+    }
 
     return (
         <ParentContainer>

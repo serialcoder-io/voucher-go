@@ -22,6 +22,8 @@ import {validateEmail, validatePassword} from "@/validations/auth.validations";
 import {SignupParams, signupResponse} from "@/types/auth.types";
 import { signup } from '@/lib/services/auth';
 import {useMutation} from "@tanstack/react-query";
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
+import NoInternetScreen from '@/components/ui/NoInternet';
 
 const SignupScreen = () => {
     const [username, setUsername] = useState('');
@@ -32,6 +34,7 @@ const SignupScreen = () => {
     const shop = useShopStore.use.shop();
     const allFields = [username, email, password, confirmPassword];
     const {theme} = useTheme()
+    const [isConnected, checkNetwork] = useNetworkStatus();
 
     const mutation = useMutation<signupResponse, Error, SignupParams>({
         mutationFn: signup,
@@ -90,6 +93,10 @@ const SignupScreen = () => {
             return;
         }
     };
+
+    if (isConnected === false) {
+        return <NoInternetScreen onRetry={checkNetwork} />;
+    }
 
     return (
         <ParentContainer width='90%'>

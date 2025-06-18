@@ -17,6 +17,8 @@ import {showDialog, showToast} from "@/utils";
 import { ALERT_TYPE } from "react-native-alert-notification";
 import {styles} from "@/styles/account"
 import {displayToast} from "@/utils/acount.utils";
+import NoInternetScreen from "@/components/ui/NoInternet";
+import { useNetworkStatus } from "@/hooks/useNetworkStatus";
 
 
 function Index() {
@@ -29,6 +31,7 @@ function Index() {
     const {theme} = useTheme();
     const accessToken = useAuthStore.use.tokens().access;
     const mutation = useUpdateProfile()
+    const [isConnected, checkNetwork] = useNetworkStatus();
 
 
     const updateUserStore = ()=>{
@@ -65,6 +68,10 @@ function Index() {
             mutation.reset()
             clearTimeout(timeout)
         }
+    }
+
+    if (isConnected === false) {
+        return <NoInternetScreen onRetry={checkNetwork} />;
     }
 
     return (
