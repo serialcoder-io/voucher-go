@@ -115,7 +115,6 @@ const SignupScreen = () => {
                 actionOnPress={handleSignup}
                 width='95%'
             />
-
             <Link href='/auth' style={{...useGlobalStyles().textSecondary, marginTop: 10, fontSize: 15}}>
                 Already a member ? <Text style={{color: commonColors.primaryColor, fontWeight: 'bold'}}>Login</Text>
             </Link>

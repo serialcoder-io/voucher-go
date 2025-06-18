@@ -1,19 +1,27 @@
+// components
 import ParentContainer from "@/components/parentContainer";
-import {View, Text, Alert} from "react-native";
-import React, {useCallback, useEffect, useState} from 'react';
-import { Dropdown } from 'react-native-element-dropdown';
-import {Button, Icon} from "@rneui/themed";
-import {useTheme} from "@/hooks/useTheme";
-import {Company, Shop} from "@/types";
-import PrimaryButton from "@/components/ui/primaryButton";
-import {useRouter} from "expo-router";
 import RenderItem from "@/components/ui/shop/renderItem";
-import {fetchAllCompanies, fetchShops} from "@/lib/services/company";
+import PrimaryButton from "@/components/ui/primaryButton";
+import { Dropdown } from 'react-native-element-dropdown';
+import {View, Text, Alert} from "react-native";
+import {Button, Icon} from "@rneui/themed";
+
+//hooks
+import React, {useCallback, useEffect, useState} from 'react';
+import {useTheme} from "@/hooks/useTheme";
+import {useRouter} from "expo-router";
 import {useQuery} from "@tanstack/react-query";
+import { useShopStore } from "@/store/shop";
+
+import {Company, Shop} from "@/types";
+
+// lib
+import {fetchAllCompanies, fetchShops} from "@/lib/services/company";
 import {queryClient} from "@/lib/queryClient";
 import {commonColors} from "@/constants/Colors";
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 import {getStyles} from "@/styles/firstLaunch/shop.styles";
+
 
 function Label({ title }: { title: string }) {
     const {theme} = useTheme();
@@ -25,16 +33,18 @@ function ShopSetup(){
     const [company, setCompany] = useState<number | null>(null);
     const [companies, setCompanies] = useState<Company[]>([]);
     const [shops, setShops] = useState<Shop[]>([]);
-    const [location, setLocation] = useState(null);
+    const [selectedShopId, setSelectedShopId] = useState(null);
+    const setShop = useShopStore.use.setShop(); // global store (Zustand)
     const {theme} = useTheme();
     const styles = getStyles(theme)
     const router = useRouter();
 
     const saveShop = async()=>{
-        const shop = shops.find((shop) => shop.id === location);
-        if(shop){
-            await asyncStorage.setItem("shop", JSON.stringify(shop));
+        const selectedShop = shops.find((shop) => shop.id === selectedShopId);
+        if(selectedShop){
+            await asyncStorage.setItem("shop", JSON.stringify(selectedShop));
             await asyncStorage.setItem("first_launch", "1");
+            setShop(selectedShop)
             router.push("/auth/register");
         }else{
             Alert.alert("Shop not found", "The specified shop does not exist. Please contact support.");
@@ -146,8 +156,8 @@ function ShopSetup(){
                     valueField="value"
                     placeholder="Select shop"
                     searchPlaceholder="Search shop ..."
-                    value={location}
-                    onChange={item => {setLocation(item.value)}}
+                    value={selectedShopId}
+                    onChange={item => {setSelectedShopId(item.value)}}
                     renderLeftIcon={() => (
                         <Icon
                             name="shop" type='material' size={23}
@@ -160,7 +170,7 @@ function ShopSetup(){
             <View style={styles.dropdownContainer}>
                 <PrimaryButton
                     title="Save"
-                    disabled={!company || !location}
+                    disabled={!company || !selectedShopId}
                     actionOnPress={() =>saveShop()}
                     width='100%'
                 />
