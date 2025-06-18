@@ -11,39 +11,56 @@ import {Text} from "@rneui/themed";
 
 import {getStyles} from "@/styles/auth/resetPassword.styles"
 import { validateEmail } from "@/validations/auth.validations";
-import { resetPassword } from "@/lib/services/auth";
-import {showDialog} from "@/utils";
+import { resetPassword, signup } from "@/lib/services/auth";
+import {showDialog, showToast} from "@/utils";
 
 //hooks
 import {useTheme} from "@/hooks/useTheme";
 import {useGlobalStyles} from "@/styles";
 import {useMutation} from "@tanstack/react-query";
 
+import { ResetPasswordParams } from "@/types/auth.types";
 
 const RsetPasswordScreen = () => {
     const [email, setEmail] = useState("");
     const {theme} = useTheme();
     const styles = getStyles(theme)
 
-    const mutation = useMutation<number, Error, string>({
+    const mutation = useMutation<number, Error, ResetPasswordParams>({
         mutationFn: resetPassword,
     });
 
     const handleSubmit = async() => {
+        const controller = new AbortController()
+        const timeout = setTimeout(()=>{
+            controller.abort()
+        }, 30000)
+
         const isEmailValid = validateEmail(email, mutation.reset);
         if (!isEmailValid) {
             return;
         }
         try {
-            const http_status_code = await mutation.mutateAsync(email);
+            const http_status_code = await mutation.mutateAsync({
+                email,
+                signal: controller.signal,
+            });
             displayDialogMessage(http_status_code, mutation.reset)
         
         } catch (error) {
-            const msg = "Sorry, something went wrong, please try again later, " +
-                "If the problem persists, please contact support for assistance.";
-            showDialog("Error", msg, ALERT_TYPE.DANGER, () =>mutation.reset())
+            if (error instanceof Error && error.name === "AbortError") {
+                const mssg = "This is taking longer than usual. " +
+                "Check your connection or call assistance if the problem persists."
+                showToast("Timeout", mssg, ALERT_TYPE.DANGER, theme);
+            } else {
+                const errMsg = "Sorry, something went wrong, please try again later";
+                showDialog("Sorry", errMsg, ALERT_TYPE.DANGER, () => mutation.reset());
+            }
+        }finally{
+            clearTimeout(timeout);
+            setEmail('')
         }
-        setEmail('')
+        
     };
 
     return (

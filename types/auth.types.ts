@@ -28,3 +28,8 @@ export type ChangePasswordParams = {
     new_password: string;
     signal?: AbortSignal;
 };
+
+export type ResetPasswordParams = {
+    email: string,
+    signal?: AbortSignal
+}

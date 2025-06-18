@@ -5,7 +5,8 @@ import {
     signupResponse,
     loginResponse,
     LoginParams,
-    ChangePasswordParams
+    ChangePasswordParams,
+    ResetPasswordParams
 } from "@/types/auth.types";
 
 
@@ -87,13 +88,15 @@ export async function signup(params: SignupParams): Promise<signupResponse> {
     }
 }
 
+
 /**
  * send a request to the endpoint and return the http status code
  * if the status code is 204 it means and email was sent
- * @param email 
+ * @param params
  * @returns 
  */
-export async function resetPassword(email: string): Promise<number>{
+export async function resetPassword(params: ResetPasswordParams): Promise<number>{
+    const {email, signal} = params;
     try {
         const response = await fetch(`${baseUrl}/vms/auth/users/reset_password/`, {
             method: 'POST',
@@ -102,6 +105,7 @@ export async function resetPassword(email: string): Promise<number>{
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({"email": email}),
+            signal
         });
         return response.status;
     } catch (e: unknown) {
