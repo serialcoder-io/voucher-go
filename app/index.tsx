@@ -93,7 +93,7 @@ function PinLoginScreen() {
     return (
         <View style={styles.container} onLayout={onLayoutRootView}>
             {/* Logo */}
-            <Image source={require('@/assets/images/app-img-1.png')} style={styles.logo} />
+            <Image source={require('@/assets/images/adaptive-icon.png')} style={styles.logo} />
 
             {/* Title */}
             <Text style={styles.title}>Login</Text>

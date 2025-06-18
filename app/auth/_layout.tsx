@@ -5,6 +5,7 @@ import { useTheme } from "@/hooks/useTheme";
 import {queryClient} from "@/lib/queryClient";
 import {QueryClientProvider} from '@tanstack/react-query'
 import {AlertNotificationRoot} from "react-native-alert-notification";
+import { commonColors } from "@/constants/Colors";
 
 
 function RootNavigator() {
@@ -30,9 +31,9 @@ function RootNavigator() {
                     headerShown: true,
                     headerTitle: "Register",
                     headerStyle: {
-                        backgroundColor: theme.backgroundSecondary,
+                        backgroundColor: commonColors.primaryColor,
                     },
-                    headerTintColor: theme.textPrimary,
+                    headerTintColor: "white",
                 }}
             />
             <Stack.Screen

@@ -36,7 +36,6 @@ const buttonStyles = StyleSheet.create({
         borderRadius: 10,
     },
     buttonContainer: {
-        marginHorizontal: 50,
         height: 50,
         width: '95%',
         marginVertical: 0,
