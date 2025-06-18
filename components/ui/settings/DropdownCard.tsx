@@ -31,8 +31,10 @@ function DropdownCard(){
             </View>
             <Divider />
             <CustomPressable text='Pin' iconName='lock' iconType='feather' onPress={()=>router.push("/changePin")}/>
-            <Divider />
-            <CustomPressable text='About shop' iconName='info' iconType='feather' />
+            {/*
+                <Divider />
+                <CustomPressable text='About shop' iconName='info' iconType='feather' />
+            */}
         </Card>
     )
 }
