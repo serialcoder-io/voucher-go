@@ -21,6 +21,8 @@ import {queryClient} from "@/lib/queryClient";
 import {commonColors} from "@/constants/Colors";
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 import {getStyles} from "@/styles/firstLaunch/shop.styles";
+import { useNetworkStatus } from "@/hooks/useNetworkStatus";
+import NoInternetScreen from "@/components/ui/NoInternet";
 
 
 function Label({ title }: { title: string }) {
@@ -38,6 +40,7 @@ function ShopSetup(){
     const {theme} = useTheme();
     const styles = getStyles(theme)
     const router = useRouter();
+    const [isConnected, checkNetwork] = useNetworkStatus();
 
     const saveShop = async()=>{
         const selectedShop = shops.find((shop) => shop.id === selectedShopId);
@@ -106,6 +109,10 @@ function ShopSetup(){
                 />
             </View>
         )
+    }
+
+    if (isConnected === false) {
+        return <NoInternetScreen onRetry={checkNetwork} />;
     }
 
     return (

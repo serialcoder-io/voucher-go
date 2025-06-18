@@ -12,6 +12,8 @@ import {useShopStore} from "@/store/shop";
 import {getHomeScreenStyles} from "@/styles";
 import {showToast} from "@/utils";
 import {ALERT_TYPE} from "react-native-alert-notification";
+import NoInternetScreen from '@/components/ui/NoInternet';
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,6 +27,7 @@ function PinLoginScreen() {
     const router = useRouter()
     const styles = getHomeScreenStyles(theme);
     const globalStyles = useGlobalStyles();
+    const [isConnected, checkNetwork] = useNetworkStatus();
 
     const handleChangePin = async(pin: string) => {
         setPin(pin);
@@ -81,6 +84,10 @@ function PinLoginScreen() {
 
     if (!appIsReady) {
         return null;
+    }
+
+    if (isConnected === false) {
+        return <NoInternetScreen onRetry={checkNetwork} />;
     }
 
     return (
