@@ -5,6 +5,7 @@ export type SignupParams = {
     username: string;
     password: string;
     company: number;
+    signal?: AbortSignal;
 };
 
 export type signupResponse = {
@@ -20,9 +21,10 @@ export type loginResponse = {
 export interface LoginParams {
   username: string;
   password: string;
-  signal?: AbortSignal; // ✅ on ajoute signal ici
+  signal?: AbortSignal;
 }
 export type ChangePasswordParams = {
     old_password: string;
     new_password: string;
+    signal?: AbortSignal;
 };

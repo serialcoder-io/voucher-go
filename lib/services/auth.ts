@@ -52,6 +52,7 @@ export async function login(
 }
 
 export async function signup(params: SignupParams): Promise<signupResponse> {
+    const { email, username, password, company, signal } = params
     try {
         const response = await fetch(`${baseUrl}/vms/auth/users/`, {
             method: 'POST',
@@ -59,7 +60,8 @@ export async function signup(params: SignupParams): Promise<signupResponse> {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(params),
+            body: JSON.stringify({ email, username, password, company }),
+            signal
         });
         let message = ""
         if(response.status == 400){

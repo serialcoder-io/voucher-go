@@ -8,12 +8,13 @@ import InputPassword from "@/components/ui/inputPassword";
 import ParentContainer from "@/components/parentContainer";
 import CustomInputText from "@/components/ui/customInputText";
 import {Text} from '@rneui/themed';
-import {showDialog} from "@/utils";
+import {showDialog, showToast} from "@/utils";
 import {allRequiredFieldsFilled} from "@/validations";
 
 // hooks
 import {useGlobalStyles} from "@/styles";
 import {useShopStore} from "@/store/shop";
+import { useTheme } from '@/hooks/useTheme';
 
 import {Link} from "expo-router";
 import {commonColors} from "@/constants/Colors";
@@ -30,6 +31,7 @@ const SignupScreen = () => {
     const [secureTextEntry, setSecureTextEntry] = useState(true);
     const shop = useShopStore.use.shop();
     const allFields = [username, email, password, confirmPassword];
+    const {theme} = useTheme()
 
     const mutation = useMutation<signupResponse, Error, SignupParams>({
         mutationFn: signup,
@@ -42,10 +44,18 @@ const SignupScreen = () => {
         if (!isEmailValid || !isPasswordValid) {
             return;
         }
+
+        const controller = new AbortController()
+        const timeout = setTimeout(()=>{
+            controller.abort()
+        }, 45000)
+
         const company = shop?.company?.id
         if (company !== undefined) {
             try {
-                const result = await mutation.mutateAsync({username, email, password, company})
+                const result = await mutation.mutateAsync({username, email, password, company, signal: controller.signal})
+          
+                clearTimeout(timeout);
                 switch (result.status_code){
                     case 201:
                         const message = "Your account has been created successfully. you can now login"
@@ -59,11 +69,18 @@ const SignupScreen = () => {
                 setPassword('')
                 setConfirmPassword('')
             } catch (error) {
-                const msg = "Sorry, something went wrong, please try again later, " +
-                    "If the problem persists, please contact support for assistance.";
-                showDialog("Error", msg, ALERT_TYPE.DANGER, () =>mutation.reset())
+                if (error instanceof Error && error.name === "AbortError") {
+                    const mssg = "This is taking longer than usual. " +
+                    "Check your connection or call assistance if the problem persists."
+                    showToast("Timeout", mssg, ALERT_TYPE.DANGER, theme);
+                } else {
+                    const msg = "Sorry, something went wrong, please try again later"
+                    const title = "Company not exist"
+                    showDialog(title, msg, ALERT_TYPE.DANGER, () =>mutation.reset())
+                }
             }
         } else {
+            clearTimeout(timeout)
             const msg = "No shop registered in this app. " +
                 "Please log in and register your shop in the settings, " +
                 "or try resetting the app by clearing its data from your phone settings," +
