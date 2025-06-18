@@ -127,7 +127,7 @@ function Home() {
                     showToast(
                         "Voucher not found",
                         "Please check the reference and try again.",
-                        ALERT_TYPE.WARNING,
+                        ALERT_TYPE.DANGER,
                         theme
                     );
                 }
