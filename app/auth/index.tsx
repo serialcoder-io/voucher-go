@@ -41,8 +41,17 @@ const LoginScreen = () => {
     });
 
     const handleSubmit = async () => {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => {
+            controller.abort(); // Abort the request after 45 seconds
+        }, 45000);
         try {
-            const result = await mutation.mutateAsync({ username, password });
+            const result = await mutation.mutateAsync({
+                username, 
+                password, 
+                signal: controller.signal
+            });
+            clearTimeout(timeout);
             let dialogTitle = ""
             let dialogMsg = ""
             switch (result.http_status_code) {
@@ -65,8 +74,15 @@ const LoginScreen = () => {
                     showToast(dialogTitle, dialogMsg, ALERT_TYPE.DANGER, theme)
             }
         } catch (error) {
-            const errMsg = "Sorry, something went wrong, please try again later";
-            showDialog("Sorry", errMsg, ALERT_TYPE.DANGER, () =>mutation.reset())
+            clearTimeout(timeout);
+            if (error instanceof Error && error.name === "AbortError") {
+                const mssg = "This is taking longer than usual. " +
+                "Check your connection or call assistance if the problem persists."
+                showToast("Timeout", mssg, ALERT_TYPE.DANGER, theme);
+            } else {
+                const errMsg = "Sorry, something went wrong, please try again later";
+                showDialog("Sorry", errMsg, ALERT_TYPE.DANGER, () => mutation.reset());
+            }
         }
     };
 

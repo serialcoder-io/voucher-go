@@ -18,10 +18,10 @@ export type loginResponse = {
 };
 
 export interface LoginParams {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
+  signal?: AbortSignal; // ✅ on ajoute signal ici
 }
-
 export type ChangePasswordParams = {
     old_password: string;
     new_password: string;

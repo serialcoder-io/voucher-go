@@ -14,7 +14,11 @@ import {
  * @param credentials - Login parameters containing username and password
  * @returns - JWT tokens or error message
  */
-export async function login(credentials: LoginParams): Promise<loginResponse> {
+export async function login(
+    params: LoginParams, 
+): Promise<loginResponse> {
+     const { username, password, signal } = params;
+
     try {
         const response = await fetch(`${baseUrl}/vms/auth/token/`, {
             method: 'POST',
@@ -22,7 +26,8 @@ export async function login(credentials: LoginParams): Promise<loginResponse> {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(credentials),
+            body: JSON.stringify({username, password}),
+            signal
         });
 
         const data = await response.json();
