@@ -21,6 +21,7 @@ import {formatDate, showDialog} from "@/utils";
 import {getStyles} from "@/styles/voucher/redemption.styles"
 import {handleRedeem} from "@/utils/voucher.utils";
 
+// redeem the voucher.
 function Index() {
     const { till_no } = useLocalSearchParams();
     const {theme} = useTheme();

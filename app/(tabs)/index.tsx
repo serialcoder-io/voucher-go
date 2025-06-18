@@ -27,6 +27,8 @@ import RedemptionCard from "@/components/ui/(tabs)/index/redemptionCard";
 import CheckVoucherCard from "@/components/ui/(tabs)/index/CheckVoucherCard";
 import CustomConfirmationModal from "@/components/ui/customConfirmationModal";
 import VoucherNotFoundCard from "@/components/ui/(tabs)/index/voucherNotFoundCard";
+import { showToast } from '@/utils';
+import { ALERT_TYPE } from 'react-native-alert-notification';
 
 
 function Home() {
@@ -118,7 +120,19 @@ function Home() {
                 setShowRedemptionCard(true);
             } else {
                 setNotFoundMsg(true);
+                if(
+                    isFetched && !isLoading && voucher.length === 0 && 
+                    notFoundMsg && !isPending && !isFetching
+                ){
+                    showToast(
+                        "Voucher not found",
+                        "Please check the reference and try again.",
+                        ALERT_TYPE.WARNING,
+                        theme
+                    );
+                }
             }
+
             queryClient.resetQueries({ queryKey: "voucher", exact: true }).then(() => {
                 setSearchVoucher(false);
                 setReference("");
@@ -182,12 +196,6 @@ function Home() {
                         resetState={resetState}
                         showConfirmationModal={()=>setShowConfirm(true)}
                         isLoading={isLoading || isFetching || isPending}
-                    />
-                )}
-                {(isFetched && !isLoading && voucher.length === 0 && notFoundMsg && !isPending && !isFetching) && (
-                    < VoucherNotFoundCard
-                        theme={theme} resetState={resetState}
-                        voucher={voucher} isLoading={isLoading}
                     />
                 )}
             </View>
