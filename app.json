@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "voucher-go",
+    "name": "Intermart Vouchers",
     "slug": "voucher-go",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icons/adaptive-icon.png",
+        "foregroundImage": "./assets/icons/android-icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [
