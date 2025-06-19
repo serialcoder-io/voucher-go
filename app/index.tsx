@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { Input, Button } from '@rneui/themed';
 import { useTheme } from '@/hooks/useTheme';
 import { useGlobalStyles } from '@/styles';
@@ -108,7 +108,7 @@ function PinLoginScreen() {
 
       {/* Validate Button */}
       <Button
-        title="Valider"
+        title="Submit"
         onPress={handleValidatePin}
         containerStyle={{ width: '90%', alignSelf: 'center', marginTop: 20 }}
         buttonStyle={{
@@ -121,9 +121,19 @@ function PinLoginScreen() {
 
       {/* Forgot Pin */}
       <View style={{ marginTop: 20 }}>
-        <Link href="/auth/resetPassword" style={[styles.forgotPin, { textAlign: 'center' }]}>
-          J’ai oublié mon code PIN
-        </Link>
+        <TouchableOpacity
+          onPress={() =>
+            Alert.alert(
+              'Security Notice',
+              'For security reasons, the access code cannot be changed. Please reset the app to set a new code.',
+              [{ text: 'OK' }]
+            )
+          }
+        >
+            <Text style={[styles.forgotPin, { textAlign: 'center' }]}>
+              I forgot access code
+            </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -1,4 +1,4 @@
-import {View, RefreshControl, SectionList, StatusBar} from "react-native";
+import {View, RefreshControl, SectionList, StatusBar, TouchableOpacity, StyleSheet} from "react-native";
 import React, {useState, useEffect, useCallback} from "react";
 
 // components
@@ -18,7 +18,7 @@ import {useShopStore} from "@/store/shop";
 import {useAuthStore} from "@/store/AuthStore"
 
 
-import {Voucher} from "@/types";
+import {Theme, Voucher} from "@/types";
 import {getVouchersRedeemedAtShop} from "@/lib/services/redemptions";
 import {commonColors} from "@/constants/Colors";
 import {queryClient} from "@/lib/queryClient";
@@ -38,6 +38,7 @@ function Transactions(){
     const [isBottom, setIsBottom] = useState(false);
     const [refreshing, setRefreshing] = React.useState(false);
     const [isConnected, checkNetwork] = useNetworkStatus();
+    const noRedeemedFoundStyle = notFoundStyles(theme)
 
     const initialData =  {
         next: null,
@@ -119,14 +120,17 @@ function Transactions(){
         )
     }
 
+    // no redeem voucher found
+
     if(isFetched && vouchers.length === 0){
         return (
             <ParentContainer>
-                <Text style={{color: theme.textSecondary, fontSize: 18}}>
-                    No redeemed vouchers found
-                </Text>
+                <Text style={noRedeemedFoundStyle.title}>No vouchers have been redeemed for this shop</Text>
+                <TouchableOpacity style={noRedeemedFoundStyle.button} onPress={()=>onRefresh()}>
+                    <Text style={noRedeemedFoundStyle.buttonText}>Refresh</Text>
+                </TouchableOpacity>
             </ParentContainer>
-        )
+        );
     }
 
     if((isLoading || isFetching) && vouchers.length === 0){
@@ -185,3 +189,39 @@ function Transactions(){
 }
 
 export default Transactions;
+
+
+export const notFoundStyles = (theme: Theme) => StyleSheet.create({
+    container: {
+    flex: 1,
+    backgroundColor: theme.background,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 24,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: '600',
+    marginTop: 16,
+    color: theme.textPrimary,
+    textAlign: "center"
+  },
+  subtitle: {
+    fontSize: 16,
+    color: theme.textSecondary,
+    marginTop: 8,
+    textAlign: 'center',
+  },
+  button: {
+    marginTop: 24,
+    backgroundColor: commonColors.primaryColor,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 25,
+  },
+  buttonText: {
+    color: theme.textPrimary,
+    fontSize: 16,
+    fontWeight: "500",
+  },
+});
