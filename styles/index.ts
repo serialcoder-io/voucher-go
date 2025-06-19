@@ -80,8 +80,8 @@ export const getHomeScreenStyles = (theme: Theme) => StyleSheet.create({
 		padding: 16,
 	},
 	logo: {
-		width: 100,
-		height: 100,
+		width: "100%",
+		height: 120,
 		marginBottom: 40,
 	},
 	title: {
