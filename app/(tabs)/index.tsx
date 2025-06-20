@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {commonColors} from "@/constants/Colors";
 import {useTheme} from "@/hooks/useTheme";
-import {useFocusEffect, useRouter} from "expo-router";
-import {useQuery} from "@tanstack/react-query";
 
 // react native
 import {ScrollView, View, StyleSheet, Alert, StatusBar} from 'react-native';
@@ -12,6 +10,9 @@ import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncSto
 import {Theme} from "@/types";
 import {queryClient} from "@/lib/queryClient";
 
+
+import {useFocusEffect, useRouter} from "expo-router";
+import {useQuery} from "@tanstack/react-query";
 import {findVoucherByRef} from "@/lib/services/voucher";
 
 // store
@@ -25,11 +26,7 @@ import ShopCard from "@/components/ui/(tabs)/index/shopCard";
 import RedemptionCard from "@/components/ui/(tabs)/index/redemptionCard";
 import CheckVoucherCard from "@/components/ui/(tabs)/index/CheckVoucherCard";
 import CustomConfirmationModal from "@/components/ui/customConfirmationModal";
-import { showToast } from '@/utils';
-import { ALERT_TYPE } from 'react-native-alert-notification';
-import { useNetworkStatus } from '@/hooks/useNetworkStatus';
-import { Text } from 'react-native';
-import NoInternetScreen from '@/components/ui/NoInternet';
+import VoucherNotFoundCard from "@/components/ui/(tabs)/index/voucherNotFoundCard";
 
 
 function Home() {
@@ -49,8 +46,6 @@ function Home() {
     const [showConfirm, setShowConfirm] = useState(false);
     const [notFoundMsg, setNotFoundMsg ] = useState(false);
     const router = useRouter();
-    const [isConnected, checkNetwork] = useNetworkStatus();
-
 
     const { data, isLoading, isSuccess, error, isPending, isFetching, isFetched } = useQuery({
         queryKey: ["voucher"],
@@ -123,19 +118,7 @@ function Home() {
                 setShowRedemptionCard(true);
             } else {
                 setNotFoundMsg(true);
-                if(
-                    isFetched && !isLoading && voucher.length === 0 && 
-                    notFoundMsg && !isPending && !isFetching
-                ){
-                    showToast(
-                        "Voucher not found",
-                        "Please check the reference and try again.",
-                        ALERT_TYPE.DANGER,
-                        theme
-                    );
-                }
             }
-
             queryClient.resetQueries({ queryKey: "voucher", exact: true }).then(() => {
                 setSearchVoucher(false);
                 setReference("");
@@ -155,10 +138,6 @@ function Home() {
             pathname: '/voucher/[till_no]' as const,
             params: { till_no: tillNo },
         });
-    }
-
-    if (isConnected === false) {
-        return <NoInternetScreen onRetry={checkNetwork} />;
     }
 
     return (
@@ -203,6 +182,12 @@ function Home() {
                         resetState={resetState}
                         showConfirmationModal={()=>setShowConfirm(true)}
                         isLoading={isLoading || isFetching || isPending}
+                    />
+                )}
+                {(isFetched && !isLoading && voucher.length === 0 && notFoundMsg && !isPending && !isFetching) && (
+                    < VoucherNotFoundCard
+                        theme={theme} resetState={resetState}
+                        voucher={voucher} isLoading={isLoading}
                     />
                 )}
             </View>
