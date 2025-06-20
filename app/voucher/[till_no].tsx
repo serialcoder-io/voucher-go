@@ -34,7 +34,7 @@ function Index() {
 
     const shopId = shop?.id ? shop?.id : "";
     const tillNo = Array.isArray(till_no) ? parseInt(till_no[0]) : parseInt(till_no) || "";
-    const voucherId = voucher[0].id
+    const voucherId = voucher[0]?.id
 
     const redirect = () => {
         setVoucher([]);
