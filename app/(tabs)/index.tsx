@@ -27,6 +27,7 @@ import RedemptionCard from "@/components/ui/(tabs)/index/redemptionCard";
 import CheckVoucherCard from "@/components/ui/(tabs)/index/CheckVoucherCard";
 import CustomConfirmationModal from "@/components/ui/customConfirmationModal";
 import VoucherNotFoundCard from "@/components/ui/(tabs)/index/voucherNotFoundCard";
+import Loader from '@/components/ui/loader';
 
 
 function Home() {
@@ -178,6 +179,9 @@ function Home() {
                     setReference={setReference}
                     handleSubmitRef={handleSubmitRef}
                 />
+                {isLoading &&(
+                    <Loader/>
+                )}
                 {/* redemption card*/}
                 {(isSuccess && voucher.length > 0 && showRedemptionCard) && (
                     <RedemptionCard

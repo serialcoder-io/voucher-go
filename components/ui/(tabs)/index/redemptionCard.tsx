@@ -1,14 +1,18 @@
-import {StyleSheet, View} from "react-native";
-import {Button, Card, Divider, Icon, Text} from "@rneui/themed";
-import CardRow from "@/components/ui/(tabs)/cardRow";
-import BorderedInput from "@/components/ui/borderedInput";
+
 import React, {useEffect, useState} from "react";
 import {Theme, Voucher} from "@/types";
 import {useRouter} from "expo-router";
 import {commonColors} from "@/constants/Colors";
 import {isVoucherExpired, isVoucherInvalidStatus} from "@/validations/voucher.validations"
+
+// components
 import VoucherCardError from "@/components/ui/(tabs)/index/voucherCardError";
 import Loader from "@/components/ui/loader";
+import ExtendedVoucherCard from "@/components/ui/(tabs)/index/voucherExtendedCard"
+import {StyleSheet, View} from "react-native";
+import {Button, Card, Divider, Icon, Text} from "@rneui/themed";
+import CardRow from "@/components/ui/(tabs)/cardRow";
+import BorderedInput from "@/components/ui/borderedInput";
 
 type RedemptionCardProps = {
     theme: Theme;
@@ -47,10 +51,6 @@ function RedemptionCard({
             setVoucherData(voucher[0]);
         }
     }, [voucher, isLoading]);
-
-    if(isLoading){
-        return <Loader />
-    }
 
     if (!voucherData) {
         return null;
@@ -93,6 +93,9 @@ function RedemptionCard({
 
     return (
         <Card containerStyle={styles.card}>
+            {/* will display a message to inform the user that this voucher was extended */}
+            <ExtendedVoucherCard voucher={voucher[0]} />
+
             <View style={styles.refRow}>
                 <Icon name='check-circle' type='feather' color='green' />
                 <Text style={styles.refText}>Ref: {voucher[0]?.voucher_ref}</Text>

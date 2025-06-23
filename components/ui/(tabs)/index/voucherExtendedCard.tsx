@@ -1,21 +1,28 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; // ou autre selon ta config
+import { MaterialIcons } from '@expo/vector-icons';
+import { Voucher } from '@/types';
+import { formatDate } from '@/utils';
 
-interface Props {
-  expiryDate: string;
-  extensionDate: string;
-}
+const ExtendedVoucherCard = ({ voucher }: { voucher: Voucher }) => {
+  const now = new Date();
+  const expiry = voucher.expiry_date ? new Date(voucher.expiry_date) : null;
+  const extension = voucher.extention_date ? new Date(voucher.extention_date) : null;
 
-const ExtendedVoucherCard = ({ expiryDate, extensionDate }: Props) => {
+  if (!expiry || now <= expiry) return null; // the voucher is still valid
+  if (!extension || extension < now) return null; // extension null in passed
+
   return (
     <View style={styles.card}>
-      <MaterialIcons name="schedule" size={28} color="#FFA500" style={styles.icon} />
-      <Text style={styles.title}>Voucher extended</Text>
+      <View style={styles.titleRow}>
+        <MaterialIcons name="schedule" size={28} color="#FFA500" style={styles.icon} />
+        <Text style={styles.title}>Voucher extended</Text>
+      </View>
       <Text style={styles.text}>
-        The original expiry date ({expiryDate}) has passed, but this voucher was extended.
+        The original expiry date ({formatDate(voucher.expiry_date!)}) has passed, but this voucher was extended.
       </Text>
-      <Text style={styles.validUntil}>Valid until: <Text style={styles.date}>{extensionDate}</Text></Text>
+      <Text style={styles.validUntil}>Valid until: <Text style={styles.date}>{formatDate(voucher.extention_date!)}</Text>
+      </Text>
     </View>
   );
 };
@@ -32,6 +39,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+  },
+  titleRow: {
+    display: "flex", 
+    flexDirection: "row", 
+    alignItems: "center", 
+    gap: 3
   },
   icon: {
     marginBottom: 8,
