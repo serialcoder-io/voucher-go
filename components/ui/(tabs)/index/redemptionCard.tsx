@@ -68,7 +68,9 @@ function RedemptionCard({
             />
         )
     }
-
+    
+    // if the status of the voucher is not issued, we display the card error depending of the status:
+    // cancelled, redeemed, provisional
     if(voucherInvalidStatus){
         return (
             <VoucherCardError
