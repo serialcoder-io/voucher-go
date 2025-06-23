@@ -1,25 +1,19 @@
 import {Voucher} from "@/types";
 
 /**
- * this fucntion check if the voucher is not expired, and return true, false otherwise
+ * this fucntion check if the voucher was expired, and return true, false otherwise
  * @param voucher
  */
 export const isVoucherExpired = (voucher: Voucher) => {
-    // Check if the voucher status is "expired"
-    if (voucher.voucher_status === "expired") {
-        return true; // If the status is "expired", the voucher is expired
-    }
+    const now = new Date();
+    const expiry = voucher.expiry_date ? new Date(voucher.expiry_date) : null;
+    const extension = voucher.extention_date ? new Date(voucher.extention_date) : null;
 
-    const expiration_date = voucher.expiry_date ? new Date(voucher.expiry_date) : null;
-    const extention_date = voucher.extention_date ? new Date(voucher.extention_date) : null;
-    const currentDate = new Date();
+    if (!expiry) return false; // If there is no expiry_date, assume the voucher is still valid
+    if (now <= expiry) return false; 
+    if (extension && now <= extension) return false;
 
-    // If an expiration date is present, compare it with the current date
-    if (expiration_date && currentDate > expiration_date) {
-        // If the expiration date is passed, check for the extension
-        return !(extention_date && currentDate <= extention_date);
-    }
-    return false; // The voucher is not expired if none of the above conditions are met
+    return true;
 };
 
 

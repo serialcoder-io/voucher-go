@@ -41,7 +41,14 @@ function Home() {
     // If true, enables the query to find the voucher by the reference
     const [searchVoucher, setSearchVoucher] = useState(false);
     const {voucher, setVoucher} = useVoucherStore();
+
+    // Voucher reference stored in the global store.
+    // Used to temporarily hold the reference when a QR code is scanned,
+    // instead of entering it manually.
+    // After the scan, the user is redirected to this page,
+    // and the reference state is initialized with the value of globalRef.
     const {globalRef, setGlobalRef} = useGlobalRef();
+    
     const [showRedemptionCard, setShowRedemptionCard] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [notFoundMsg, setNotFoundMsg ] = useState(false);
