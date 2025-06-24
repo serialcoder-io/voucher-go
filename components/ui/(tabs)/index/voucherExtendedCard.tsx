@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    color: '#333',
+    color: 'red',
     marginBottom: 6,
   },
   validUntil: {
